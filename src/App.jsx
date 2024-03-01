@@ -7,7 +7,9 @@ import { useEffect, useContext } from 'react';
 import { AuthContext } from './context/AuthContext';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import dayjs from 'dayjs';
 
+dayjs.tz.setDefault('Asia/Kuala_Lumpur');
 
 function App() {
   const { isAuthenticated, role, permissions, dispatch } = useContext(AuthContext);

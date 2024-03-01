@@ -14,6 +14,8 @@ export const useAppontmentBooking = () => {
         selectedSpecialist: null,
         selectedDateTime: null,
     });
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     const [services, setServices] = useState([]);
     const [specialists, setSpecialists] = useState([]);
@@ -66,10 +68,23 @@ export const useAppontmentBooking = () => {
         });
     };
 
-    const bookAppointment = async () => {
-        const response = await createAppointment(appointDetails);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
+        try {
+            setLoading(true);
+
+            const response = await createAppointment(appointDetails);
+            return;
+
+        } catch (err) {
+            setError(err.message);
+        }
+        finally {
+            setLoading(false);
+        }
     }
+
 
     const fetchServices = async () => {
         const allServices = await fetchAllServices();
@@ -81,6 +96,6 @@ export const useAppontmentBooking = () => {
         setSpecialists(specialists);
     }
 
-    return { appointDetails, services, specialists, updateAppointmentDetails, resetAppointmentDetails, bookAppointment, fetchServices, fetchSpecialists, setSpecialists };
+    return { appointDetails, loading, error, services, specialists, updateAppointmentDetails, resetAppointmentDetails, handleSubmit, fetchServices, fetchSpecialists, setSpecialists };
 
 }

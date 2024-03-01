@@ -1,4 +1,22 @@
 export const createAppointment = async (appointDetails) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/appointment/new`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(appointDetails)
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.error);
+        }
+
+        return await response.json();
+    } catch (err) {
+        throw new Error(err.message);
+    }
 
 }
 
