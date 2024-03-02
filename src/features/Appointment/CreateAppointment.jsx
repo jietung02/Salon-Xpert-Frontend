@@ -7,8 +7,8 @@ import { useContext, useEffect, useState } from "react";
 import Dropdown from "../../components/Dropdown/Dropdown";
 import RadioButton from "../../components/RadioButton/RadioButton";
 import Checkbox from "../../components/Checkbox/Checkbox";
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
+import { DatePicker, TimePicker } from '@mui/x-date-pickers';
+import { MobileDatePicker, MobileTimePicker } from '@mui/x-date-pickers';
 import useScreenSize from "../../hooks/useScreenSize";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -16,7 +16,7 @@ export default function CreateAppointment() {
   const { name, email, gender, age, contact } = useContext(AuthContext);
 
   const { width } = useScreenSize();
-  const { appointDetails, services, loading, error, specialists, updateAppointmentDetails, resetAppointmentDetails, handleSubmit, fetchServices, fetchSpecialists, setSpecialists } = useAppontmentBooking();
+  const { appointDetails, services, loading, error, specialists, availableTimeSlot, updateAppointmentDetails, resetAppointmentDetails, handleSubmit, fetchServices, fetchSpecialists, setSpecialists, shouldDisableTime, fetchAvailableTimeSlot } = useAppontmentBooking();
   const [selectedValue, setSelectedValue] = useState('');
   useEffect(() => {
 
@@ -50,13 +50,19 @@ export default function CreateAppointment() {
     updateAppointmentDetails({ target: { name: 'selectedSpecialist', value: null, } })
 
   };
+  const resetDateTime = () => {
+    updateAppointmentDetails({ }, 'selectedDate', true);
+    updateAppointmentDetails({ }, 'selectedTime', true);
+  }
+
+
 
   useEffect(() => {
     const fetchSpecialistData = async () => {
       try {
-        console.log('clear')
         clearDropdownSelection();
         setSpecialists([]);
+        resetDateTime();
         await fetchSpecialists();
       } catch (error) {
         console.error('Error fetching specialists:', error);
@@ -65,6 +71,17 @@ export default function CreateAppointment() {
 
     fetchSpecialistData();
   }, [appointDetails.selectedServices]);
+
+  useEffect(() => {
+    const fetchSpecialistTimeSlot = async () => {
+      try {
+        await fetchAvailableTimeSlot();
+      } catch (error) {
+        console.error('Error fetching specialists timeslot:', error);
+      }
+    }
+    fetchSpecialistTimeSlot();
+  }, [appointDetails.selectedDate]);
 
   return (
     <div>
@@ -183,31 +200,72 @@ export default function CreateAppointment() {
                 })))
               ]} />
 
-            <div className="relative md:w-2/5 w-full h-10 mx-auto">
-              {width > 768 ? (
-                <DateTimePicker
-                  disabled={appointDetails.selectedServices.length === 0 || appointDetails.selectedSpecialist === null}
-                  label="Select Service Date and Time"
-                  slotProps={{ textField: { size: 'small' } }}
-                  name="selectedDateTime"
-                  views={['year', 'month', 'day', 'hours', 'minutes']}
-                  minutesStep={15}
-                  onAccept={(e) => { updateAppointmentDetails(e) }}
-                />
-              ) :
-                <MobileDateTimePicker
-                  disabled={appointDetails.selectedServices.length === 0 || appointDetails.selectedSpecialist === null}
-                  label="Select Service Date and Time"
-                  slotProps={{ textField: { size: 'small' } }}
-                  name="selectedDateTime"
-                  views={['year', 'month', 'day', 'hours', 'minutes']}
-                  minutesStep={15}
-                  onAccept={(e) => { updateAppointmentDetails(e) }}
-                  className="w-full"
-                />
-              }
 
-            </div>
+            {width > 768 ? (
+              <>
+                <div className="relative md:w-2/5 w-full h-10 mx-auto">
+                  <DatePicker
+                    disabled={appointDetails.selectedServices.length === 0 || appointDetails.selectedSpecialist === null}
+                    label="Select Service Date"
+                    slotProps={{ textField: { size: 'small' } }}
+                    name="selectedDate"
+                    format="DD/MM/YYYY"
+                    views={['day', 'month', 'year']}
+                    disablePast
+                    
+                    onAccept={(e) => { updateAppointmentDetails(e, 'selectedDate') }}
+                  />
+                </div>
+
+                <div className="relative md:w-2/5 w-full h-10 mx-auto">
+                  <TimePicker
+                    disabled={appointDetails.selectedDate === null}
+                    label="Select Service Time"
+                    skipDisabled
+                    shouldDisableTime={shouldDisableTime}
+                    slotProps={{ textField: { size: 'small' } }}
+                    name="selectedTime"
+                    minutesStep={15}
+                    ampm={false}
+                    onAccept={(e) => { updateAppointmentDetails(e, 'selectedTime') }}
+                  />
+                </div>
+              </>
+            ) :
+              <>
+                <div className="relative md:w-2/5 w-full h-10 mx-auto">
+                  <MobileDatePicker
+                    disabled={appointDetails.selectedServices.length === 0 || appointDetails.selectedSpecialist === null}
+                    label="Select Service Date"
+                    slotProps={{ textField: { size: 'small' } }}
+                    name="selectedDate"
+                    format="DD/MM/YYYY"
+                    views={['day', 'month', 'year']}
+                    disablePast
+                    onAccept={(e) => { updateAppointmentDetails(e, 'selectedDate') }}
+                    className="w-full"
+                  />
+                </div>
+
+                <div className="relative md:w-2/5 w-full h-10 mx-auto">
+                  <MobileTimePicker
+                    disabled={appointDetails.selectedDate === null}
+                    label="Select Service Time"
+                    skipDisabled
+                    shouldDisableTime={shouldDisableTime}
+                    slotProps={{ textField: { size: 'small' } }}
+                    name="selectedTime"
+                    minutesStep={15}
+                    ampm={false}
+                    onAccept={(e) => { updateAppointmentDetails(e, 'selectedTime') }}
+                    className="w-full"
+
+                  />
+                </div>
+              </>
+            }
+
+
           </>
         ) : <></>
         }
@@ -216,31 +274,45 @@ export default function CreateAppointment() {
           <>
             <div className="relative md:w-2/5 w-full h-10 mx-auto">
               {width > 768 ? (
-                <DateTimePicker
-                  disabled={appointDetails.selectedServices.length === 0}
-                  label="Select Service Date and Time"
-                  slotProps={{ textField: { size: 'small' } }}
-                  name="selectedDateTime"
-                  views={['year', 'month', 'day', 'hours', 'minutes']}
-                  minutesStep={15}
-                  onAccept={(e) => { updateAppointmentDetails(e) }}
-                />
+                <>
+                  <DatePicker
+                    disabled={appointDetails.selectedServices.length === 0 || appointDetails.selectedSpecialist === null}
+                    label="Select Service Date"
+                    slotProps={{ textField: { size: 'small' } }}
+                    name="selectedDate"
+                    format="DD/MM/YYYY"
+                    views={['day', 'month', 'year']}
+                    disablePast
+                    onAccept={(e) => { updateAppointmentDetails(e) }}
+                  />
+
+                  <TimePicker
+
+                  />
+                </>
               ) :
-                <MobileDateTimePicker
-                  disabled={appointDetails.selectedServices.length === 0}
-                  label="Select Service Date and Time"
-                  slotProps={{ textField: { size: 'small' } }}
-                  name="selectedDateTime"
-                  views={['year', 'month', 'day', 'hours', 'minutes']}
-                  minutesStep={15}
-                  onAccept={(e) => { updateAppointmentDetails(e) }}
-                  className="w-full"
-                />
+                <>
+                  <MobileDatePicker
+                    disabled={appointDetails.selectedServices.length === 0 || appointDetails.selectedSpecialist === null}
+                    label="Select Service Date"
+                    slotProps={{ textField: { size: 'small' } }}
+                    name="selectedDate"
+                    format="DD/MM/YYYY"
+                    views={['day', 'month', 'year']}
+                    disablePast
+                    onAccept={(e) => { updateAppointmentDetails(e) }}
+                    className="w-full"
+                  />
+
+                  <MobileTimePicker
+
+                  />
+                </>
+              }
               }
             </div>
-            {console.log(typeof appointDetails.selectedDateTime)}
             <Dropdown
-              disabled={appointDetails.selectedServices.length === 0 || appointDetails.selectedDateTime === null}
+              disabled={appointDetails.selectedServices.length === 0 || appointDetails.selectedDate === null || appointDetails.selectedTime === null}
               isSelected={appointDetails.selectedSpecialist}
               label='Select a Specialist'
               name='selectedSpecialist'
@@ -256,7 +328,7 @@ export default function CreateAppointment() {
           : <></>
         }
 
-        <div className="relative md:w-2/5 w-full h-10 mx-auto">
+        <div className="relative w-full h-10 mx-auto">
           <button
             disabled={loading}
             class="align-middle select-none font-bold text-center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-sm py-2 px-4 rounded-lg border border-gray-900 text-gray-900 hover:opacity-75 focus:ring focus:ring-gray-900 active:opacity-[0.85] flex mx-auto items-center gap-3"

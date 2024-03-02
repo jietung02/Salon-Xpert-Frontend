@@ -60,3 +60,24 @@ export const fetchMatchSpecialists = async (selectedServices) => {
     }
 }
 
+export const fetchTimeSpecialistTimeSlot = async (selectedServices, selectedSpecialist, selectedDate) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/specialist-timeslots`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ selectedServices, selectedSpecialist, selectedDate })
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.error);
+        }
+
+        return await response.json();
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
+

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { createAppointment, fetchAllServices, fetchMatchSpecialists } from '../services/appointment';
-
+import { createAppointment, fetchAllServices, fetchMatchSpecialists, fetchTimeSpecialistTimeSlot } from '../services/appointment';
+import dayjs from 'dayjs';
 export const useAppontmentBooking = () => {
 
     const [appointDetails, setAppointDetails] = useState({
@@ -12,16 +12,20 @@ export const useAppontmentBooking = () => {
         selectedServices: [],
         bookingMethod: null,
         selectedSpecialist: null,
-        selectedDateTime: null,
+        selectedDate: null,
+        selectedTime: null,
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     const [services, setServices] = useState([]);
     const [specialists, setSpecialists] = useState([]);
+    const [availableTimeSlot, setAvailableTimeSlot] = useState([]);
 
-    const updateAppointmentDetails = (e) => {
-
+    const updateAppointmentDetails = (e, key, reset) => {
+        if (e === null) {
+            return;
+        }
         if (e.hasOwnProperty('target')) {
             const { name, value, checked, type } = e.target;
 
@@ -44,10 +48,33 @@ export const useAppontmentBooking = () => {
         }
         else {
             setAppointDetails((prevDetails) => {
-                return {
-                    ...prevDetails,
-                    selectedDateTime: e.valueOf(),
+
+                if (reset) {
+                    return {
+                        ...prevDetails,
+                        selectedDate: null,
+                        selectedTime: null,
+                    }
                 }
+                if (key === 'selectedTime') {
+
+                    const combinedDateTime = dayjs(appointDetails.selectedDate).set('hour', e.$H).set('minute', e.$m);
+
+                    const klDateTime = combinedDateTime.tz('Asia/Kuala_Lumpur').format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+
+                    return {
+                        ...prevDetails,
+                        [key]: klDateTime,
+                    }
+                }
+                else {
+                    return {
+                        ...prevDetails,
+
+                        [key]: e.tz('Asia/Kuala_Lumpur').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
+                    }
+                }
+
             });
         }
 
@@ -64,7 +91,8 @@ export const useAppontmentBooking = () => {
             selectedServices: [],
             bookingMethod: null,
             selectedSpecialist: null,
-            selectedDateTime: null,
+            selectedDate: null,
+            selectedTime: null,
         });
     };
 
@@ -96,6 +124,51 @@ export const useAppontmentBooking = () => {
         setSpecialists(specialists);
     }
 
-    return { appointDetails, loading, error, services, specialists, updateAppointmentDetails, resetAppointmentDetails, handleSubmit, fetchServices, fetchSpecialists, setSpecialists };
+    const fetchAvailableTimeSlot = async () => {
+        const timeSlots = await fetchTimeSpecialistTimeSlot(appointDetails.selectedServices, appointDetails.selectedSpecialist, appointDetails.selectedDate);
+        setAvailableTimeSlot(timeSlots);
+    }
+
+    const shouldDisableTime = (value, view) => {
+        const schema = [[{ hour: 10, minutes: [0, 30] }, { hour: 12, minutes: [0, 15, 30, 45] }, { hour: 15, minutes: [0, 15] }], { startHour: 10, offHour: 19 }];
+        const [unavailableTimeSlots, workingHour] = schema;
+        const { startHour, offHour } = workingHour;
+        const hour = value.hour();
+        const minute = value.minute();
+
+
+        if (view === 'hours') {
+            const unavailableSlot = unavailableTimeSlots.find(slot => slot.minutes.length === 4);
+
+            // Check if there is an unavailable slot with all minutes
+            if (unavailableSlot && hour === unavailableSlot.hour) {
+                return true;
+            }
+            return hour < startHour || hour >= offHour;
+        }
+
+        if (view === 'minutes') {
+
+            const unavailableHour = unavailableTimeSlots.find(slot => slot.hour === hour);
+
+            if (unavailableHour && unavailableHour.minutes.includes(minute)) {
+                return true;
+            }
+            console.log(unavailableHour)
+        }
+        return
+
+
+        // if (view === 'hours') {
+        //   return hour < 9 || hour > 13;
+        // }
+        // if (view === 'minutes') {
+        //   const minute = value.minute();
+        //   return minute > 20 && hour === 13;
+        // }
+        // return false;
+    };
+
+    return { appointDetails, loading, error, services, specialists, availableTimeSlot, updateAppointmentDetails, resetAppointmentDetails, handleSubmit, fetchServices, fetchSpecialists, setSpecialists, shouldDisableTime, fetchAvailableTimeSlot };
 
 }
