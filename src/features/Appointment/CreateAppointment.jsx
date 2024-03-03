@@ -16,7 +16,7 @@ export default function CreateAppointment() {
   const { name, email, gender, age, contact } = useContext(AuthContext);
 
   const { width } = useScreenSize();
-  const { appointDetails, services, loading, error, specialists, availableTimeSlot, updateAppointmentDetails, resetAppointmentDetails, handleSubmit, fetchServices, fetchSpecialists, setSpecialists, shouldDisableTime, fetchAvailableTimeSlot } = useAppontmentBooking();
+  const { appointDetails, services, loading, error, specialists, setErrorMessage, updateAppointmentDetails, setAvailableTimeSlots, handleSubmit, fetchServices, fetchSpecialists, setSpecialists, shouldDisableTime, fetchAvailableTimeSlot, fetchWorkingTimeSlots, fetchSpecialistAvailability } = useAppontmentBooking();
   const [selectedValue, setSelectedValue] = useState('');
   useEffect(() => {
 
@@ -51,8 +51,8 @@ export default function CreateAppointment() {
 
   };
   const resetDateTime = () => {
-    updateAppointmentDetails({ }, 'selectedDate', true);
-    updateAppointmentDetails({ }, 'selectedTime', true);
+    updateAppointmentDetails({}, 'selectedDate', true);
+    updateAppointmentDetails({}, 'selectedTime', true);
   }
 
 
@@ -60,17 +60,29 @@ export default function CreateAppointment() {
   useEffect(() => {
     const fetchSpecialistData = async () => {
       try {
-        clearDropdownSelection();
-        setSpecialists([]);
-        resetDateTime();
-        await fetchSpecialists();
+
+        if (appointDetails.bookingMethod === 'specialist') {
+          clearDropdownSelection();
+          setSpecialists([]);
+          setAvailableTimeSlots([]);
+          resetDateTime();
+          console.log('INN')
+          await fetchSpecialists();
+        }
+        else {
+          clearDropdownSelection();
+          resetDateTime();
+          setSpecialists([]);
+          await fetchSpecialists();
+        }
+
       } catch (error) {
         console.error('Error fetching specialists:', error);
       }
     }
 
     fetchSpecialistData();
-  }, [appointDetails.selectedServices]);
+  }, [appointDetails.bookingMethod, appointDetails.selectedServices]);
 
   useEffect(() => {
     const fetchSpecialistTimeSlot = async () => {
@@ -80,15 +92,55 @@ export default function CreateAppointment() {
         console.error('Error fetching specialists timeslot:', error);
       }
     }
-    fetchSpecialistTimeSlot();
-  }, [appointDetails.selectedDate]);
+    if (appointDetails.bookingMethod === 'specialist' && appointDetails.selectedSpecialist !== null && appointDetails.selectedDate !== null) {
+      fetchSpecialistTimeSlot();
+    }
+
+  }, [appointDetails.selectedSpecialist, appointDetails.selectedDate]);
+
+  useEffect(() => {
+    const fetchWorkingHours = async () => {
+      try {
+        await fetchWorkingTimeSlots();
+      } catch (error) {
+        console.error('Error fetching working hours', error);
+      }
+    }
+
+    if (appointDetails.bookingMethod === 'datetime') {
+      fetchWorkingHours();
+    }
+  }, [appointDetails.bookingMethod])
+
+  useEffect(() => {
+    if (appointDetails.bookingMethod === 'datetime') {
+      clearDropdownSelection();
+    }
+    const fetchSpecialistAvailableThatTime = async () => {
+      try {
+        await fetchSpecialists();
+        if (appointDetails.bookingMethod === 'datetime' && specialists.length !== 0 && appointDetails.selectedTime !== null) {
+          await fetchSpecialistAvailability();
+        }
+      } catch (error) {
+        console.error('Error fetching specialists', error);
+      }
+    }
+    const date = new Date(appointDetails.selectedDate);
+    const time = new Date(appointDetails.selectedTime);
+    if (date.getDate() !== time.getDate()) {
+      updateAppointmentDetails({ $H: time.getHours(), $m: time.getMinutes() }, 'selectedTime')
+    }
+    fetchSpecialistAvailableThatTime();
+
+  }, [appointDetails.selectedTime, appointDetails.selectedDate])
 
   return (
     <div>
       <h1 className="px-8 py-6 text-3xl sm:px-7 md:px-11 md:py-6 md:text-4xl lg:px-11 md:text-left text-center font-bold text-gray-900">Book Appointment</h1>
       <form className="my-6 container mx-auto w-5/6 bg-gray-100 rounded-lg shadow-md shadow-gray-200 flex flex-wrap md:items-end gap-8 px-12 py-12 mx-auto" onSubmit={(e) => handleSubmit(e)}>
         {error && (
-          <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative" role="alert">
+          <div class="w-full text-center bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative" role="alert">
             <span class="block sm:inline text-xs">{error}</span>
           </div>
         )}
@@ -211,8 +263,9 @@ export default function CreateAppointment() {
                     name="selectedDate"
                     format="DD/MM/YYYY"
                     views={['day', 'month', 'year']}
+                    onError={(newError) => setErrorMessage(newError)}
                     disablePast
-                    
+
                     onAccept={(e) => { updateAppointmentDetails(e, 'selectedDate') }}
                   />
                 </div>
@@ -225,6 +278,7 @@ export default function CreateAppointment() {
                     shouldDisableTime={shouldDisableTime}
                     slotProps={{ textField: { size: 'small' } }}
                     name="selectedTime"
+                    onError={(newError) => setErrorMessage(newError)}
                     minutesStep={15}
                     ampm={false}
                     onAccept={(e) => { updateAppointmentDetails(e, 'selectedTime') }}
@@ -241,6 +295,7 @@ export default function CreateAppointment() {
                     name="selectedDate"
                     format="DD/MM/YYYY"
                     views={['day', 'month', 'year']}
+                    onError={(newError) => setErrorMessage(newError)}
                     disablePast
                     onAccept={(e) => { updateAppointmentDetails(e, 'selectedDate') }}
                     className="w-full"
@@ -255,6 +310,7 @@ export default function CreateAppointment() {
                     shouldDisableTime={shouldDisableTime}
                     slotProps={{ textField: { size: 'small' } }}
                     name="selectedTime"
+                    onError={(newError) => setErrorMessage(newError)}
                     minutesStep={15}
                     ampm={false}
                     onAccept={(e) => { updateAppointmentDetails(e, 'selectedTime') }}
@@ -265,52 +321,79 @@ export default function CreateAppointment() {
               </>
             }
 
-
           </>
         ) : <></>
         }
 
         {appointDetails.bookingMethod && appointDetails.bookingMethod === 'datetime' ?
           <>
-            <div className="relative md:w-2/5 w-full h-10 mx-auto">
-              {width > 768 ? (
-                <>
+            {width > 768 ? (
+              <>
+                <div className="relative md:w-2/5 w-full h-10 mx-auto">
                   <DatePicker
-                    disabled={appointDetails.selectedServices.length === 0 || appointDetails.selectedSpecialist === null}
+                    disabled={appointDetails.selectedServices.length === 0}
                     label="Select Service Date"
                     slotProps={{ textField: { size: 'small' } }}
                     name="selectedDate"
                     format="DD/MM/YYYY"
                     views={['day', 'month', 'year']}
+                    onError={(newError) => setErrorMessage(newError)}
                     disablePast
-                    onAccept={(e) => { updateAppointmentDetails(e) }}
-                  />
 
+                    onAccept={(e) => { updateAppointmentDetails(e, 'selectedDate') }}
+                  />
+                </div>
+
+                <div className="relative md:w-2/5 w-full h-10 mx-auto">
                   <TimePicker
-
+                    disabled={appointDetails.selectedServices.length === 0 || appointDetails.selectedDate === null}
+                    label="Select Service Time"
+                    skipDisabled
+                    shouldDisableTime={shouldDisableTime}
+                    slotProps={{ textField: { size: 'small' } }}
+                    name="selectedTime"
+                    onError={(newError) => setErrorMessage(newError)}
+                    minutesStep={15}
+                    ampm={false}
+                    onAccept={(e) => { updateAppointmentDetails(e, 'selectedTime') }}
                   />
-                </>
-              ) :
-                <>
+                </div>
+              </>
+            ) :
+              <>
+                <div className="relative md:w-2/5 w-full h-10 mx-auto">
                   <MobileDatePicker
-                    disabled={appointDetails.selectedServices.length === 0 || appointDetails.selectedSpecialist === null}
+                    disabled={appointDetails.selectedServices.length === 0}
                     label="Select Service Date"
                     slotProps={{ textField: { size: 'small' } }}
                     name="selectedDate"
                     format="DD/MM/YYYY"
                     views={['day', 'month', 'year']}
+                    onError={(newError) => setErrorMessage(newError)}
                     disablePast
-                    onAccept={(e) => { updateAppointmentDetails(e) }}
+                    onAccept={(e) => { updateAppointmentDetails(e, 'selectedDate') }}
                     className="w-full"
                   />
+                </div>
 
+                <div className="relative md:w-2/5 w-full h-10 mx-auto">
                   <MobileTimePicker
+                    disabled={appointDetails.selectedServices.length === 0 || appointDetails.selectedDate === null}
+                    label="Select Service Time"
+                    skipDisabled
+                    shouldDisableTime={shouldDisableTime}
+                    slotProps={{ textField: { size: 'small' } }}
+                    name="selectedTime"
+                    onError={(newError) => setErrorMessage(newError)}
+                    minutesStep={15}
+                    ampm={false}
+                    onAccept={(e) => { updateAppointmentDetails(e, 'selectedTime') }}
+                    className="w-full"
 
                   />
-                </>
-              }
-              }
-            </div>
+                </div>
+              </>
+            }
             <Dropdown
               disabled={appointDetails.selectedServices.length === 0 || appointDetails.selectedDate === null || appointDetails.selectedTime === null}
               isSelected={appointDetails.selectedSpecialist}
@@ -324,6 +407,7 @@ export default function CreateAppointment() {
                   label: specialist.staffName,
                 })))
               ]} />
+
           </>
           : <></>
         }

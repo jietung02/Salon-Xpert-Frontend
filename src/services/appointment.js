@@ -81,3 +81,43 @@ export const fetchTimeSpecialistTimeSlot = async (selectedServices, selectedSpec
     }
 }
 
+export const fetchWorkingHoursTimeSlots = async () => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/working-hours`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.error);
+        }
+
+        return await response.json();
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
+
+export const fetchSpecialistThatTime = async (specialists, selectedServices, selectedTime) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/specialists-available`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ specialists, selectedServices, selectedTime })
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.error);
+        }
+
+        return await response.json();
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}

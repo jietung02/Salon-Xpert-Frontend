@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createAppointment, fetchAllServices, fetchMatchSpecialists, fetchTimeSpecialistTimeSlot } from '../services/appointment';
+import { createAppointment, fetchAllServices, fetchMatchSpecialists, fetchTimeSpecialistTimeSlot, fetchWorkingHoursTimeSlots, fetchSpecialistThatTime } from '../services/appointment';
 import dayjs from 'dayjs';
 export const useAppontmentBooking = () => {
 
@@ -20,8 +20,11 @@ export const useAppontmentBooking = () => {
 
     const [services, setServices] = useState([]);
     const [specialists, setSpecialists] = useState([]);
-    const [availableTimeSlot, setAvailableTimeSlot] = useState([]);
+    const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
 
+    const setErrorMessage = (message) => {
+        setError(message);
+    }
     const updateAppointmentDetails = (e, key, reset) => {
         if (e === null) {
             return;
@@ -32,7 +35,7 @@ export const useAppontmentBooking = () => {
             setAppointDetails((prevDetails) => {
 
                 if (type === 'checkbox') {
-                    console.log('IN 1')
+
                     return {
                         ...prevDetails,
                         [name]: checked ? [...prevDetails[name], value] : prevDetails[name].filter(item => item !== value),
@@ -68,6 +71,7 @@ export const useAppontmentBooking = () => {
                     }
                 }
                 else {
+
                     return {
                         ...prevDetails,
 
@@ -102,6 +106,9 @@ export const useAppontmentBooking = () => {
         try {
             setLoading(true);
 
+            if (error) {
+                return;
+            }
             const response = await createAppointment(appointDetails);
             return;
 
@@ -122,53 +129,73 @@ export const useAppontmentBooking = () => {
     const fetchSpecialists = async () => {
         const specialists = await fetchMatchSpecialists(appointDetails.selectedServices);
         setSpecialists(specialists);
+
+
     }
 
     const fetchAvailableTimeSlot = async () => {
-        const timeSlots = await fetchTimeSpecialistTimeSlot(appointDetails.selectedServices, appointDetails.selectedSpecialist, appointDetails.selectedDate);
-        setAvailableTimeSlot(timeSlots);
+        try {
+            const timeSlots = await fetchTimeSpecialistTimeSlot(appointDetails.selectedServices, appointDetails.selectedSpecialist, appointDetails.selectedDate);
+            setAvailableTimeSlots(timeSlots);
+        } catch (error) {
+            setError(error.message);
+        }
+
     }
 
     const shouldDisableTime = (value, view) => {
-        const schema = [[{ hour: 10, minutes: [0, 30] }, { hour: 12, minutes: [0, 15, 30, 45] }, { hour: 15, minutes: [0, 15] }], { startHour: 10, offHour: 19 }];
-        const [unavailableTimeSlots, workingHour] = schema;
-        const { startHour, offHour } = workingHour;
         const hour = value.hour();
         const minute = value.minute();
 
+        if (Array.isArray(availableTimeSlots)) {
+            if (view === 'hours') {
+                const availableSlots = availableTimeSlots.filter(slot => slot.hour === hour);
 
-        if (view === 'hours') {
-            const unavailableSlot = unavailableTimeSlots.find(slot => slot.minutes.length === 4);
+                if (availableSlots.some((slot => hour === slot.hour))) {
+                    console.log(hour)
+                    return false;
+                }
+                else {
+                    console.log(hour)
+                    return true;
+                }
 
-            // Check if there is an unavailable slot with all minutes
-            if (unavailableSlot && hour === unavailableSlot.hour) {
-                return true;
             }
-            return hour < startHour || hour >= offHour;
-        }
 
-        if (view === 'minutes') {
+            if (view === 'minutes') {
 
-            const unavailableHour = unavailableTimeSlots.find(slot => slot.hour === hour);
+                const availableHour = availableTimeSlots.find(slot => slot.hour === hour);
 
-            if (unavailableHour && unavailableHour.minutes.includes(minute)) {
-                return true;
+                if (availableHour && availableHour.minutes.includes(minute)) {
+                    return false;
+                }
+                else {
+                    return true;
+                }
             }
-            console.log(unavailableHour)
         }
-        return
-
-
-        // if (view === 'hours') {
-        //   return hour < 9 || hour > 13;
-        // }
-        // if (view === 'minutes') {
-        //   const minute = value.minute();
-        //   return minute > 20 && hour === 13;
-        // }
-        // return false;
     };
 
-    return { appointDetails, loading, error, services, specialists, availableTimeSlot, updateAppointmentDetails, resetAppointmentDetails, handleSubmit, fetchServices, fetchSpecialists, setSpecialists, shouldDisableTime, fetchAvailableTimeSlot };
+    const fetchWorkingTimeSlots = async () => {
+        try {
+            const timeSlots = await fetchWorkingHoursTimeSlots();
+            setAvailableTimeSlots(timeSlots);
+        } catch (error) {
+            setError(error.message);
+        }
+    }
+
+    const fetchSpecialistAvailability = async () => {
+        try {
+            const specialistsAvailable = await fetchSpecialistThatTime(specialists, appointDetails.selectedServices, appointDetails.selectedTime);
+            setSpecialists(specialistsAvailable);
+        } catch (error) {
+            setSpecialists([]);
+            setError(error.message);
+        }
+    }
+
+
+    return { appointDetails, loading, error, services, specialists, setAvailableTimeSlots, setErrorMessage, updateAppointmentDetails, resetAppointmentDetails, handleSubmit, fetchServices, fetchSpecialists, setSpecialists, shouldDisableTime, fetchAvailableTimeSlot, fetchWorkingTimeSlots, fetchSpecialistAvailability, };
 
 }
