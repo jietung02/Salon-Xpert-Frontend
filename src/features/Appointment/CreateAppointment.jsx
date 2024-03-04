@@ -11,6 +11,7 @@ import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import { MobileDatePicker, MobileTimePicker } from '@mui/x-date-pickers';
 import useScreenSize from "../../hooks/useScreenSize";
 import { AuthContext } from "../../context/AuthContext";
+import dayjs from "dayjs";
 
 export default function CreateAppointment() {
   const { name, email, gender, age, contact } = useContext(AuthContext);
@@ -55,6 +56,9 @@ export default function CreateAppointment() {
     updateAppointmentDetails({}, 'selectedTime', true);
   }
 
+  const resetTime = () => {
+    updateAppointmentDetails({}, 'selectedTime', true);
+  }
 
 
   useEffect(() => {
@@ -93,6 +97,7 @@ export default function CreateAppointment() {
       }
     }
     if (appointDetails.bookingMethod === 'specialist' && appointDetails.selectedSpecialist !== null && appointDetails.selectedDate !== null) {
+      resetTime();
       fetchSpecialistTimeSlot();
     }
 
@@ -115,7 +120,17 @@ export default function CreateAppointment() {
   useEffect(() => {
     if (appointDetails.bookingMethod === 'datetime') {
       clearDropdownSelection();
+      // if (appointDetails.selectedTime !== null) {
+      //   const date = new Date(appointDetails.selectedDate);
+      //   const time = new Date(appointDetails.selectedTime);
+
+      //   if (date.getDate() !== time.getDate()) {
+      //     updateAppointmentDetails({ $H: time.getHours(), $m: time.getMinutes() }, 'selectedTime')
+      //   }
+      // }
+
     }
+
     const fetchSpecialistAvailableThatTime = async () => {
       try {
         await fetchSpecialists();
@@ -126,14 +141,16 @@ export default function CreateAppointment() {
         console.error('Error fetching specialists', error);
       }
     }
-    const date = new Date(appointDetails.selectedDate);
-    const time = new Date(appointDetails.selectedTime);
-    if (date.getDate() !== time.getDate()) {
-      updateAppointmentDetails({ $H: time.getHours(), $m: time.getMinutes() }, 'selectedTime')
-    }
     fetchSpecialistAvailableThatTime();
 
   }, [appointDetails.selectedTime, appointDetails.selectedDate])
+
+  useEffect(() => {
+    if (appointDetails.bookingMethod === 'datetime') {
+      resetTime();
+    }
+
+  }, [appointDetails.selectedDate])
 
   return (
     <div>
@@ -257,6 +274,7 @@ export default function CreateAppointment() {
               <>
                 <div className="relative md:w-2/5 w-full h-10 mx-auto">
                   <DatePicker
+                    value={appointDetails.selectedDate ? dayjs(appointDetails.selectedDate) : null}
                     disabled={appointDetails.selectedServices.length === 0 || appointDetails.selectedSpecialist === null}
                     label="Select Service Date"
                     slotProps={{ textField: { size: 'small' } }}
@@ -273,6 +291,7 @@ export default function CreateAppointment() {
                 <div className="relative md:w-2/5 w-full h-10 mx-auto">
                   <TimePicker
                     disabled={appointDetails.selectedDate === null}
+                    value={appointDetails.selectedTime ? dayjs(appointDetails.selectedTime) : null}
                     label="Select Service Time"
                     skipDisabled
                     shouldDisableTime={shouldDisableTime}
@@ -290,6 +309,7 @@ export default function CreateAppointment() {
                 <div className="relative md:w-2/5 w-full h-10 mx-auto">
                   <MobileDatePicker
                     disabled={appointDetails.selectedServices.length === 0 || appointDetails.selectedSpecialist === null}
+                    value={appointDetails.selectedDate ? dayjs(appointDetails.selectedDate) : null}
                     label="Select Service Date"
                     slotProps={{ textField: { size: 'small' } }}
                     name="selectedDate"
@@ -305,6 +325,7 @@ export default function CreateAppointment() {
                 <div className="relative md:w-2/5 w-full h-10 mx-auto">
                   <MobileTimePicker
                     disabled={appointDetails.selectedDate === null}
+                    value={appointDetails.selectedTime ? dayjs(appointDetails.selectedTime) : null}
                     label="Select Service Time"
                     skipDisabled
                     shouldDisableTime={shouldDisableTime}
@@ -332,6 +353,7 @@ export default function CreateAppointment() {
                 <div className="relative md:w-2/5 w-full h-10 mx-auto">
                   <DatePicker
                     disabled={appointDetails.selectedServices.length === 0}
+                    value={appointDetails.selectedDate ? dayjs(appointDetails.selectedDate) : null}
                     label="Select Service Date"
                     slotProps={{ textField: { size: 'small' } }}
                     name="selectedDate"
@@ -347,6 +369,7 @@ export default function CreateAppointment() {
                 <div className="relative md:w-2/5 w-full h-10 mx-auto">
                   <TimePicker
                     disabled={appointDetails.selectedServices.length === 0 || appointDetails.selectedDate === null}
+                    value={appointDetails.selectedTime ? dayjs(appointDetails.selectedTime) : null}
                     label="Select Service Time"
                     skipDisabled
                     shouldDisableTime={shouldDisableTime}
@@ -364,6 +387,7 @@ export default function CreateAppointment() {
                 <div className="relative md:w-2/5 w-full h-10 mx-auto">
                   <MobileDatePicker
                     disabled={appointDetails.selectedServices.length === 0}
+                    value={appointDetails.selectedDate ? dayjs(appointDetails.selectedDate) : null}
                     label="Select Service Date"
                     slotProps={{ textField: { size: 'small' } }}
                     name="selectedDate"
@@ -379,6 +403,7 @@ export default function CreateAppointment() {
                 <div className="relative md:w-2/5 w-full h-10 mx-auto">
                   <MobileTimePicker
                     disabled={appointDetails.selectedServices.length === 0 || appointDetails.selectedDate === null}
+                    value={appointDetails.selectedTime ? dayjs(appointDetails.selectedTime) : null}
                     label="Select Service Time"
                     skipDisabled
                     shouldDisableTime={shouldDisableTime}

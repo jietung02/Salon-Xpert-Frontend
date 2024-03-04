@@ -74,7 +74,7 @@ export default function Login() {
 
     }
     else if (isAuthenticated === 'guest') {
-      navigate('/guest');
+      navigate('/guest/new-appointment');
     }
 
   }, [isAuthenticated]);
@@ -93,7 +93,7 @@ export default function Login() {
       }
     }
     else if (isAuthenticated === 'guest') {
-      navigate('/guest');
+      navigate('/guest/new-appointment');
     }
   }, []);
 

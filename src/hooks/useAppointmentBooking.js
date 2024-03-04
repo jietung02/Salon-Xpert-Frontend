@@ -1,8 +1,13 @@
 import { useState } from 'react';
 import { createAppointment, fetchAllServices, fetchMatchSpecialists, fetchTimeSpecialistTimeSlot, fetchWorkingHoursTimeSlots, fetchSpecialistThatTime } from '../services/appointment';
 import dayjs from 'dayjs';
-export const useAppontmentBooking = () => {
+import { useContext } from 'react';
+import { useNavigate, } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
+export const useAppontmentBooking = () => {
+    const navigate = useNavigate();
+    const { isAuthenticated, username, } = useContext(AuthContext);
     const [appointDetails, setAppointDetails] = useState({
         name: null,
         email: null,
@@ -52,13 +57,19 @@ export const useAppontmentBooking = () => {
         else {
             setAppointDetails((prevDetails) => {
 
-                if (reset) {
+                if (key === 'selectedDate' && reset) {
                     return {
                         ...prevDetails,
                         selectedDate: null,
+                    }
+                }
+                else if (key === 'selectedTime' && reset) {
+                    return {
+                        ...prevDetails,
                         selectedTime: null,
                     }
                 }
+
                 if (key === 'selectedTime') {
 
                     const combinedDateTime = dayjs(appointDetails.selectedDate).set('hour', e.$H).set('minute', e.$m);
@@ -109,10 +120,20 @@ export const useAppontmentBooking = () => {
             if (error) {
                 return;
             }
-            const response = await createAppointment(appointDetails);
-            return;
+
+            const path = isAuthenticated === 'guest' ? '/guest/booking-summary' : '/customer/booking-summary';
+            const from = isAuthenticated === 'guest' ? 'guest' : 'customer';
+
+            const response = await createAppointment({ ...appointDetails, from, username });
+
+            if (response.status !== 'success') {
+                throw new Error(response.message);
+            }
+
+            navigate(path, { replace: true, state: { summaryDetails: response.data } });
 
         } catch (err) {
+            
             setError(err.message);
         }
         finally {
@@ -187,6 +208,7 @@ export const useAppontmentBooking = () => {
 
     const fetchSpecialistAvailability = async () => {
         try {
+            setError(null);
             const specialistsAvailable = await fetchSpecialistThatTime(specialists, appointDetails.selectedServices, appointDetails.selectedTime);
             setSpecialists(specialistsAvailable);
         } catch (error) {

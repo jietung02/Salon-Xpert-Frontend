@@ -1,11 +1,11 @@
-import { Outlet } from "react-router-dom";
-
+import CreateAppointment from "../../../features/Appointment/CreateAppointment";
 
 export default function GuestAppointment() {
-    return (
-        <>
-            <Outlet />
-        </>);
+  return (
+    <>
+      <CreateAppointment />
+    </>
+  );
 
 
 }
