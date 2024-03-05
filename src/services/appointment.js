@@ -10,7 +10,7 @@ export const createAppointment = async (appointDetails) => {
 
         if (!response.ok) {
             const errorResponse = await response.json();
-            throw new Error(errorResponse.error);
+            throw new Error(errorResponse.message);
         }
 
         return await response.json();
@@ -114,6 +114,47 @@ export const fetchSpecialistThatTime = async (specialists, selectedServices, sel
         if (!response.ok) {
             const errorResponse = await response.json();
             throw new Error(errorResponse.error);
+        }
+
+        return await response.json();
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
+
+export const cancelAppointment = async (appointmentId) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/appointment/cancel/${appointmentId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message);
+        }
+
+        return await response.json();
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
+
+export const payDeposit = async (summaryDetails) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/appointment/update/${summaryDetails.appointmentId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ...summaryDetails })
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message);
         }
 
         return await response.json();

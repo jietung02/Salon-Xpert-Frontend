@@ -31,6 +31,7 @@ export const useAppontmentBooking = () => {
         setError(message);
     }
     const updateAppointmentDetails = (e, key, reset) => {
+        setError(null);
         if (e === null) {
             return;
         }
@@ -125,10 +126,7 @@ export const useAppontmentBooking = () => {
             const from = isAuthenticated === 'guest' ? 'guest' : 'customer';
 
             const response = await createAppointment({ ...appointDetails, from, username });
-
-            if (response.status !== 'success') {
-                throw new Error(response.message);
-            }
+            console.log(response)
 
             navigate(path, { replace: true, state: { summaryDetails: response.data } });
 
@@ -141,7 +139,7 @@ export const useAppontmentBooking = () => {
         }
     }
 
-
+    
     const fetchServices = async () => {
         const allServices = await fetchAllServices();
         setServices(allServices);
