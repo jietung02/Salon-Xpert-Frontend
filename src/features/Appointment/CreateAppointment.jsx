@@ -16,6 +16,7 @@ import dayjs from "dayjs";
 export default function CreateAppointment() {
   const { name, email, gender, age, contact } = useContext(AuthContext);
 
+  const maxDate = dayjs().add(7, 'day');
   const { width } = useScreenSize();
   const { appointDetails, services, loading, error, specialists, setErrorMessage, updateAppointmentDetails, setAvailableTimeSlots, handleSubmit, fetchServices, fetchSpecialists, setSpecialists, shouldDisableTime, fetchAvailableTimeSlot, fetchWorkingTimeSlots, fetchSpecialistAvailability } = useAppontmentBooking();
   const [selectedValue, setSelectedValue] = useState('');
@@ -280,6 +281,7 @@ export default function CreateAppointment() {
                     slotProps={{ textField: { size: 'small' } }}
                     name="selectedDate"
                     format="DD/MM/YYYY"
+                    maxDate={maxDate}
                     views={['day', 'month', 'year']}
                     onError={(newError) => setErrorMessage(newError)}
                     disablePast
@@ -314,6 +316,7 @@ export default function CreateAppointment() {
                     slotProps={{ textField: { size: 'small' } }}
                     name="selectedDate"
                     format="DD/MM/YYYY"
+                    maxDate={maxDate}
                     views={['day', 'month', 'year']}
                     onError={(newError) => setErrorMessage(newError)}
                     disablePast
@@ -358,6 +361,7 @@ export default function CreateAppointment() {
                     slotProps={{ textField: { size: 'small' } }}
                     name="selectedDate"
                     format="DD/MM/YYYY"
+                    maxDate={maxDate}
                     views={['day', 'month', 'year']}
                     onError={(newError) => setErrorMessage(newError)}
                     disablePast
@@ -392,6 +396,7 @@ export default function CreateAppointment() {
                     slotProps={{ textField: { size: 'small' } }}
                     name="selectedDate"
                     format="DD/MM/YYYY"
+                    maxDate={maxDate}
                     views={['day', 'month', 'year']}
                     onError={(newError) => setErrorMessage(newError)}
                     disablePast
