@@ -1,13 +1,32 @@
+import { useContext, useEffect } from "react";
+import { ServiceContext } from "../../context/ServiceContext";
 import { useServiceConfiguration } from "../../hooks/useServiceConfiguration";
+import { XMarkIcon } from "@heroicons/react/24/solid";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function CreateService() {
-  const { serviceDetails, updateServiceDetails, loading, error, handleSubmitForCreation } = useServiceConfiguration();
+  const {role} = useContext(AuthContext);
+  const { serviceDetails, updateServiceDetails, clearServiceDetails } = useContext(ServiceContext);
+  const { loading, error, handleSubmitForCreation } = useServiceConfiguration();
+  useEffect(() => {
+    clearServiceDetails();
+  }, []);
+
   return (
     <div>
       <form className="my-4 container mx-auto w-5/6 bg-gray-50 rounded-lg shadow-md shadow-gray-300 flex flex-wrap md:items-end gap-8 px-12 py-12 mx-auto" onSubmit={(e) => handleSubmitForCreation(e)}>
-        <div className="relative w-full h-10 flex items-center justify-center mb-4">
-          <span className="font-bold text-xl text-gray-900">New Service</span>
+        <div className="relative w-full">
+          <div className="flex justify-center items-center mb-4 h-16">
+            <span className="font-bold text-xl text-gray-900">New Service</span>
+          </div>
+          <div className="absolute top-0 right-0 mt-1 mr-1 md:mr-4">
+            <Link to={role === 'admin' ? '/admin/service-configurations' : '/staff/service-configurations'} className="text-gray-500 hover:text-gray-700">
+              <XMarkIcon className="h-6 w-6 hover:text-gray-500" color="#111827" />
+            </Link>
+          </div>
         </div>
+
         {error && (
           <div class="w-full text-center bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative" role="alert">
             <span class="block sm:inline text-xs">{error}</span>
@@ -17,8 +36,8 @@ export default function CreateService() {
           <input
             type="text"
             name="serviceCode"
-            value={serviceDetails.serviceCode}
-            className="peer w-full h-full bg-transparent text-gray-900 font-normal outline outline-0 focus:outline-0 disabled:bg-white disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-gray-100 placeholder-shown:border-t-gray-100 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-gray-100 focus:border-gray-900"
+            value={serviceDetails.serviceCode !== null ? serviceDetails.serviceCode : ''}
+            className="peer w-full h-full bg-transparent text-gray-900  font-normal outline outline-0 focus:outline-0 disabled:bg-white disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-gray-100 placeholder-shown:border-t-gray-100 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-gray-100 focus:border-gray-900"
             placeholder=""
             onChange={(e) => updateServiceDetails(e)}
             pattern="^[A-Z_]+$"
@@ -36,7 +55,7 @@ export default function CreateService() {
           <input
             type="text"
             name="serviceName"
-            value={serviceDetails.serviceName}
+            value={serviceDetails.serviceName !== null ? serviceDetails.serviceName : ''}
             className="peer w-full h-full bg-transparent text-gray-900 font-normal outline outline-0 focus:outline-0 disabled:bg-white disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-gray-100 placeholder-shown:border-t-gray-100 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-gray-100 focus:border-gray-900"
             placeholder=""
             onChange={(e) => updateServiceDetails(e)}
@@ -54,7 +73,7 @@ export default function CreateService() {
           <input
             type="number"
             name="serviceDuration"
-            value={serviceDetails.serviceDuration}
+            value={serviceDetails.serviceDuration !== null ? serviceDetails.serviceDuration : ''}
             className="peer w-full h-full bg-transparent text-gray-900 font-normal outline outline-0 focus:outline-0 disabled:bg-white disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-gray-100 placeholder-shown:border-t-gray-100 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-gray-100 focus:border-gray-900"
             placeholder=""
             onChange={(e) => updateServiceDetails(e)}
@@ -74,7 +93,7 @@ export default function CreateService() {
             type="number"
             step="any"
             name="serviceBasedPrice"
-            value={serviceDetails.serviceBasedPrice}
+            value={serviceDetails.serviceBasedPrice !== null ? serviceDetails.serviceBasedPrice : ''}
             className="peer w-full h-full bg-transparent text-gray-900 font-normal outline outline-0 focus:outline-0 disabled:bg-white disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-gray-100 placeholder-shown:border-t-gray-100 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-gray-100 focus:border-gray-900"
             placeholder=""
             onChange={(e) => updateServiceDetails(e)}

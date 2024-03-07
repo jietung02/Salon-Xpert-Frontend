@@ -22,15 +22,15 @@ export default function Table({ headers, data, handleEdit, handleDelete }) {
         </thead>
         <tbody>
           {data.map((row, rowIndex) => {
-            return (<tr class="bg-white border-b bg-gray-200 text-gray-900 border-gray-100 hover:bg-gray-200">
+            return (<tr key={rowIndex} class="bg-white border-b bg-gray-200 text-gray-900 border-gray-100 hover:bg-gray-200">
               {row.map((cell, cellIndex) => {
                 return (<td key={cellIndex} class="px-6 py-4">{cell}</td>);
               })}
               <td class="px-6 py-4 text-right">
-                <span onClick={() => handleEdit(row[0])} class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</span>
+                <span onClick={() => handleEdit(row)} class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Edit</span>
               </td>
               <td class="px-6 py-4 text-right">
-                <span onClick={() => handleDelete(row[0])} class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</span>
+                <span onClick={() => handleDelete(row[0])} class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Delete</span>
               </td>
             </tr>)
           })}

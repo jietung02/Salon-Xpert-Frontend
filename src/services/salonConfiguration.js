@@ -38,3 +38,24 @@ export const createNewService = async (serviceDetails) => {
         throw new Error(err.message);
     }
 }
+
+export const editService = async (serviceDetails) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/services/${serviceDetails.serviceCode}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ...serviceDetails })
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message);
+        }
+
+        return await response.json();
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}

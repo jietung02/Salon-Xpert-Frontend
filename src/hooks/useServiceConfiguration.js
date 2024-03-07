@@ -1,21 +1,15 @@
 import { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom";
-import { getSalonServices, createNewService } from "../services/salonConfiguration";
+import { getSalonServices, createNewService, editService, } from "../services/salonConfiguration";
 import { AuthContext } from "../context/AuthContext";
 import { ServiceContext } from "../context/ServiceContext";
 
 export const useServiceConfiguration = () => {
 
     const { role } = useContext(AuthContext);
-    const { performingChanges, performedChanges } = useContext(ServiceContext);
+    const { performingChanges, serviceDetails, performedChanges, updateServiceDetails, updateServiceDetailsArrayVer, } = useContext(ServiceContext);
     const navigate = useNavigate();
 
-    const [serviceDetails, setServiceDetails] = useState({
-        serviceCode: null,
-        serviceName: null,
-        serviceDuration: null,
-        serviceBasedPrice: null,
-    });
 
     const [tableData, setTableData] = useState({
         headers: [],
@@ -24,20 +18,6 @@ export const useServiceConfiguration = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
-
-    const updateServiceDetails = (e) => {
-        console.log(e.target.value)
-
-        if (e.hasOwnProperty('target')) {
-            const { name, value } = e.target;
-
-            setServiceDetails({
-                ...serviceDetails,
-                [name]: value,
-            });
-        }
-
-    }
 
     const fetchAllServiceRecords = async () => {
         try {
@@ -61,7 +41,21 @@ export const useServiceConfiguration = () => {
         try {
             const response = await createNewService(serviceDetails);
 
-            navigate(role === 'admin' ? '/admin/service-configurations' : '/staff/service-configurations')
+            navigate(role === 'admin' ? '/admin/service-configurations' : '/staff/service-configurations', { state: { successMessage: `Successfully Created a New Service, Service Code : ${serviceDetails.serviceCode}` } })
+        } catch (error) {
+            setError(error.message)
+        } finally {
+            performedChanges();
+        }
+    }
+
+    const handleSubmitForEditService = async (e) => {
+        e.preventDefault();
+        //rmb to change the performing state for all delete modify and create, to fetch the services again
+        try {
+            const response = await editService(serviceDetails);
+
+            navigate(role === 'admin' ? '/admin/service-configurations' : '/staff/service-configurations', { state: { successMessage: `Successfully Updated Service for Service Code : ${serviceDetails.serviceCode}` } })
         } catch (error) {
             setError(error.message)
         } finally {
@@ -70,14 +64,14 @@ export const useServiceConfiguration = () => {
     }
 
     const handleEdit = (serviceDetails) => {
-        // rmb to check authcontext role for navigating
-        navigate('/admin/service-configurations/modify', { state: { serviceDetails: serviceDetails } });
+        updateServiceDetailsArrayVer(serviceDetails);
+        navigate(role === 'admin' ? '/admin/service-configurations/modify' : '/staff/service-configurations/modify');
     }
 
     const handleDelete = (serviceCode) => {
 
     }
 
-    return { serviceDetails, tableData, loading, error, updateServiceDetails, fetchAllServiceRecords, handleSubmitForCreation, handleEdit, handleDelete }
+    return { serviceDetails, tableData, loading, error, updateServiceDetails, fetchAllServiceRecords, handleSubmitForCreation, handleSubmitForEditService, handleEdit, handleDelete }
 
 }

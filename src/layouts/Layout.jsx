@@ -12,7 +12,7 @@ export default function Layout() {
     return (
         <div className="md:flex flex-col md:flex-row md:min-h-screen">
             {(isAuthenticated === true || isAuthenticated === 'guest') && <SideBar />}
-            <div className="main-content bg-gray-100 text-black md:flex-1 overflow-y-auto">
+            <div className="main-content bg-gray-100 text-black md:flex-1 min-h-screen overflow-y-auto">
                 <AppRoutes />
             </div>
         </div>
