@@ -87,14 +87,6 @@ export default function ServiceConfigurationMain() {
           </div>
         )}
 
-      {/* <div className="relative w-full h-10 mx-auto">
-        <button
-          onClick={()=> handleAddButton()}
-          class="align-middle select-none font-bold text-center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-sm py-2 px-4 rounded-lg border border-gray-900 text-gray-900 hover:opacity-75 focus:ring focus:ring-gray-900 active:opacity-[0.85] flex mx-auto items-center gap-3"
-          type="submit">
-          Add New Service
-        </button>
-      </div> */}
       <div className="relative w-full h-10 mx-auto">
         <Link
           to={role === 'admin' ? '/admin/service-configurations/create' : '/staff/service-configurations/create'}

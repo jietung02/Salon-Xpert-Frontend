@@ -2,9 +2,6 @@ import { createContext, useState } from "react";
 
 export const ServiceContext = createContext();
 
-// export const updatePerformingChanges = () => {
-//     setPerformingChanges(!performingChanges);
-// }
 
 export const ServiceContextProvider = ({ children }) => {
 
@@ -31,7 +28,6 @@ export const ServiceContextProvider = ({ children }) => {
     }
 
     const updateServiceDetails = (e) => {
-        console.log(e.target.value)
 
         if (e.hasOwnProperty('target')) {
             const { name, value } = e.target;

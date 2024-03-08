@@ -1,6 +1,6 @@
 import { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom";
-import { getSalonServices, createNewService, editService, } from "../services/salonConfiguration";
+import { getSalonServices, createNewService, editService, deleteService, } from "../services/salonConfiguration";
 import { AuthContext } from "../context/AuthContext";
 import { ServiceContext } from "../context/ServiceContext";
 
@@ -68,7 +68,21 @@ export const useServiceConfiguration = () => {
         navigate(role === 'admin' ? '/admin/service-configurations/modify' : '/staff/service-configurations/modify');
     }
 
-    const handleDelete = (serviceCode) => {
+    const handleDelete = async (serviceCode) => {
+        const isConfirmed = window.confirm('Are you sure you want to delete this service?');
+
+        if (isConfirmed) {
+            //rmb to change the performing state for all delete modify and create, to fetch the services again
+            try {
+                const response = await deleteService(serviceCode);
+
+                navigate(role === 'admin' ? '/admin/service-configurations' : '/staff/service-configurations', { state: { successMessage: `Successfully Delete Service (Service Code : ${serviceCode})` } })
+            } catch (error) {
+                setError(error.message)
+            } finally {
+                performedChanges();
+            }
+        }
 
     }
 
