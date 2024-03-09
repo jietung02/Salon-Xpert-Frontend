@@ -45,14 +45,13 @@ export const useAppontmentBooking = () => {
                     return {
                         ...prevDetails,
                         [name]: checked ? [...prevDetails[name], value] : prevDetails[name].filter(item => item !== value),
-                    }
+                    };
                 }
-                console.log(name)
-                console.log(value)
+
                 return {
                     ...prevDetails,
                     [name]: value,
-                }
+                };
             });
         }
         else {

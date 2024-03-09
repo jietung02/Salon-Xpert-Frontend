@@ -40,7 +40,8 @@ export default function Signup() {
                   onChange={(e) => handleChange(e)}
                   value={userData.username}
                   id="username"
-                  pattern="[a-zA-Z0-9_]{3,20}"
+                  pattern="^[a-zA-Z0-9_]{3,20}$"
+                  title="Please enter a username between 3 and 20 characters, using only letters (both lowercase and uppercase), digits, or underscores."
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                   placeholder="Username"
                   required
@@ -56,6 +57,7 @@ export default function Signup() {
                   id="password"
                   placeholder="••••••••"
                   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}"
+                  title="Password must contain at least one digit, one lowercase letter, one uppercase letter, one special character, and be at least 8 characters long"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                   required
                 />
