@@ -31,12 +31,7 @@ export default function SideBarMenuItem({ isSelected, name, path, }) {
       >
         {name}
       </Link>
-      {/* <a
-        className={`${className}`}
-        href={`${path}`}
-      >
-        {name}
-      </a> */}
+
     </>
 
   );

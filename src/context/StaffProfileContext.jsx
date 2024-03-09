@@ -47,6 +47,20 @@ export const StaffProfileContextProvider = ({ children }) => {
     }
   }
 
+  const updateProfileDetailsObj = (details) => {
+    setProfileDetails({
+      staffId: details.staffId,
+      staffUsername: details.staffUsername,
+      staffPassword: details.staffPassword,
+      staffName: details.staffName,
+      staffEmail: details.staffEmail,
+      staffRole: details.staffRoleCode,
+      servicesProvided: details.serviceCodes,
+      staffContact: details.staffContact,
+      staffBio: details.staffBio,
+    })
+  }
+
   const resetProfileDetails = () => {
     setProfileDetails({
       staffId: null,
@@ -70,8 +84,31 @@ export const StaffProfileContextProvider = ({ children }) => {
     });
   };
 
+  const checkRoleIsServiceProvider = () => {
+    const selectedRole = availableRoles.find(role => role.roleCode === profileDetails.staffRole);
+
+    if (selectedRole && selectedRole.roleIsServiceProvider === 1) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  const checkRoleIsServiceProviderWithArgs = (serviceCode) => {
+    const selectedRole = availableRoles.find(role => role.roleCode === serviceCode);
+
+    if (selectedRole && selectedRole.roleIsServiceProvider === 1) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+
   return (
-    <StaffProfileContext.Provider value={{ performingChanges, allProfiles, profileDetails, availableRoles, availableServices, performedChanges, updateProfileDetails, setAllProfiles, setAvailableRoles, setAvailableServices, clearServiceProvided, resetProfileDetails,}} >
+    <StaffProfileContext.Provider value={{ performingChanges, allProfiles, profileDetails, availableRoles, availableServices, performedChanges, updateProfileDetails, setAllProfiles, setAvailableRoles, setAvailableServices, clearServiceProvided, updateProfileDetailsObj, resetProfileDetails, checkRoleIsServiceProvider, checkRoleIsServiceProviderWithArgs, }} >
       {children}
     </StaffProfileContext.Provider>
   )

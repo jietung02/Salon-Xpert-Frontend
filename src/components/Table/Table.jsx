@@ -1,7 +1,7 @@
 export default function Table({ headers, data, handleEdit, handleDelete }) {
 
   return (
-    <div class="relative overflow-auto shadow-md sm:rounded-lg md:mx-16 md:mt-16 mx-3 mt-3 mb-5 h-80">
+    <div class="relative overflow-auto shadow-md sm:rounded-lg md:mx-16 md:mt-16 mx-3 mt-3 mb-5 h-96">
 
       <table class="w-full text-xs text-left rtl:text-right text-gray-500">
         <thead class="text-xs text-white uppercase bg-gray-900 ">

@@ -9,30 +9,30 @@ import Checkbox from "../../components/Checkbox/Checkbox";
 
 export default function CreateStaffProfile() {
   const { role } = useContext(AuthContext);
-  const { profileDetails, updateProfileDetails, availableRoles, availableServices, clearServiceProvided, } = useContext(StaffProfileContext);
+  const { profileDetails, updateProfileDetails, availableRoles, availableServices, clearServiceProvided, checkRoleIsServiceProvider,resetProfileDetails,} = useContext(StaffProfileContext);
   const { loading, error, handleSubmitForStaffCreation, fetchRoles, fetchServices, } = useStaffProfileConfiguration();
-  const [isServiceProvider, setIsServiceProvider] = useState(0);
+  const [isServiceProvider, setIsServiceProvider] = useState(false);
   useEffect(() => {
 
-    const fetchAvailableRoles = async () => {
+    const fetchData = async () => {
       try {
         await fetchRoles();
         await fetchServices();
       } catch (error) {
-        console.error('Error fetching roles', error);
+        console.error('Error fetching data', error);
       }
     }
-    fetchAvailableRoles();
+    resetProfileDetails();
+    fetchData();
 
   }, []);
 
   useEffect(() => {
-
-    const selectedRole = availableRoles.find(role => role.roleCode === profileDetails.staffRole);
-    if (selectedRole && selectedRole.roleIsServiceProvider === 1) {
-      setIsServiceProvider(1);
+    const isServiceProvider = checkRoleIsServiceProvider();
+    if (isServiceProvider) {
+      setIsServiceProvider(true);
     } else {
-      setIsServiceProvider(0);
+      setIsServiceProvider(false);
       clearServiceProvided();
     }
   }, [profileDetails.staffRole]);
@@ -164,7 +164,7 @@ export default function CreateStaffProfile() {
             })))
           ]} />
 
-        {profileDetails.staffRole !== null && isServiceProvider === 1 && < Checkbox
+        {profileDetails.staffRole !== null && isServiceProvider && < Checkbox
           label='Service Provided'
           checkBoxGroupName='servicesProvided'
           selectedServices={profileDetails.serviceProvided}

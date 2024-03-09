@@ -1,5 +1,4 @@
 import { createContext, useContext, useReducer } from 'react';
-import MainContent from '../components/MainContent'
 import AppRoutes from '../routes';
 import { Routes } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';

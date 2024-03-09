@@ -1,18 +1,12 @@
 import { useState, useContext, useEffect } from "react";
 
 import {
-
-  XMarkIcon,
   Bars3Icon,
 } from "@heroicons/react/24/solid";
-import {
-  ChevronDownIcon,
-} from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
+
 import { AuthContext } from "../context/AuthContext";
 import useScreenSize from "../hooks/useScreenSize";
 import SideBarMenuItem from "./SideBarMenuItem";
-import SideBarMenuSubItem from "./SideBarMenuSubItem";
 
 export default function SideBar() {
 
