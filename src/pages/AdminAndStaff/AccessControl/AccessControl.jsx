@@ -1,3 +1,7 @@
+import RoleAccessControl from "../../../features/RoleAccessControl/RoleAccessControl";
+
 export default function AccessControl() {
-    return (<h1>Access Control</h1>);
+  return (
+    <RoleAccessControl />
+  );
 }

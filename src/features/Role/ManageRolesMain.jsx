@@ -1,62 +1,59 @@
+import { useContext, useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { useServiceConfiguration } from "../../hooks/useServiceConfiguration";
-import Table from "../../components/Table/Table";
-import { useState, useContext, useEffect } from "react";
+
 import { AuthContext } from "../../context/AuthContext";
-import { ServiceContext } from "../../context/ServiceContext";
+import { RoleContext } from "../../context/RoleContext";
+import { useManageRole } from "../../hooks/useManageRole";
+
+import Table from "../../components/Table/Table";
 import { InformationCircleIcon } from "@heroicons/react/24/solid";
 
+export default function ManageRolesMain() {
 
-export default function ServiceConfigurationMain() {
   let location = useLocation();
-  const [successMessage, setSuccessMessage] = useState(null);
-  const { serviceDetails, performingChanges } = useContext(ServiceContext);
   const navigate = useNavigate();
 
   const { role } = useContext(AuthContext);
-  const { tableData, loading, error, updateServiceDetails, fetchAllServiceRecords, handleAddButton, handleEdit, handleDelete } = useServiceConfiguration();
+  const { roleDetails, performingChanges, updateRoleDetails } = useContext(RoleContext);
+  const { tableData, loading, error, fetchRoles, handleAddButton, handleEdit, handleDelete } = useManageRole();
 
+  const [successMessage, setSuccessMessage] = useState(null);
 
   useEffect(() => {
-
-    const fetchServices = async () => {
+    const fetchData = async () => {
       try {
-        await fetchAllServiceRecords();
+        await fetchRoles();
       } catch (error) {
-        console.error('Error fetching services', error);
+        console.error('Error fetching roles', error);
       }
     }
-    fetchServices();
+    fetchData();
   }, []);
 
   useEffect(() => {
     if (location.state) {
       const { successMessage: msg } = location.state;
-      console.log(msg)
       setSuccessMessage(msg);
     }
-    const fetchServices = async () => {
+    const fetchData = async () => {
       try {
-        await fetchAllServiceRecords();
+        await fetchRoles();
       } catch (error) {
-        console.error('Error fetching services', error);
+        console.error('Error fetching roles', error);
       }
     }
     const timer = setTimeout(() => {
       setSuccessMessage(null);
     }, 3000);
 
-    console.log('REFRESHED')
-    fetchServices();
+    fetchData();
     return () => clearTimeout(timer);
 
   }, [performingChanges]);
 
-
   return (
-
     <div>
-      <h1 className="px-8 py-6 text-3xl sm:px-7 md:px-11 md:py-6 md:text-4xl lg:px-11 md:text-left text-center font-bold text-gray-900">Services Configuration</h1>
+      <h1 className="px-8 py-6 text-3xl sm:px-7 md:px-11 md:py-6 md:text-4xl lg:px-11 md:text-left text-center font-bold text-gray-900">Roles Management</h1>
 
       {successMessage && (
         <div class="flex w-4/6 mx-auto items-center p-4 md:mt-10 text-sm text-green-800 rounded-lg bg-gray-900 text-green-400" role="alert">
@@ -68,8 +65,8 @@ export default function ServiceConfigurationMain() {
         </div>
       )}
 
-      {tableData.headers.length > 0 && tableData.servicesData.length > 0 ?
-        <Table headers={tableData.headers} data={tableData.servicesData} handleEdit={handleEdit} handleDelete={handleDelete} />
+      {tableData.headers.length > 0 && tableData.rolesData.length > 0 ?
+        <Table headers={tableData.headers} data={tableData.rolesData} handleEdit={handleEdit} handleDelete={handleDelete} />
         :
         (
           <div className="relative overflow-auto shadow-md sm:rounded-lg md:m-16 m-3 h-80 flex items-center justify-center">
@@ -79,16 +76,15 @@ export default function ServiceConfigurationMain() {
 
       <div className="relative w-full h-10 mx-auto">
         <Link
-          to={role === 'admin' ? '/admin/service-configurations/create' : '/staff/service-configurations/create'}
+          to={role === 'admin' ? '/admin/roles/create' : '/staff/roles/create'}
           className="align-middle select-none font-bold text-center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-sm py-2 px-4 w-40 rounded-lg border border-gray-900 text-gray-900 hover:opacity-75 focus:ring focus:ring-gray-900 active:opacity-[0.85] flex mx-auto items-center gap-3"
           role="button"
         >
-          <span className="inline-block w-full">Add New Service</span>
+          <span className="inline-block w-full">Add New Role</span>
         </Link>
       </div>
 
       <Outlet />
     </div>
-
-  );
+  )
 }

@@ -1,11 +1,10 @@
-import { Outlet } from "react-router-dom";
+import ManageRolesMain from "../../../features/Role/ManageRolesMain";
+import { RoleContextProvider } from "../../../context/RoleContext";
 
 export default function Roles() {
   return (
-    <div>
-      <h1>Roles</h1>
-      <Outlet />
-    </div>
-
+    <RoleContextProvider >
+      <ManageRolesMain />
+    </RoleContextProvider>
   );
 }

@@ -39,7 +39,6 @@ export const useStaffProfileConfiguration = () => {
 
         resetProfileDetails();
         const profile = allProfiles.find(value => value.staffId === profileDetails[0]);
-        console.log(profile)
         const isServiceProvider = checkRoleIsServiceProviderWithArgs(profile.staffRoleCode);
 
         const reformat = {

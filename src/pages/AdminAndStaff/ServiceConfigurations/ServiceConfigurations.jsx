@@ -2,9 +2,9 @@ import ServiceConfigurationMain from "../../../features/SalonService/ServiceConf
 import { ServiceContextProvider } from "../../../context/ServiceContext";
 
 export default function ServiceConfigurations() {
-    return (
-        <ServiceContextProvider>
-            <ServiceConfigurationMain />
-        </ServiceContextProvider>
-    );
+  return (
+    <ServiceContextProvider>
+      <ServiceConfigurationMain />
+    </ServiceContextProvider>
+  );
 }

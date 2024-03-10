@@ -1,33 +1,17 @@
 import { useContext, useEffect, useState } from "react";
-import {
-  Card,
-  Input,
-  Checkbox,
-  Button,
-  Typography,
-} from "@material-tailwind/react";
-
-import { Link, useNavigate } from "react-router-dom";
+import { Button, } from "@material-tailwind/react";
+import { InformationCircleIcon } from "@heroicons/react/24/solid";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useLogin, useGuest } from "../hooks/useLogin";
 import { AuthContext } from "../context/AuthContext";
-export default function Login() {
 
+export default function Login() {
+  let location = useLocation();
   const navigate = useNavigate();
-  const { isAuthenticated,
-    name,
-    email,
-    gender,
-    age,
-    contact,
-    role,
-    permissions,
-    token,
-    isLoggedOut,
-    dispatch,
-  } = useContext(AuthContext);
-  // const { isAuthenticated, role, permissions, isLoggedOut, dispatch } = useContext(AuthContext);
+  const { isAuthenticated, role, isLoggedOut, dispatch, } = useContext(AuthContext);
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
 
   const { guestAuth } = useGuest();
   const { login, loading, error } = useLogin();
@@ -39,10 +23,7 @@ export default function Login() {
     if (authData !== undefined) {
       dispatch({ type: 'LOGIN', payload: authData });
     }
-
-
     sessionStorage.setItem('authData', JSON.stringify(authData));
-
   }
 
   const handleGuestMode = () => {
@@ -80,6 +61,14 @@ export default function Login() {
   }, [isAuthenticated]);
 
   useEffect(() => {
+    if (location.state) {
+      const { successMessage: msg } = location.state;
+      setSuccessMessage(msg);
+    }
+    const timer = setTimeout(() => {
+      setSuccessMessage(null);
+    }, 3000);
+
     if (isAuthenticated === true) {
       console.log(role);
       if (role === 'admin') {
@@ -95,6 +84,7 @@ export default function Login() {
     else if (isAuthenticated === 'guest') {
       navigate('/guest/new-appointment');
     }
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -103,11 +93,21 @@ export default function Login() {
         <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
           Salon Xpert
         </a>
+        {successMessage && (
+          <div class="flex w-8/12 md:w-3/12 mx-auto items-center p-4 md:mt-10 mb-4 text-sm text-white rounded-lg bg-green-500 text-green-400" role="alert">
+            <InformationCircleIcon className="h-5 w-5" />
+            <span class="sr-only">Info</span>
+            <div>
+              <span className="pl-2">{successMessage}</span>
+            </div>
+          </div>
+        )}
         <div className="w-full bg-gray-800 rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Sign in to your account
             </h1>
+
             <form className="space-y-4 md:space-y-6" action="/sign-up" method="post" onSubmit={handleSubmit}>
               {error && (
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative" role="alert">

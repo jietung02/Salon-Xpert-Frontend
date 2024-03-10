@@ -1,4 +1,3 @@
-import { Outlet } from "react-router-dom";
 import StaffProfileConfigurationMain from "../../../features/SalonStaffProfile/StaffProfileConfigurationMain";
 import { StaffProfileContextProvider } from "../../../context/StaffProfileContext";
 

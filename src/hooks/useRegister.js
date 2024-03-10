@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { registerUser } from '../services/authService';
-
+import { useNavigate } from 'react-router-dom';
 
 export const useRegister = () => {
+    const navigate = useNavigate();
+
     const [userData, setUserData] = useState({
         username: null,
         password: null,
@@ -29,6 +31,8 @@ export const useRegister = () => {
             setLoading(true);
 
             const response = await registerUser(userData);
+
+            navigate('/login',  { state: { successMessage: 'Successfully Registered Your Account' } });
             return;
 
         } catch (err) {
