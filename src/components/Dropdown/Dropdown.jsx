@@ -1,9 +1,8 @@
 import DropdownOption from "./DropdownOption";
 
-export default function Dropdown({ disabled, isSelected, label, name, handleOnChange, loadSelection, options }) {
-
+export default function Dropdown({ disabled, isSelected, label, name, handleOnChange, loadSelection, options, goTop }) {
   return (
-    <div className="relative md:w-2/5 w-full h-10 mx-auto flex items-center justify-center">
+    <div className={`relative md:w-2/5 w-full h-10 mx-auto flex items-center justify-center ${goTop !== undefined && goTop === 'Yes'? 'mb-auto': ''}`}>
       {( !disabled && !isSelected) && <label
         className="select-none pointer-events-none absolute left-3 text-blue-gray-500 font-normal !overflow-visible truncate leading-tight transition-all text-sm text-gray-500"
       >

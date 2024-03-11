@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
-export default function SideBarMenuItem({ isSelected, name, path, }) {
+export default function SideBarMenuItem({ isSelected, name, path, onClick}) {
 
   const { dispatch } = useContext(AuthContext);
   const handleLogout = () => {
@@ -27,7 +27,12 @@ export default function SideBarMenuItem({ isSelected, name, path, }) {
       <Link
         to={path}
         className={`${className}`}
-        onClick={name === 'Log Out' ? handleLogout : undefined}
+        onClick={(e) => {
+          onClick();
+          if (name === "Log Out") {
+            handleLogout();
+          }
+        }}
       >
         {name}
       </Link>

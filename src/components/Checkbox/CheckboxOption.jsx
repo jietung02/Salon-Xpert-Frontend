@@ -2,7 +2,7 @@ import {
   CheckCircleIcon,
 } from "@heroicons/react/24/solid";
 
-export default function CheckboxOption({ checkBoxGroupName, selectedServices, handleOnChange, uniqueID, value }) {
+export default function CheckboxOption({ disabled, checkBoxGroupName, selectedServices, handleOnChange, uniqueID, value }) {
   return (
     <div className="w-full">
       <div role="button" className="flex items-center w-full pt-1 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-gray-900">
@@ -11,6 +11,7 @@ export default function CheckboxOption({ checkBoxGroupName, selectedServices, ha
             <div className="inline-flex items-center">
               <label className="relative flex items-center p-0 rounded-full cursor-pointer" htmlFor={uniqueID}>
                 <input
+                  disabled={disabled}
                   type="checkbox"
                   id={uniqueID}
                   name={checkBoxGroupName}

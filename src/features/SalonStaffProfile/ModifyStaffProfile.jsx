@@ -15,6 +15,13 @@ export default function ModifyStaffProfile() {
   const [isServiceProvider, setIsServiceProvider] = useState(false);
 
   useEffect(() => {
+    const isServiceProvider = checkRoleIsServiceProvider();
+    if (isServiceProvider) {
+      setIsServiceProvider(true);
+    } else {
+      setIsServiceProvider(false);
+      clearServiceProvided();
+    }
 
     const fetchData = async () => {
       try {
@@ -145,7 +152,9 @@ export default function ModifyStaffProfile() {
               value: role.roleCode,
               label: role.roleName,
             })))
-          ]} />
+          ]}
+          goTop='Yes'
+        />
 
         {profileDetails.staffRole !== null && isServiceProvider && < Checkbox
           label='Service Provided'

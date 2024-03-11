@@ -20,7 +20,11 @@ export default function SideBar() {
     setOpen(!open);
   };
 
-
+  const handleMenuItemClick = () => {
+    if (width < 768) {
+      setOpen(false); // Close the dropdown if the screen size is less than 768
+    }
+  };
 
   useEffect(() => {
     if (width >= 768) {
@@ -31,14 +35,6 @@ export default function SideBar() {
     }
 
   }, [width]);
-
-  // useEffect(() => {
-  //   const mainContent = document.getElementById("main-content");
-  //   if (mainContent) {
-  //     setMainContentHeight(mainContent.clientHeight);
-
-  // }, [height]);
-
 
 
   return (
@@ -64,7 +60,7 @@ export default function SideBar() {
             <div key={index} className="m-2">
               <span className="block px-2 py-2 text-xs font-semibold text-gray-400">{permission.rolePermission}</span>
               {permission.functions.map((func, i) => (
-                <SideBarMenuItem key={i} isSelected={false} name={func.name} path={func.route} />
+                <SideBarMenuItem key={i} isSelected={false} name={func.name} path={func.route} onClick={handleMenuItemClick}/>
               ))}
             </div>
           ))}

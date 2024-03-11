@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { AuthContext } from "../context/AuthContext";
 import { RoleContext } from "../context/RoleContext";
-import { fetchAllRoles, createRole, editRole, deleteRole, } from "../services/userManagement";
+import { fetchAllRoles, createRole, editRole, deleteRole, fetchAllPermissionCategories, } from "../services/userManagement";
 
 export const useManageRole = () => {
     const navigate = useNavigate();
@@ -32,6 +32,19 @@ export const useManageRole = () => {
             setError(error.message);
         }
     };
+
+    const fetchPermissionCategories = async () => {
+        try {
+            const allCategories = await fetchAllPermissionCategories();
+            setTableData({
+                headers: allCategories.data.headers,
+                permissionCategories: allCategories.data.permissionCategoriesData,
+            })
+
+        } catch (error) {
+            setError(error.message);
+        }
+    }
 
     const handleEdit = (details) => {
         clearRoleDetails();
@@ -89,5 +102,5 @@ export const useManageRole = () => {
         }
     };
 
-    return { tableData, loading, error, fetchRoles, handleEdit, handleDelete, handleSubmitForRoleCreation, handleSubmitForEditRole, }
+    return { tableData, loading, error, fetchRoles, fetchPermissionCategories, handleEdit, handleDelete, handleSubmitForRoleCreation, handleSubmitForEditRole, }
 }

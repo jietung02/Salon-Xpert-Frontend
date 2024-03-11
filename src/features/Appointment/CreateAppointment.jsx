@@ -220,7 +220,7 @@ export default function CreateAppointment() {
           </label>
         </div>
 
-        <div className="relative md:w-2/5 w-full h-10  mx-auto mb-auto">
+        <div className="relative md:w-2/5 w-full h-10 mx-auto mb-auto">
           <input
             type="tel"
             readOnly={contact !== null}
