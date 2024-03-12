@@ -26,7 +26,7 @@ export const StaffProfileContextProvider = ({ children }) => {
   });
 
   const updateProfileDetails = (e) => {
-    console.log(e.target)
+
     if (e.hasOwnProperty('target')) {
       const { name, value, type, checked } = e.target;
 

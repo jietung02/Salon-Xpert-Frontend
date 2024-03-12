@@ -150,7 +150,7 @@ export default function CreateStaffProfile() {
             Contact Number
           </label>
         </div>
-        {console.log(availableRoles)}
+
         <Dropdown
           isSelected={profileDetails.staffRole}
           label='Role'

@@ -23,7 +23,7 @@ export const useAccessControl = () => {
     setError(null);
     if (e.hasOwnProperty('target')) {
       const { name, value, type, checked } = e.target;
-      console.log(name, value)
+
       setRolePermissions((prevDetails) => {
         if (type === 'checkbox') {
           return {

@@ -45,7 +45,7 @@ export const useStaffProfileConfiguration = () => {
             ...profile,
             serviceCodes: isServiceProvider ? profile.serviceCodes.split(', ') : [],
         }
-
+        
         updateProfileDetailsObj(reformat);
         navigate(role === 'admin' ? '/admin/staff-profile-configurations/modify' : '/staff/staff-profile-configurations/modify');
     }

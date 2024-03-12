@@ -201,3 +201,124 @@ export const deleteProfile = async (staffId) => {
         throw new Error(err.message);
     }
 }
+
+export const fetchAllPriceOptions = async () => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-options`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message);
+        }
+
+        return await response.json();
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
+
+export const savePriceOptions = async (priceOptions) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-options/save`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ priceOptions })
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message);
+        }
+
+        return await response.json();
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
+
+export const fetchAllPricingRules = async () => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-rules`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message);
+        }
+
+        return await response.json();
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
+
+export const fetchAllSalonServices = async () => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-rules/services`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message);
+        }
+
+        return await response.json();
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
+
+export const fetchAllAgeCategories = async () => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-rules/age-categories`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message);
+        }
+
+        return await response.json();
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
+
+export const fetchMatchSpecialists = async (serviceCode) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-rules/match-specialists/${serviceCode}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message);
+        }
+
+        return await response.json();
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}

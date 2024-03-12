@@ -30,8 +30,8 @@ import GuestAppointment from './pages/Guest/GuestAppointment/GuestAppointment';
 import GuestBookSummary from './pages/Guest/GuestBookSummary/GuestBookSummary';
 import GuestBookSuccess from './pages/Guest/GuestBookSuccess/GuestBookSuccess';
 
-import ModifyPricingRule from './features/PricingRule/ModifyPricingRule';
-import CreatePricingRule from './features/PricingRule/CreatePricingRule';
+import ModifyPricingRule from './features/SalonPrice/ModifyPricingRule';
+import CreatePricingRule from './features/SalonPrice/CreatePricingRule';
 import CreateService from './features/SalonService/CreateService';
 import ModifyService from './features/SalonService/ModifyService';
 import CreateStaffProfile from './features/SalonStaffProfile/CreateStaffProfile';

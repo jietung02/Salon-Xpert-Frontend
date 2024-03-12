@@ -154,7 +154,6 @@ export const useAppontmentBooking = () => {
     const fetchAvailableTimeSlot = async () => {
         try {
             const timeSlots = await fetchTimeSpecialistTimeSlot(appointDetails.selectedServices, appointDetails.selectedSpecialist, appointDetails.selectedDate);
-            console.log(timeSlots)
             setAvailableTimeSlots(timeSlots);
         } catch (error) {
             setError(error.message);

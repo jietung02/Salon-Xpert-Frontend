@@ -1,10 +1,10 @@
-import { Outlet } from "react-router-dom";
+import PriceConfigurationMain from "../../../features/SalonPrice/PriceConfigurationMain";
+import { PriceContextProvider } from "../../../context/PriceContext";
 
 export default function PriceConfigurations() {
     return (
-        <div>
-            <h1>Pricing Rule</h1>
-            <Outlet />
-        </div>
+        <PriceContextProvider >
+            <PriceConfigurationMain />
+        </PriceContextProvider>
     );
 }
