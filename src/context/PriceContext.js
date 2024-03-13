@@ -18,6 +18,7 @@ export const PriceContextProvider = ({ children }) => {
 
     //Price Rules
     const [pricingRuleDetails, setPricingRuleDetails] = useState({
+        pricingRuleId: null,
         serviceCode: null,
         priceOptionType: null,
         priceOptionValue: null,
@@ -34,10 +35,15 @@ export const PriceContextProvider = ({ children }) => {
     const [priceOptionsForPriceRule, setPriceOptionsForPriceRule] = useState([]);
     const [ageCategories, setAgeCategories] = useState([]);
     const [specialists, setSpecialists] = useState([]);
+    const [priceRuleChanged, setPriceRuleChanged] = useState(false);
+    
 
+    const performedChangesPriceRule = () => {
+        setPriceRuleChanged(!priceRuleChanged);
+    };
 
     return (
-        <PriceContext.Provider value={{ showPriceOptions, priceOptions, allPriceOptions, setPriceOptions, priceOptionChanged, successMessage, setShowPriceOptions, setAllPriceOptions, setSuccessMessage, performedChangesPriceOptions, pricingRuleDetails, setPricingRuleDetails, tableData, setTableData, allPricingRulesData, setAllPricingRulesData, allServices, setAllServices, priceOptionsForPriceRule, setPriceOptionsForPriceRule, ageCategories, setAgeCategories, specialists, setSpecialists, }}>
+        <PriceContext.Provider value={{ showPriceOptions, priceOptions, allPriceOptions, setPriceOptions, priceOptionChanged, successMessage, setShowPriceOptions, setAllPriceOptions, setSuccessMessage, performedChangesPriceOptions, pricingRuleDetails, setPricingRuleDetails, tableData, setTableData, allPricingRulesData, setAllPricingRulesData, allServices, setAllServices, priceOptionsForPriceRule, setPriceOptionsForPriceRule, ageCategories, setAgeCategories, specialists, setSpecialists, priceRuleChanged, performedChangesPriceRule, }}>
             {children}
         </PriceContext.Provider>
     )

@@ -8,23 +8,11 @@ import Dropdown from "../../components/Dropdown/Dropdown";
 export default function CreatePricingRule() {
 
   const { role } = useContext(AuthContext);
-  const { pricingRuleDetails, allServices, priceOptionsForPriceRule, ageCategories, specialists, } = useContext(PriceContext);
-  const { loading, error, fetchPriceOptionsForPriceRuleCreation, fetchServices, fetchAgeCategories, fetchSpecialistsMatch, resetPricingForChangingService, resetPricingForChangingPriceOptionType, updatePricingRuleDetails, handleSubmitForPricingRuleCreation } = usePriceConfiguration();
+  const { pricingRuleDetails, allServices, priceOptionsForPriceRule, ageCategories, specialists, priceRuleChanged } = useContext(PriceContext);
+  const { loading, error, fetchPriceOptionsForPriceRuleCreation, clearPricingRuleDetails, fetchServices, fetchAgeCategories, fetchSpecialistsMatch, resetPricingForChangingService, resetPricingForChangingPriceOptionType, updatePricingRuleDetails, handleSubmitForPricingRuleCreation } = usePriceConfiguration();
 
 
-  useEffect(() => {
 
-    const fetchData = async () => {
-      try {
-        await fetchServices();
-        await fetchPriceOptionsForPriceRuleCreation();
-        await fetchAgeCategories();
-      } catch (error) {
-        console.error('Error fetching services', error);
-      }
-    }
-    fetchData();
-  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,13 +25,31 @@ export default function CreatePricingRule() {
     if (pricingRuleDetails.serviceCode !== null && pricingRuleDetails.serviceCode !== '') {
       fetchData();
     }
+
     resetPricingForChangingService();
 
   }, [pricingRuleDetails.serviceCode])
 
   useEffect(() => {
+
     resetPricingForChangingPriceOptionType();
   }, [pricingRuleDetails.priceOptionType])
+
+  useEffect(() => {
+
+    const fetchData = async () => {
+      try {
+        await fetchServices();
+        await fetchPriceOptionsForPriceRuleCreation();
+        await fetchAgeCategories();
+      } catch (error) {
+        console.error('Error fetching services', error);
+      }
+    }
+    clearPricingRuleDetails();
+    fetchData();
+
+  }, []);
 
   return (
     <div>
@@ -100,8 +106,8 @@ export default function CreatePricingRule() {
             options={[
               { label: '', value: '' },
               ...(pricingRuleDetails.priceOptionType === 'AGE' && Array.isArray(ageCategories) ? ageCategories.map((category) => ({
-                value: category.categoryName,
-                label: category.ageRange,
+                value: category.ageRange,
+                label: `${category.categoryName} ${category.ageRange}`,
               })) : []),
               ...(pricingRuleDetails.priceOptionType === 'SPECIALIST' && Array.isArray(specialists) ? specialists.map((specialist) => ({
                 value: specialist.staffId,
@@ -111,25 +117,25 @@ export default function CreatePricingRule() {
             ]} />
         )}
 
-        {/* <div className="relative md:w-2/5 w-full h-10 mx-auto">
+        <div className="relative md:w-2/5 w-full h-10 mx-auto">
           <input
-            type="text"
-            name="staffName"
-            value={profileDetails.staffName !== null ? profileDetails.staffName : ''}
-            className="peer w-full h-full bg-transparent text-gray-900  font-normal outline outline-0 focus:outline-0 disabled:bg-white disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-gray-100 placeholder-shown:border-t-gray-100 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-gray-100 focus:border-gray-900"
+            type="number"
+            step="any"
+            name="priceAdjustment"
+            value={pricingRuleDetails.priceAdjustment !== null ? pricingRuleDetails.priceAdjustment : ''}
+            className="peer w-full h-full bg-transparent text-gray-900 font-normal outline outline-0 focus:outline-0 disabled:bg-white disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-gray-100 placeholder-shown:border-t-gray-100 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-gray-100 focus:border-gray-900"
             placeholder=""
-            onChange={(e) => updateProfileDetails(e)}
-            pattern="[a-zA-Z\s]{2,50}"
+            onChange={(e) => updatePricingRuleDetails(e)}
+            min="0.00"
+            max="50000.00"
             required
           />
           <label
             className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-gray-500 peer-focus:text-gray-900 before:border-gray-100 peer-focus:before:!border-gray-900 after:border-gray-100 peer-focus:after:!border-gray-900"
           >
-            Name
+            Price Adjustment
           </label>
-        </div> */}
-
-
+        </div>
 
         <div className="relative w-full h-10 mx-auto">
           <button

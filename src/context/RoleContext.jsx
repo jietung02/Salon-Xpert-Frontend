@@ -17,18 +17,6 @@ export const RoleContextProvider = ({ children }) => {
         roleIsServiceProvider: null,
     })
 
-
-    const updateRoleDetails = (e) => {
-        if (e.hasOwnProperty('target')) {
-            const { name, value } = e.target;
-
-            setRoleDetails({
-                ...roleDetails,
-                [name]: value,
-            });
-        }
-    }
-
     const updateRoleDetailsArrayVer = (details) => {
         setRoleDetails({
             roleCode: details[0],
@@ -48,7 +36,7 @@ export const RoleContextProvider = ({ children }) => {
     }
 
     return (
-        <RoleContext.Provider value={{ performingChanges, roleDetails, performedChanges, updateRoleDetails, clearRoleDetails, updateRoleDetailsArrayVer,}} >
+        <RoleContext.Provider value={{ performingChanges, roleDetails, performedChanges, setRoleDetails, clearRoleDetails, updateRoleDetailsArrayVer,}} >
             {children}
         </RoleContext.Provider>
     )

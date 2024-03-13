@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { fetchAllPriceOptions, savePriceOptions, fetchAllPricingRules, fetchAllSalonServices, fetchAllAgeCategories, fetchMatchSpecialists, } from '../services/salonConfiguration';
+import { fetchAllPriceOptions, savePriceOptions, fetchAllPricingRules, fetchAllSalonServices, fetchAllAgeCategories, fetchMatchSpecialists, createNewPriceRule, editPriceRule, } from '../services/salonConfiguration';
 import { AuthContext } from "../context/AuthContext";
 import { PriceContext } from "../context/PriceContext";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ export const usePriceConfiguration = () => {
     const navigate = useNavigate();
 
     const { role } = useContext(AuthContext);
-    const { priceOptions, performedChangesPriceOptions, setAllPriceOptions, setPriceOptions, setSuccessMessage, tableData, setTableData, allPricingRulesData, pricingRuleDetails, setPricingRuleDetails, setAllPricingRulesData, setAllServices, setPriceOptionsForPriceRule, ageCategories, setAgeCategories, specialists, setSpecialists, } = useContext(PriceContext);
+    const { priceOptions, performedChangesPriceOptions, setAllPriceOptions, setPriceOptions, setSuccessMessage, tableData, setTableData, allPricingRulesData, pricingRuleDetails, setPricingRuleDetails, setAllPricingRulesData, setAllServices, setPriceOptionsForPriceRule, ageCategories, setAgeCategories, specialists, setSpecialists, performedChangesPriceRule, } = useContext(PriceContext);
 
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -57,17 +57,18 @@ export const usePriceConfiguration = () => {
     const handleSubmitForPriceOptions = async (e) => {
         e.preventDefault();
         try {
+            setLoading(true);
             if (Array.isArray(priceOptions) && priceOptions.length === 0) {
                 throw new Error('Please Select At Least One Price Option');
             }
             const response = await savePriceOptions(priceOptions);
-
-            // navigate(role === 'admin' ? '/admin/price-configurations' : '/staff/price-configurations', { state: { successMessage: `Successfully Saved Price Options` } })
-        } catch (error) {
-            setError(error.message)
-        } finally {
             setSuccessMessage(`Successfully Saved Price Options`);
             performedChangesPriceOptions();
+            // navigate(role === 'admin' ? '/admin/price-configurations' : '/staff/price-configurations', { state: { successMessage: `Successfully Saved Price Options` } })
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -83,6 +84,27 @@ export const usePriceConfiguration = () => {
         }
     }
 
+    const updatePricingRuleDetailsObjectVer = (priceRule) => {
+        setPricingRuleDetails({
+            pricingRuleId: priceRule.pricingRuleId,
+            serviceCode: priceRule.serviceCode,
+            priceOptionType: priceRule.priceOptionCode,
+            priceOptionValue: priceRule.priceRuleOptionValue,
+            priceAdjustment: priceRule.priceAdjustment,
+        });
+    };
+
+    const clearPricingRuleDetails = () => {
+
+        setPricingRuleDetails({
+            pricingRuleId: null,
+            serviceCode: null,
+            priceOptionType: null,
+            priceOptionValue: null,
+            priceAdjustment: null,
+        });
+    };
+
     const resetPricingForChangingService = () => {
         setPricingRuleDetails({
             ...pricingRuleDetails,
@@ -90,7 +112,7 @@ export const usePriceConfiguration = () => {
             priceOptionValue: null,
             priceAdjustment: null,
         });
-    }
+    };
 
     const resetPricingForChangingPriceOptionType = () => {
         setPricingRuleDetails({
@@ -98,7 +120,7 @@ export const usePriceConfiguration = () => {
             priceOptionValue: null,
             priceAdjustment: null,
         });
-    }
+    };
 
     const fetchPricingRules = async () => {
         try {
@@ -164,7 +186,53 @@ export const usePriceConfiguration = () => {
         }
     }
 
-    const handleEdit = () => {
+    const handleSubmitForPricingRuleCreation = async (e) => {
+        e.preventDefault();
+        try {
+            setLoading(true);
+            const response = await createNewPriceRule(pricingRuleDetails);
+            setSuccessMessage(`Successfully Created New Price Rule`);
+            clearPricingRuleDetails();
+
+            navigate(role === 'admin' ? '/admin/price-configurations' : '/staff/price-configurations')
+            performedChangesPriceRule();
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const handleSubmitForEditPricingRule = async (e) => {
+        e.preventDefault();
+        try {
+            setLoading(true);
+            const response = await editPriceRule(pricingRuleDetails);
+            setSuccessMessage(`Successfully Edited Pricing Rule, Pricing Rule ID : ${pricingRuleDetails.pricingRuleId}`);
+            clearPricingRuleDetails();
+
+            navigate(role === 'admin' ? '/admin/price-configurations' : '/staff/price-configurations');
+            performedChangesPriceRule();
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const handleEdit = (pricingRuleDetails) => {
+        clearPricingRuleDetails();
+
+        //find the id and get the object from allPricingRulesData;
+        const details = allPricingRulesData.find(value => value.pricingRuleId === pricingRuleDetails[0]);
+
+        // if (details === undefined) {
+        //     setError('Pricing Rule ID Not Found');
+        // }
+
+        updatePricingRuleDetailsObjectVer(details);
+
+        navigate(role === 'admin' ? '/admin/price-configurations/modify' : '/staff/price-configurations/modify');
 
     }
 
@@ -172,5 +240,6 @@ export const usePriceConfiguration = () => {
 
     }
 
-    return { loading, error, updatePriceOptions, fetchPriceOptions, handleSubmitForPriceOptions, handleEdit, handleDelete, fetchPricingRules, fetchServices, fetchPriceOptionsForPriceRuleCreation, fetchAgeCategories, fetchSpecialistsMatch, resetPricingForChangingService, resetPricingForChangingPriceOptionType, updatePricingRuleDetails, };
+
+    return { loading, error, updatePriceOptions, fetchPriceOptions, handleSubmitForPriceOptions, handleEdit, handleDelete, fetchPricingRules, fetchServices, fetchPriceOptionsForPriceRuleCreation, fetchAgeCategories, fetchSpecialistsMatch, clearPricingRuleDetails, resetPricingForChangingService, resetPricingForChangingPriceOptionType, updatePricingRuleDetails, handleSubmitForPricingRuleCreation, handleSubmitForEditPricingRule, };
 }

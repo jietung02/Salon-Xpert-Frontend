@@ -14,8 +14,8 @@ export default function ManageRolesMain() {
   const navigate = useNavigate();
 
   const { role } = useContext(AuthContext);
-  const { roleDetails, performingChanges, updateRoleDetails } = useContext(RoleContext);
-  const { tableData, loading, error, fetchRoles, handleAddButton, handleEdit, handleDelete } = useManageRole();
+  const { performingChanges, } = useContext(RoleContext);
+  const { tableData, error, fetchRoles, handleEdit, handleDelete } = useManageRole();
 
   const [successMessage, setSuccessMessage] = useState(null);
 

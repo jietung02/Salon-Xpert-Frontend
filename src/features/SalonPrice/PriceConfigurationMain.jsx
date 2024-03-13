@@ -10,7 +10,7 @@ import { InformationCircleIcon } from "@heroicons/react/24/solid";
 export default function PriceConfigurationMain() {
 
   const { role } = useContext(AuthContext);
-  const { showPriceOptions, successMessage, setShowPriceOptions, setSuccessMessage, priceOptionChanged, tableData, } = useContext(PriceContext);
+  const { showPriceOptions, successMessage, setShowPriceOptions, setSuccessMessage, priceOptionChanged, priceRuleChanged, tableData, } = useContext(PriceContext);
 
   const { fetchPriceOptions, error, fetchPricingRules, handleEdit, handleDelete } = usePriceConfiguration();
 
@@ -48,6 +48,26 @@ export default function PriceConfigurationMain() {
     return () => clearTimeout(timer);
   }, [priceOptionChanged])
 
+  useEffect(() => {
+
+    const timer = setTimeout(() => {
+      setSuccessMessage(null);
+    }, 3000);
+    
+    const fetchData = async () => {
+      try {
+        await fetchPricingRules();
+      } catch (error) {
+        console.error('Error fetching pricing rules', error);
+      }
+    }
+    fetchData();
+
+    return () => clearTimeout(timer);
+  }, [priceRuleChanged]);
+
+
+
   return (
     <div>
       <h1 className="px-8 py-6 text-3xl sm:px-7 md:px-11 md:py-6 md:text-4xl lg:px-11 md:text-left text-center font-bold text-gray-900">Prices Configuration</h1>
@@ -59,6 +79,11 @@ export default function PriceConfigurationMain() {
           <div>
             <span className="pl-2">{successMessage}</span>
           </div>
+        </div>
+      )}
+      {error && (
+        <div class="w-full text-center bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative" role="alert">
+          <span class="block sm:inline text-xs">{error}</span>
         </div>
       )}
 

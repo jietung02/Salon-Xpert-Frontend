@@ -7,7 +7,7 @@ import { ServiceContext } from "../context/ServiceContext";
 export const useServiceConfiguration = () => {
 
     const { role } = useContext(AuthContext);
-    const { performingChanges, serviceDetails, performedChanges, updateServiceDetails, updateServiceDetailsArrayVer, } = useContext(ServiceContext);
+    const { performingChanges, serviceDetails, performedChanges, updateServiceDetails, updateServiceDetailsArrayVer, clearServiceDetails, } = useContext(ServiceContext);
     const navigate = useNavigate();
 
 
@@ -39,13 +39,15 @@ export const useServiceConfiguration = () => {
         e.preventDefault();
         //rmb to change the performing state for all delete modify and create, to fetch the services again
         try {
+            setLoading(true);
             const response = await createNewService(serviceDetails);
-
+            clearServiceDetails();
             navigate(role === 'admin' ? '/admin/service-configurations' : '/staff/service-configurations', { state: { successMessage: `Successfully Created a New Service, Service Code : ${serviceDetails.serviceCode}` } })
         } catch (error) {
-            setError(error.message)
+            setError(error.message);
         } finally {
             performedChanges();
+            setLoading(false);
         }
     }
 
@@ -53,13 +55,15 @@ export const useServiceConfiguration = () => {
         e.preventDefault();
         //rmb to change the performing state for all delete modify and create, to fetch the services again
         try {
+            setLoading(true);
             const response = await editService(serviceDetails);
-
+            clearServiceDetails();
             navigate(role === 'admin' ? '/admin/service-configurations' : '/staff/service-configurations', { state: { successMessage: `Successfully Updated Service for Service Code : ${serviceDetails.serviceCode}` } })
         } catch (error) {
             setError(error.message)
         } finally {
             performedChanges();
+            setLoading(false);
         }
     }
 

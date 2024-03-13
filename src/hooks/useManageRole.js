@@ -9,7 +9,7 @@ export const useManageRole = () => {
     const navigate = useNavigate();
     const { role } = useContext(AuthContext);
 
-    const { setPerformingChanges, performedChanges, roleDetails, updateRoleDetails, updateRoleDetailsArrayVer, clearRoleDetails, } = useContext(RoleContext);
+    const { performedChanges, setRoleDetails, roleDetails, updateRoleDetailsArrayVer, clearRoleDetails, } = useContext(RoleContext);
 
 
     const [tableData, setTableData] = useState({
@@ -19,6 +19,17 @@ export const useManageRole = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
+    const updateRoleDetails = (e) => {
+        setError(null);
+        if (e.hasOwnProperty('target')) {
+            const { name, value } = e.target;
+
+            setRoleDetails({
+                ...roleDetails,
+                [name]: value,
+            });
+        }
+    }
 
     const fetchRoles = async () => {
         try {
@@ -76,14 +87,15 @@ export const useManageRole = () => {
         e.preventDefault();
 
         try {
+            setLoading(true);
             const response = await createRole(roleDetails);
-
+            clearRoleDetails();
             navigate(role === 'admin' ? '/admin/roles' : '/staff/roles', { state: { successMessage: `Successfully Created a New Role, Role Code : ${roleDetails.roleCode}` } })
+            performedChanges();
         } catch (error) {
             setError(error.message)
         } finally {
-            clearRoleDetails();
-            performedChanges();
+            setLoading(false);
         }
     };
 
@@ -91,16 +103,17 @@ export const useManageRole = () => {
         e.preventDefault();
 
         try {
+            setLoading(true);
             const response = await editRole(roleDetails);
-
+            clearRoleDetails();
             navigate(role === 'admin' ? '/admin/roles' : '/staff/roles', { state: { successMessage: `Successfully Updated Role for Role Code : ${roleDetails.roleCode}` } })
+            performedChanges();
         } catch (error) {
             setError(error.message)
         } finally {
-            clearRoleDetails();
-            performedChanges();
+            setLoading(false);
         }
     };
 
-    return { tableData, loading, error, fetchRoles, fetchPermissionCategories, handleEdit, handleDelete, handleSubmitForRoleCreation, handleSubmitForEditRole, }
+    return { tableData, loading, error, updateRoleDetails, fetchRoles, fetchPermissionCategories, handleEdit, handleDelete, handleSubmitForRoleCreation, handleSubmitForEditRole, }
 }

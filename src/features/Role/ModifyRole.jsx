@@ -10,8 +10,8 @@ import Dropdown from "../../components/Dropdown/Dropdown";
 export default function ModifyRole() {
 
   const { role } = useContext(AuthContext);
-  const { roleDetails, updateRoleDetails, } = useContext(RoleContext);
-  const { loading, error, handleSubmitForEditRole, } = useManageRole();
+  const { roleDetails, } = useContext(RoleContext);
+  const { loading, error, updateRoleDetails, handleSubmitForEditRole, } = useManageRole();
 
   return (
     <div>

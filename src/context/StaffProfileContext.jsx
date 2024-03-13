@@ -25,27 +25,6 @@ export const StaffProfileContextProvider = ({ children }) => {
     staffBio: null,
   });
 
-  const updateProfileDetails = (e) => {
-
-    if (e.hasOwnProperty('target')) {
-      const { name, value, type, checked } = e.target;
-
-      setProfileDetails((prevDetails) => {
-        if (type === 'checkbox') {
-          return {
-            ...prevDetails,
-            [name]: checked ? [...prevDetails[name], value] : prevDetails[name].filter(item => item !== value),
-
-          };
-        }
-
-        return {
-          ...prevDetails,
-          [name]: value,
-        };
-      });
-    }
-  }
 
   const updateProfileDetailsObj = (details) => {
     setProfileDetails({
@@ -108,7 +87,7 @@ export const StaffProfileContextProvider = ({ children }) => {
 
 
   return (
-    <StaffProfileContext.Provider value={{ performingChanges, allProfiles, profileDetails, availableRoles, availableServices, performedChanges, updateProfileDetails, setAllProfiles, setAvailableRoles, setAvailableServices, clearServiceProvided, updateProfileDetailsObj, resetProfileDetails, checkRoleIsServiceProvider, checkRoleIsServiceProviderWithArgs, }} >
+    <StaffProfileContext.Provider value={{ performingChanges, allProfiles, profileDetails, availableRoles, availableServices, performedChanges, setProfileDetails, setAllProfiles, setAvailableRoles, setAvailableServices, clearServiceProvided, updateProfileDetailsObj, resetProfileDetails, checkRoleIsServiceProvider, checkRoleIsServiceProviderWithArgs, }} >
       {children}
     </StaffProfileContext.Provider>
   )

@@ -9,8 +9,8 @@ import Dropdown from "../../components/Dropdown/Dropdown";
 
 export default function CreateRole() {
   const { role } = useContext(AuthContext);
-  const { roleDetails, updateRoleDetails, clearRoleDetails } = useContext(RoleContext);
-  const { loading, error, handleSubmitForRoleCreation } = useManageRole();
+  const { roleDetails, clearRoleDetails } = useContext(RoleContext);
+  const { loading, error, updateRoleDetails, handleSubmitForRoleCreation, } = useManageRole();
 
   useEffect(() => {
     clearRoleDetails();
@@ -92,7 +92,7 @@ export default function CreateRole() {
           </label>
         </div>
 
-      
+
 
         <div className="relative w-full h-10 mx-auto">
           <button

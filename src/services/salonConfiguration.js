@@ -322,3 +322,45 @@ export const fetchMatchSpecialists = async (serviceCode) => {
         throw new Error(err.message);
     }
 }
+
+export const createNewPriceRule = async (pricingRuleDetails) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-rules/new`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ...pricingRuleDetails })
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message);
+        }
+
+        return await response.json();
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
+
+export const editPriceRule = async (pricingRuleDetails) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-rules/${pricingRuleDetails.pricingRuleId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ...pricingRuleDetails })
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message);
+        }
+
+        return await response.json();
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}

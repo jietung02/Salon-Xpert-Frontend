@@ -9,8 +9,8 @@ import Checkbox from "../../components/Checkbox/Checkbox";
 
 export default function CreateStaffProfile() {
   const { role } = useContext(AuthContext);
-  const { profileDetails, updateProfileDetails, availableRoles, availableServices, clearServiceProvided, checkRoleIsServiceProvider,resetProfileDetails,} = useContext(StaffProfileContext);
-  const { loading, error, handleSubmitForStaffCreation, fetchRoles, fetchServices, } = useStaffProfileConfiguration();
+  const { profileDetails, availableRoles, availableServices, clearServiceProvided, checkRoleIsServiceProvider,resetProfileDetails,} = useContext(StaffProfileContext);
+  const { loading, error,updateProfileDetails, handleSubmitForStaffCreation, fetchRoles, fetchServices, } = useStaffProfileConfiguration();
   const [isServiceProvider, setIsServiceProvider] = useState(false);
   useEffect(() => {
 

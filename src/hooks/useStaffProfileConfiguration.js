@@ -6,7 +6,7 @@ import { fetchAllProfileRecords, fetchAllRoles, fetchAllServices, createNewStaff
 
 export const useStaffProfileConfiguration = () => {
     const { role } = useContext(AuthContext);
-    const { profileDetails, allProfiles, performedChanges, setAllProfiles, updateProfileDetailsObj, setAvailableRoles, setAvailableServices, resetProfileDetails, checkRoleIsServiceProvider, checkRoleIsServiceProviderWithArgs, } = useContext(StaffProfileContext);
+    const { profileDetails, allProfiles, performedChanges, setAllProfiles, setProfileDetails, updateProfileDetailsObj, setAvailableRoles, setAvailableServices, resetProfileDetails, checkRoleIsServiceProvider, checkRoleIsServiceProviderWithArgs, } = useContext(StaffProfileContext);
     const navigate = useNavigate();
 
     const [tableData, setTableData] = useState({
@@ -17,6 +17,28 @@ export const useStaffProfileConfiguration = () => {
 
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+
+    const updateProfileDetails = (e) => {
+        setError(null);
+        if (e.hasOwnProperty('target')) {
+            const { name, value, type, checked } = e.target;
+
+            setProfileDetails((prevDetails) => {
+                if (type === 'checkbox') {
+                    return {
+                        ...prevDetails,
+                        [name]: checked ? [...prevDetails[name], value] : prevDetails[name].filter(item => item !== value),
+
+                    };
+                }
+
+                return {
+                    ...prevDetails,
+                    [name]: value,
+                };
+            });
+        }
+    }
 
     const fetchAllProfiles = async () => {
         try {
@@ -45,7 +67,7 @@ export const useStaffProfileConfiguration = () => {
             ...profile,
             serviceCodes: isServiceProvider ? profile.serviceCodes.split(', ') : [],
         }
-        
+
         updateProfileDetailsObj(reformat);
         navigate(role === 'admin' ? '/admin/staff-profile-configurations/modify' : '/staff/staff-profile-configurations/modify');
     }
@@ -68,27 +90,25 @@ export const useStaffProfileConfiguration = () => {
         //rmb to delete from user table also since the constraint is not working
     }
 
-    const handleCreateButton = () => {
-
-    }
-
     const handleSubmitForStaffCreation = async (e) => {
         e.preventDefault();
 
-        if (checkRoleIsServiceProvider && profileDetails.servicesProvided.length === 0) {
+        if (checkRoleIsServiceProvider() && profileDetails.servicesProvided.length === 0) {
             setError('Please Select at Least One Service');
             return;
         }
 
         try {
+            setLoading(true);
             const response = await createNewStaff(profileDetails);
+            resetProfileDetails();
 
-            navigate(role === 'admin' ? '/admin/staff-profile-configurations' : '/staff-profile-configurations', { state: { successMessage: `Successfully Created a Staff Profile, Staff Username : ${profileDetails.staffUsername}` } })
+            navigate(role === 'admin' ? '/admin/staff-profile-configurations' : '/staff-profile-configurations', { state: { successMessage: `Successfully Created a Staff Profile, Staff Username : ${profileDetails.staffUsername}` } });
+            performedChanges();
         } catch (error) {
             setError(error.message)
         } finally {
-            resetProfileDetails();
-            performedChanges();
+            setLoading(false);
         }
     }
 
@@ -101,14 +121,16 @@ export const useStaffProfileConfiguration = () => {
         }
 
         try {
+            setLoading(true);
             const response = await editStaffProfile(profileDetails);
+            resetProfileDetails();
 
-            navigate(role === 'admin' ? '/admin/staff-profile-configurations' : '/staff-profile-configurations', { state: { successMessage: `Successfully Edited the Staff Profile, Staff Username : ${profileDetails.staffUsername}` } })
+            navigate(role === 'admin' ? '/admin/staff-profile-configurations' : '/staff-profile-configurations', { state: { successMessage: `Successfully Edited the Staff Profile, Staff Username : ${profileDetails.staffUsername}` } });
+            performedChanges();
         } catch (error) {
             setError(error.message)
         } finally {
-            resetProfileDetails();
-            performedChanges();
+            setLoading(false);
         }
     }
 
@@ -134,5 +156,5 @@ export const useStaffProfileConfiguration = () => {
         }
     }
 
-    return { loading, error, tableData, fetchAllProfiles, handleEdit, handleDelete, handleCreateButton, handleSubmitForStaffCreation, handleSubmitForEditStaff, fetchRoles, fetchServices, }
+    return { loading, error, tableData, fetchAllProfiles, updateProfileDetails, handleEdit, handleDelete, handleSubmitForStaffCreation, handleSubmitForEditStaff, fetchRoles, fetchServices, }
 }
