@@ -44,6 +44,7 @@ export default function Signup() {
                   title="Please enter a username between 3 and 20 characters, using only letters (both lowercase and uppercase), digits, or underscores."
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                   placeholder="Username"
+                  autocomplete="one-time-code"
                   required
                 />
               </div>
@@ -56,6 +57,7 @@ export default function Signup() {
                   value={userData.password}
                   id="password"
                   placeholder="••••••••"
+                  autocomplete="one-time-code"
                   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}"
                   title="Password must contain at least one digit, one lowercase letter, one uppercase letter, one special character, and be at least 8 characters long"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"

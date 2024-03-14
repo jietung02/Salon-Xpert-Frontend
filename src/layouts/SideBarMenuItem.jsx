@@ -28,10 +28,12 @@ export default function SideBarMenuItem({ isSelected, name, path, onClick}) {
         to={path}
         className={`${className}`}
         onClick={(e) => {
-          onClick();
-          if (name === "Log Out") {
+          if (name === "Log Out") {   
             handleLogout();
           }
+          else{ 
+            onClick();
+          }       
         }}
       >
         {name}

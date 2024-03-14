@@ -364,3 +364,23 @@ export const editPriceRule = async (pricingRuleDetails) => {
         throw new Error(err.message);
     }
 }
+
+export const deletePricingRule = async (pricingRuleId) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-rules/${pricingRuleId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message);
+        }
+
+        return await response.json();
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}

@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { fetchAllPriceOptions, savePriceOptions, fetchAllPricingRules, fetchAllSalonServices, fetchAllAgeCategories, fetchMatchSpecialists, createNewPriceRule, editPriceRule, } from '../services/salonConfiguration';
+import { fetchAllPriceOptions, savePriceOptions, fetchAllPricingRules, fetchAllSalonServices, fetchAllAgeCategories, fetchMatchSpecialists, createNewPriceRule, editPriceRule, deletePricingRule, } from '../services/salonConfiguration';
 import { AuthContext } from "../context/AuthContext";
 import { PriceContext } from "../context/PriceContext";
 import { useNavigate } from "react-router-dom";
@@ -70,10 +70,11 @@ export const usePriceConfiguration = () => {
         } finally {
             setLoading(false);
         }
-    }
+    };
 
     //Pricing Rules
     const updatePricingRuleDetails = (e) => {
+        setError(null);
         if (e.hasOwnProperty('target')) {
             const { name, value } = e.target;
 
@@ -82,7 +83,7 @@ export const usePriceConfiguration = () => {
                 [name]: value,
             });
         }
-    }
+    };
 
     const updatePricingRuleDetailsObjectVer = (priceRule) => {
         setPricingRuleDetails({
@@ -236,8 +237,20 @@ export const usePriceConfiguration = () => {
 
     }
 
-    const handleDelete = async () => {
+    const handleDelete = async (pricingRuleId) => {
+        const isConfirmed = window.confirm('Are you sure you want to delete this service?');
 
+        if (isConfirmed) {
+            //rmb to change the performing state for all delete modify and create, to fetch the services again
+            try {
+                const response = await deletePricingRule(pricingRuleId);
+                setSuccessMessage(`Successfully Deleted Pricing Rule, ID: ${pricingRuleId}`);
+                navigate(role === 'admin' ? '/admin/price-configurations' : '/staff/price-configurations');
+                performedChangesPriceRule();
+            } catch (error) {
+                setError(error.message);
+            } 
+        }
     }
 
 
