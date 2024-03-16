@@ -1,10 +1,10 @@
 export default function Table({ headers, data, handleEdit, handleDelete }) {
 
   return (
-    <div class="relative overflow-auto shadow-md sm:rounded-lg md:mx-16 md:mt-16 mx-3 mt-8 mb-5 h-96">
+    <div class="relative rounded-xl shadow-md my-14 lg:w-11/12 mx-5 lg:mx-auto overflow-auto custom-height bg-white">
 
-      <table class="w-full text-xs text-left rtl:text-right text-gray-500">
-        <thead class="text-xs text-white uppercase bg-gray-900 ">
+      <table class="w-full text-base 2xl:text-xl text-left rtl:text-right text-gray-500">
+        <thead class="text-base 2xl:text-xl text-white uppercase bg-gray-900 ">
           <tr>
             {headers.map((header, index) => {
               return (<th key={index} scope="col" class="px-6 py-3">
@@ -22,7 +22,7 @@ export default function Table({ headers, data, handleEdit, handleDelete }) {
         </thead>
         <tbody>
           {data.map((row, rowIndex) => {
-            return (<tr key={rowIndex} class="bg-white border-b bg-gray-200 text-gray-900 border-gray-100 hover:bg-gray-200">
+            return (<tr key={rowIndex} class="bg-white border-b text-gray-900 border-gray-100 hover:bg-gray-200">
               {row.map((cell, cellIndex) => {
                 return (<td key={cellIndex} class="px-6 py-4">{cell !== null ? cell : '-'}</td>);
               })}

@@ -20,6 +20,7 @@ export const authReducer = (state, action) => {
             return {
                 isAuthenticated: null,
                 username: null,
+                customerId: null,
                 name: null,
                 email: null,
                 gender: null,
@@ -77,6 +78,7 @@ export const AuthContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, {
         isAuthenticated: false,
         username: null,
+        customerId: null,
         name: null,
         email: null,
         gender: null,

@@ -1,11 +1,10 @@
-import ProvideGeneralFeedback from "../../../features/FeedbackRatings/ProvideGeneralFeedback";
-import ProvideServiceSpecificFeedback from "../../../features/FeedbackRatings/ProvideServiceSpecificFeedback";
+import ProvideFeedbackMain from "../../../features/FeedbackRatings/ProvideFeedbackMain";
+import { FeedbackContextProvider } from "../../../context/FeedbackContext";
 
 export default function FeedbackRatings() {
-    return (
-        <div>
-            <ProvideGeneralFeedback />
-            <ProvideServiceSpecificFeedback />
-        </div>
-    );
+  return (
+    <FeedbackContextProvider >
+      <ProvideFeedbackMain />
+    </FeedbackContextProvider>
+  );
 }

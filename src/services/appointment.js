@@ -99,7 +99,7 @@ export const fetchWorkingHoursTimeSlots = async () => {
     } catch (err) {
         throw new Error(err.message);
     }
-}
+};
 
 export const fetchSpecialistThatTime = async (specialists, selectedServices, selectedTime) => {
     try {
@@ -120,7 +120,7 @@ export const fetchSpecialistThatTime = async (specialists, selectedServices, sel
     } catch (err) {
         throw new Error(err.message);
     }
-}
+};
 
 export const cancelAppointment = async (appointmentId) => {
     try {
@@ -140,7 +140,7 @@ export const cancelAppointment = async (appointmentId) => {
     } catch (err) {
         throw new Error(err.message);
     }
-}
+};
 
 export const payDeposit = async (summaryDetails) => {
     try {
@@ -161,4 +161,4 @@ export const payDeposit = async (summaryDetails) => {
     } catch (err) {
         throw new Error(err.message);
     }
-}
+};

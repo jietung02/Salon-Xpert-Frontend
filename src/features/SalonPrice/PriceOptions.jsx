@@ -18,10 +18,10 @@ export default function PriceOptions() {
     <>
 
       <div>
-        <form className="my-4 container mx-auto w-5/6 bg-gray-50 rounded-lg shadow-md shadow-gray-300 flex flex-wrap md:items-end gap-8 px-12 py-12 mx-auto" onSubmit={(e) => handleSubmitForPriceOptions(e)}>
+        <form className="my-4 mx-auto w-4/5 bg-gray-50 rounded-lg shadow-md shadow-gray-300 flex flex-wrap md:items-end gap-8 px-12 py-12" onSubmit={(e) => handleSubmitForPriceOptions(e)}>
           <div className="relative w-full">
             <div className="flex justify-center items-center mb-4 h-16">
-              <span className="font-bold text-xl text-gray-900">Price Options</span>
+              <span className="font-bold text-xl lg:text-2xl 2xl:text-3xl text-gray-900">Price Options</span>
             </div>
             <button
               className="absolute top-0 right-0 mt-1 mr-1 md:mr-4"
@@ -53,10 +53,10 @@ export default function PriceOptions() {
               }
             }))} />
 
-          <div className="relative w-full h-10 mx-auto">
+          <div className="relative w-full h-12 2xl:h-14 mx-auto">
             <button
               disabled={loading}
-              class="align-middle select-none font-bold text-center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-sm py-2 px-4 rounded-lg border border-gray-900 text-gray-900 hover:opacity-75 focus:ring focus:ring-gray-900 active:opacity-[0.85] flex mx-auto items-center gap-3"
+              class="align-middle select-none font-bold text-center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xl 2xl:text-2xl py-2 px-4 rounded-lg border border-gray-900 text-gray-900 hover:opacity-75 focus:ring focus:ring-gray-900 active:opacity-[0.85] flex mx-auto items-center gap-3"
               type="submit">
               Save
             </button>

@@ -75,6 +75,7 @@ export const StaffProfileContextProvider = ({ children }) => {
   }
 
   const checkRoleIsServiceProviderWithArgs = (serviceCode) => {
+
     const selectedRole = availableRoles.find(role => role.roleCode === serviceCode);
 
     if (selectedRole && selectedRole.roleIsServiceProvider === 1) {

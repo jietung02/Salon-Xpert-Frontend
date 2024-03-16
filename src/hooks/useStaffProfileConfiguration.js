@@ -58,9 +58,10 @@ export const useStaffProfileConfiguration = () => {
     }
 
     const handleEdit = (profileDetails) => {
-
+        
         resetProfileDetails();
         const profile = allProfiles.find(value => value.staffId === profileDetails[0]);
+
         const isServiceProvider = checkRoleIsServiceProviderWithArgs(profile.staffRoleCode);
 
         const reformat = {

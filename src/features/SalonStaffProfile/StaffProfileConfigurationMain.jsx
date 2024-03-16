@@ -8,22 +8,23 @@ import { InformationCircleIcon } from "@heroicons/react/24/solid";
 
 export default function StaffProfileConfigurationMain() {
   let location = useLocation();
-  const {role} = useContext(AuthContext);
-  const {performingChanges} = useContext(StaffProfileContext);
-  const { loading, error, tableData, fetchAllProfiles, handleEdit, handleDelete } = useStaffProfileConfiguration();
+  const { role } = useContext(AuthContext);
+  const { performingChanges } = useContext(StaffProfileContext);
+  const { loading, error, tableData, fetchAllProfiles, fetchRoles, handleEdit, handleDelete } = useStaffProfileConfiguration();
 
   const [successMessage, setSuccessMessage] = useState(null);
-  
+
   useEffect(() => {
 
-    const fetchProfiles = async () => {
+    const fetchData = async () => {
       try {
         await fetchAllProfiles();
+        await fetchRoles();
       } catch (error) {
-        console.error('Error fetching staff profiles', error);
+        console.error('Error fetching data', error);
       }
     }
-    fetchProfiles();
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -50,11 +51,11 @@ export default function StaffProfileConfigurationMain() {
 
   return (
     <div>
-      <h1 className="px-8 py-6 text-3xl sm:px-7 md:px-11 md:py-6 md:text-4xl lg:px-11 md:text-left text-center font-bold text-gray-900">Staff Profiles Configuration</h1>
+      <h1 className="px-8 py-6 text-4xl sm:px-7 lg:px-20 lg:py-10 2xl:px-20 2xl:py-12 2xl:text-5xl lg:text-left text-center font-bold text-gray-900">Staff Profiles Configuration</h1>
 
       {successMessage && (
-        <div class="flex w-4/6 mx-auto items-center p-4 md:mt-10 text-sm text-green-800 rounded-lg bg-gray-900 text-green-400" role="alert">
-          <InformationCircleIcon className="h-5 w-5" />
+        <div class="flex w-3/5 mx-auto items-center p-4 lg:mt-10 text-xl 2xl:text-2xl text-white rounded-lg bg-green-800" role="alert">
+          <InformationCircleIcon className="h-6 w-6" />
           <span class="sr-only">Info</span>
           <div>
             <span className="pl-2">{successMessage}</span>
@@ -71,10 +72,10 @@ export default function StaffProfileConfigurationMain() {
           </div>
         )}
 
-      <div className="relative w-full h-10 mx-auto">
+      <div className="relative w-full h-12 2xl:h-14 mx-auto">
         <Link
           to={role === 'admin' ? '/admin/staff-profile-configurations/create' : '/staff/staff-profile-configurations/create'}
-          className="align-middle select-none font-bold text-center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-sm py-2 px-4 w-48 rounded-lg border border-gray-900 text-gray-900 hover:opacity-75 focus:ring focus:ring-gray-900 active:opacity-[0.85] flex mx-auto items-center gap-3"
+          className="align-middle select-none font-bold text-center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xl 2xl:text-2xl py-2 px-5 w-72 rounded-lg border border-gray-900 text-gray-900 hover:opacity-75 focus:ring focus:ring-gray-900 active:opacity-[0.85] flex mx-auto items-center gap-3"
           role="button"
         >
           <span className="inline-block w-full">Add New Staff Profile</span>

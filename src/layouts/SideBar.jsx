@@ -21,13 +21,13 @@ export default function SideBar() {
   };
 
   const handleMenuItemClick = () => {
-    if (width < 768) {
+    if (width < 1024) {
       setOpen(false); // Close the dropdown if the screen size is less than 768
     }
   };
 
   useEffect(() => {
-    if (width >= 768) {
+    if (width >= 1024) {
       setOpen(true);
     }
     else {
@@ -39,26 +39,26 @@ export default function SideBar() {
 
   return (
     <div
-      className="flex flex-col w-full lg:w-72 md:w-64 text-white bg-gray-900 flex-shrink-0"
+      className="flex flex-col w-full lg:w-1/5 text-white bg-gray-900 flex-shrink-0"
     >
-      <div className="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
+      <div className="flex-shrink-0 px-8 py-8 flex flex-row items-center justify-between">
         <span
-          className="text-lg font-semibold tracking-widest text-white uppercase rounded-lg"
+          className="text-2xl px-2 py-2 lg:text-2xl 2xl:text-3xl 2xl:px-4  font-semibold tracking-widest text-white uppercase rounded-lg"
         >
           Salon Xpert
         </span>
         <button
-          className="rounded-lg md:hidden rounded-lg focus:outline-none focus:shadow-outline"
+          className="rounded-lg lg:hidden rounded-lg focus:outline-none focus:shadow-outline"
           onClick={toggleDropdown}
         >
           <Bars3Icon className="h-8 w-8 stroke-2" />
         </button>
       </div>
       {open && (
-        <nav className="flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">
+        <nav className="flex-grow lg:block px-4 pb-4 lg:pb-0 lg:overflow-y-auto">
           {permissions.map((permission, index) => (
             <div key={index} className="m-2">
-              <span className="block px-2 py-2 text-xs font-semibold text-gray-400">{permission.rolePermission}</span>
+              <span className="block px-2 py-2 text-base lg:text-lg 2xl:text-xl 2xl:px-4  font-semibold text-gray-400">{permission.rolePermission}</span>
               {permission.functions.map((func, i) => (
                 <SideBarMenuItem key={i} isSelected={false} name={func.name} path={func.route} onClick={handleMenuItemClick}/>
               ))}

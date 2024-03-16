@@ -1,10 +1,10 @@
 import RadioButtonOption from "./RadioButtonOption";
 
-export default function RadioButton({ bookingMethod, label, name, handleOnChange, options }) {
+export default function RadioButton({ bookingMethod, label, name, handleOnChange, options, type }) {
 
   return (
-    <div className="relative w-full flex flex-wrap mx-auto text-center">
-      <span className="text-gray-500 text-lg w-full py-3">{label}</span>
+    <div className="relative w-full flex flex-wrap mx-auto px-0 lg:px-32 2xl:px-72 text-center">
+      <span className="text-gray-500 text-lg w-full py-3 mb-2 ">{label}</span>
 
       {options.length > 0 && options.map((value) => (
         <RadioButtonOption
@@ -12,6 +12,7 @@ export default function RadioButton({ bookingMethod, label, name, handleOnChange
           name={name}
           options={value}
           handleOnChange={handleOnChange}
+          type={type}
         />
       ))}
 

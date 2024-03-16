@@ -21,3 +21,7 @@ code {
 .main-content {
   flex-grow: 1;
 }
+
+.custom-height {
+  height: 600px;
+}
