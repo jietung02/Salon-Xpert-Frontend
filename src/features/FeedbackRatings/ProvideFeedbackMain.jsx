@@ -16,7 +16,7 @@ export default function ProvideFeedbackMain() {
     <div>
       <h1 className="px-8 py-6 text-4xl sm:px-7 lg:px-20 lg:py-10 2xl:px-20 2xl:py-12 2xl:text-5xl lg:text-left text-center font-bold text-gray-900">Feedback & Ratings</h1>
 
-      <div className="my-4 container mx-auto w-5/6 bg-gray-50 rounded-lg shadow-md shadow-gray-200 flex flex-wrap md:items-end gap-8 px-10 py-10 mx-auto">
+      <div className="my-4 mx-auto w-4/5 bg-gray-50 rounded-lg shadow-md shadow-gray-200 flex flex-wrap md:items-end gap-8 px-10 py-10">
         <RadioButton
           bookingMethod={selectedFeedbackType}
           name='feedbackType'

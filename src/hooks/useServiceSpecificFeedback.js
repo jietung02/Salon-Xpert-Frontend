@@ -130,9 +130,8 @@ export const useServiceSpecificFeedback = () => {
             setLoading(true);
             const response = await submitServiceSpecificFeedback({...serviceSpecificFeedbackDetails, selectedFeedbackType});
 
-            setSuccessMessage(`Successfully Submitted Feedback for Appointment ID : ${serviceSpecificFeedbackDetails.appointmentId}`);
-
             resetSpecificFeedbackDetails();
+            setSuccessMessage(`Successfully Submitted Feedback`);
         } catch (error) {
             setError(error.message)
         } finally {

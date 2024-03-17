@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { cancelAppointment, payDeposit, } from '../services/appointment';
+import { cancelAppointment, payDeposit, } from '../services/customerService';
 import { useNavigate } from "react-router-dom";
 
 export const useAppointmentConfirmation = () => {

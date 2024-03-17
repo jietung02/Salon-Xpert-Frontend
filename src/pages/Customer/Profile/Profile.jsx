@@ -1,9 +1,7 @@
-import { Outlet } from "react-router-dom";
+import ViewEditProfile from "../../../features/Profile/ViewEditProfile";
 
 export default function Profile() {
     return (
-        <div>
-            <h1>Profile Edit</h1>
-        </div>
+        <ViewEditProfile />
     );
 }

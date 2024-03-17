@@ -46,7 +46,7 @@ export default function ServiceConfigurationMain() {
       setSuccessMessage(null);
     }, 3000);
 
-    console.log('REFRESHED')
+
     fetchServices();
     return () => clearTimeout(timer);
 

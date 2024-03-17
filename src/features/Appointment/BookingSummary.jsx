@@ -13,7 +13,7 @@ export default function BookingSummary() {
 
   return (
     <div>
-      <form className="my-10 mx-auto w-4/5 bg-gray-100 rounded-lg shadow-md shadow-gray-200 flex flex-wrap md:items-end gap-8 px-12 py-12" onSubmit={(e) => handleDepositSubmit(e)}>
+      <form className="my-10 mx-auto w-4/5 bg-gray-100 rounded-lg shadow-md shadow-gray-200 flex flex-wrap md:items-end gap-8 px-12 lg:px-20 2xl:px-24 py-12" onSubmit={(e) => handleDepositSubmit(e)}>
         <div className="relative w-full h-12 2xl:h-14 flex items-center justify-center mb-4">
           <span className="font-bold text-xl lg:text-2xl 2xl:text-3xl text-gray-900">Booking Summary</span>
         </div>

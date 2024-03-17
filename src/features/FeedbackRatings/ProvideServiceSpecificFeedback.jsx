@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 import Dropdown from '../../components/Dropdown/Dropdown';
 import RadioButton from '../../components/RadioButton/RadioButton';
+import { InformationCircleIcon } from '@heroicons/react/24/solid';
 
 const { useServiceSpecificFeedback } = require('../../hooks/useServiceSpecificFeedback');
 
 export default function ProvideServiceSpecificFeedback() {
 
-  const { loading, error, serviceSpecificFeedbackDetails, appointmentHistory, updateServiceSpecificFeedbackDetails, resetRatingsDetailsWhenAppointmentIDChanged, handleSubmitForServiceSpecificFeedback, fetchAppointmentHistoryForFeedback, overallServiceRatingScale, cleaninessRatingScale, serviceSatisfactionRatingScale, communicationRatingScale, category, } = useServiceSpecificFeedback();
+  const { loading, error, successMessage, setSuccessMessage, serviceSpecificFeedbackDetails, appointmentHistory, updateServiceSpecificFeedbackDetails, resetRatingsDetailsWhenAppointmentIDChanged, handleSubmitForServiceSpecificFeedback, fetchAppointmentHistoryForFeedback, overallServiceRatingScale, cleaninessRatingScale, serviceSatisfactionRatingScale, communicationRatingScale, category, } = useServiceSpecificFeedback();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,6 +23,25 @@ export default function ProvideServiceSpecificFeedback() {
   }, []);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await fetchAppointmentHistoryForFeedback();
+      } catch (error) {
+        console.error('Error fetching data', error);
+      }
+    }
+
+    if (successMessage !== null) {
+      const timer = setTimeout(() => {
+        setSuccessMessage(null);
+      }, 3000);
+      fetchData();
+      return () => clearTimeout(timer);
+    };
+
+  }, [successMessage]);
+
+  useEffect(() => {
     resetRatingsDetailsWhenAppointmentIDChanged();
 
   }, [serviceSpecificFeedbackDetails.appointmentId])
@@ -29,16 +49,26 @@ export default function ProvideServiceSpecificFeedback() {
 
   return (
     <div>
-      <form className="my-4 container mx-auto w-5/6 bg-gray-50 rounded-lg shadow-md shadow-gray-300 flex flex-wrap md:items-end gap-8 px-12 py-12 mx-auto" onSubmit={(e) => handleSubmitForServiceSpecificFeedback(e)}>
+      <form className="my-4 mx-auto w-4/5 bg-gray-50 rounded-lg shadow-md shadow-gray-300 flex flex-wrap md:items-end gap-8 px-12 lg:px-20 2xl:px-24 py-12" onSubmit={(e) => handleSubmitForServiceSpecificFeedback(e)}>
         <div className="relative w-full">
           <div className="flex justify-center items-center mb-4 h-16">
             <span className="font-bold text-xl lg:text-2xl 2xl:text-3xl text-gray-900">Service Specific Feedback</span>
           </div>
         </div>
 
+        {successMessage && (
+          <div class="flex w-4/5 mx-auto items-center p-4 lg:mt-10 text-xl 2xl:text-2xl text-white rounded-lg bg-green-800" role="alert">
+            <InformationCircleIcon className="h-6 w-6" />
+            <span class="sr-only">Info</span>
+            <div>
+              <span className="pl-2">{successMessage}</span>
+            </div>
+          </div>
+        )}
+
         {error && (
-          <div class="w-full text-center bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative" role="alert">
-            <span class="block sm:inline text-xs">{error}</span>
+          <div class="w-4/5 text-center bg-red-100 border border-red-400 text-red-700 mx-auto px-5 py-2 rounded relative" role="alert">
+            <span class="block sm:inline text-xl 2xl:text-2xl">{error}</span>
           </div>
         )}
 
@@ -110,7 +140,7 @@ export default function ProvideServiceSpecificFeedback() {
           options={category}
         />
 
-        <div className="relative  w-3/5 h-auto mx-auto">
+        <div className="relative md:w-3/5 w-full h-auto mx-auto">
           <textarea
             name="feedbackComments"
             value={serviceSpecificFeedbackDetails.feedbackComments !== null ? serviceSpecificFeedbackDetails.feedbackComments : ''}

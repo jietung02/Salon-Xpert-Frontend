@@ -41,6 +41,11 @@ export const authReducer = (state, action) => {
                 ...state,
                 ...action.payload,
             }
+        case 'EDITPROFILE':
+            return {
+                ...state,
+                ...action.payload,
+            }
         default:
             return state;
     }

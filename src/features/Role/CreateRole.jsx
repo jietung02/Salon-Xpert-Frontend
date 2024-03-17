@@ -18,7 +18,7 @@ export default function CreateRole() {
 
   return (
     <div>
-      <form className="my-4 mx-auto w-4/5 bg-gray-50 rounded-lg shadow-md shadow-gray-300 flex flex-wrap md:items-end gap-8 px-12 py-12" onSubmit={(e) => handleSubmitForRoleCreation(e)}>
+      <form className="my-4 mx-auto w-4/5 bg-gray-50 rounded-lg shadow-md shadow-gray-300 flex flex-wrap md:items-end gap-8 px-12 lg:px-20 2xl:px-24 py-12" onSubmit={(e) => handleSubmitForRoleCreation(e)}>
         <div className="relative w-full">
           <div className="flex justify-center items-center mb-4 h-16">
             <span className="font-bold text-xl lg:text-2xl 2xl:text-3xl text-gray-900">New Role</span>

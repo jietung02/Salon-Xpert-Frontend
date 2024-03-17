@@ -162,3 +162,44 @@ export const payDeposit = async (summaryDetails) => {
         throw new Error(err.message);
     }
 };
+
+export const fetchOwnProfileDetails = async (customerId) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/${customerId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message);
+        }
+
+        return await response.json();
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
+
+export const saveProfileDetails = async (customerId, profileDetails) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/${customerId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ...profileDetails })
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message);
+        }
+
+        return await response.json();
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}

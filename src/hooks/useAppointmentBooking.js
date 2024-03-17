@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createAppointment, fetchAllServices, fetchMatchSpecialists, fetchTimeSpecialistTimeSlot, fetchWorkingHoursTimeSlots, fetchSpecialistThatTime } from '../services/appointment';
+import { createAppointment, fetchAllServices, fetchMatchSpecialists, fetchTimeSpecialistTimeSlot, fetchWorkingHoursTimeSlots, fetchSpecialistThatTime } from '../services/customerService';
 import dayjs from 'dayjs';
 import { useContext } from 'react';
 import { useNavigate, } from 'react-router-dom';
@@ -12,7 +12,7 @@ export const useAppontmentBooking = () => {
         name: null,
         email: null,
         gender: null,
-        age: 0,
+        age: null,
         contact: null,
         selectedServices: [],
         bookingMethod: null,
@@ -101,7 +101,7 @@ export const useAppontmentBooking = () => {
         setAppointDetails({
             name: null,
             gender: null,
-            age: 0,
+            age: null,
             contact: null,
             selectedServices: [],
             bookingMethod: null,
