@@ -28,9 +28,7 @@ export const useServiceConfiguration = () => {
             })
 
         } catch (error) {
-            // if (error.message === 'No Services Found') {
             setError(error.message);
-            // }
         }
 
     }

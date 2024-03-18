@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { submitGeneralFeedback } from "../services/feedback";
+import { submitGeneralFeedback } from "../services/customerService";
 import { AuthContext } from "../context/AuthContext";
 
 

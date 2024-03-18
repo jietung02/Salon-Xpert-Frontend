@@ -12,7 +12,7 @@ export default function Table({ headers, data, handleEdit, handleDelete }) {
               </th>);
             })}
 
-            {headers.length > 0 && (
+            {headers.length > 0 && handleEdit && handleDelete && (
               <th colSpan={headers.length < 4 ? 3 : 2} className="px-6 py-3">
                 <span className="sr-only">Actions</span>
               </th>
@@ -21,17 +21,21 @@ export default function Table({ headers, data, handleEdit, handleDelete }) {
           </tr>
         </thead>
         <tbody>
-          {data.map((row, rowIndex) => {
+          {data && data.length > 0 && data.map((row, rowIndex) => {
             return (<tr key={rowIndex} class="bg-white border-b text-gray-900 border-gray-100 hover:bg-gray-200">
               {row.map((cell, cellIndex) => {
                 return (<td key={cellIndex} class="px-6 py-4">{cell !== null ? cell : '-'}</td>);
               })}
-              <td class="px-6 py-4 text-right">
-                <span onClick={() => handleEdit(row)} class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Edit</span>
-              </td>
-              <td class="px-6 py-4 text-right">
-                <span onClick={() => handleDelete(row[0])} class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Delete</span>
-              </td>
+              {handleEdit && handleDelete && (
+                <>
+                  <td class="px-6 py-4 text-right">
+                    <span onClick={() => handleEdit(row)} class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Edit</span>
+                  </td>
+                  <td class="px-6 py-4 text-right">
+                    <span onClick={() => handleDelete(row[0])} class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Delete</span>
+                  </td>
+                </>
+              )}
             </tr>)
           })}
         </tbody>

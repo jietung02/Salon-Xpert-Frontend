@@ -6,7 +6,7 @@ export default function CheckboxOption({ disabled, checkBoxGroupName, selectedSe
   return (
     <div className="w-full">
       <div role="button" className="flex items-center w-full py-1 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-gray-900">
-        <label htmlFor="vertical-list-react-1" className="flex items-center w-full px-3 pt-2 cursor-pointer">
+        <label htmlFor={uniqueID} className="flex items-center w-full px-3 pt-2 cursor-pointer">
           <div className="grid mr-2 place-items-center">
             <div className="inline-flex items-center">
               <label className="relative flex items-center p-0 rounded-lg cursor-pointer" htmlFor={uniqueID}>

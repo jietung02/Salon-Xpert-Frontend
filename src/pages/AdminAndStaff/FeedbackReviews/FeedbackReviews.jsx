@@ -1,3 +1,7 @@
+import ReviewFeedback from "../../../features/FeedbackManagement/ReviewFeedback";
+
 export default function FeedbackReviews() {
-    return (<h1>Feedback Reviews</h1>);
+  return (
+    <ReviewFeedback />
+  );
 }

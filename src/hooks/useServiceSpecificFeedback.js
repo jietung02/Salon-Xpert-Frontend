@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { fetchAppointmentHistoryForSSFeedback, submitServiceSpecificFeedback, } from "../services/feedback";
+import { fetchAppointmentHistoryForSSFeedback, submitServiceSpecificFeedback, } from "../services/customerService";
 import { AuthContext } from "../context/AuthContext";
 import { FeedbackContext } from "../context/FeedbackContext";
 
