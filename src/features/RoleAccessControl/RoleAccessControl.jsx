@@ -76,7 +76,7 @@ export default function RoleAccessControl() {
 
         {error && (
           <div class="w-full text-center bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative" role="alert">
-            <span class="block sm:inline text-xs">{error}</span>
+            <span class="block sm:inline text-xl 2xl:text-2xl">{error}</span>
           </div>
         )}
         <Dropdown

@@ -7,7 +7,7 @@ import Table from "../../components/Table/Table";
 
 export default function ReviewFeedback() {
 
-  const { loading, error, filterIsOpen, sortIsOpen, toggleFilterButton, toggleSortButton, filterDetails, sortDetails, updateFilterDetails, resetFilterDetails, updateSortDetails, overallServiceRatingScale, cleaninessRatingScale, serviceSatisfactionRatingScale, communicationRatingScale, fetchAllFeedback, tableData, handleFilterApply, } = useReviewFeedback();
+  const { loading, error, filterIsOpen, sortIsOpen, toggleFilterButton, toggleSortButton, filterDetails, sortDetails, updateFilterDetails, resetFilterDetails, updateSortDetails, overallServiceRatingScale, cleaninessRatingScale, serviceSatisfactionRatingScale, communicationRatingScale, fetchAllFeedback, tableData, handleFilterApply, resetFilteredDetails, resetSortedDetails, allServiceSpecificFeedback, allGeneralFeedback, filteredDetails, sortedDetails, resetSortDetails, handleSortApply,setOriginalDataToTable, } = useReviewFeedback();
 
 
   useEffect(() => {
@@ -19,17 +19,27 @@ export default function ReviewFeedback() {
       }
     }
 
+    resetFilteredDetails();
+    resetSortedDetails();
     if (filterDetails.feedbackType !== undefined && filterDetails.feedbackType !== null && filterDetails.feedbackType !== '') {
       fetchData();
     }
 
   }, [filterDetails.feedbackType]);
 
+
   return (
+
     <div>
       <h1 className="px-8 py-6 text-4xl sm:px-7 lg:px-20 lg:py-10 2xl:px-20 2xl:py-12 2xl:text-5xl lg:text-left text-center font-bold text-gray-900">Review Feedback</h1>
 
       <div className="my-4 mx-auto w-4/5 bg-gray-50 rounded-lg shadow-md shadow-gray-200 flex flex-wrap md:items-end gap-8 px-12 lg:px-20 2xl:px-24 py-12">
+        {error && (
+          <div class="w-full text-center bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative" role="alert">
+            <span class="block sm:inline text-xl 2xl:text-2xl">{error}</span>
+          </div>
+        )}
+
         <Dropdown
           isSelected={filterDetails.feedbackType}
           label='Feedback Type'
@@ -144,6 +154,7 @@ export default function ReviewFeedback() {
               class="mt-5 align-middle select-none font-bold text-center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xl 2xl:text-2xl py-2 px-5 rounded-lg border border-gray-900 text-gray-900 hover:opacity-75 focus:ring focus:ring-gray-900 active:opacity-[0.85] flex mx-auto items-center gap-3"
               type="button"
               onClick={() => {
+                resetFilteredDetails();
                 resetFilterDetails();
               }}
             >
@@ -179,6 +190,74 @@ export default function ReviewFeedback() {
           </div>
         </>
       )} */}
+
+      {sortIsOpen && filterDetails.feedbackType && (
+        <>
+
+          <form className="my-4 mx-auto w-4/5 bg-gray-50 rounded-lg shadow-md shadow-gray-300 flex flex-wrap md:items-end gap-8 px-12 lg:px-20 2xl:px-24 py-12" onSubmit={(e) => { handleSortApply(e) }}>
+
+            {filterDetails.feedbackType && filterDetails.feedbackType === 'service-specific' && (
+              <>
+                <RadioButton
+                  bookingMethod={sortDetails.overallRating}
+                  name='overallRating'
+                  label='Overall Service Rating'
+                  handleOnChange={updateSortDetails}
+
+                  options={[
+                    { id: 'ratingAsc', value: 'true', label: 'Lowest to Highest' },
+                    { id: 'ratingDesc', value: 'false', label: 'Highest to Lowest' },
+                  ]}
+                />
+
+              </>
+            )}
+
+            <RadioButton
+              bookingMethod={sortDetails.date}
+              name='date'
+              label='Date'
+              handleOnChange={updateSortDetails}
+
+              options={[
+                { id: 'dateAsc', value: 'true', label: 'Date Ascending' },
+                { id: 'dateDesc', value: 'false', label: 'Date Descending' },
+              ]}
+            />
+
+            <RadioButton
+              bookingMethod={sortDetails.age}
+              name='age'
+              label='Age'
+              handleOnChange={updateSortDetails}
+
+              options={[
+                { id: 'ageAsc', value: 'true', label: 'Age Ascending' },
+                { id: 'ageDesc', value: 'false', label: 'Age Descending' },
+              ]}
+            />
+
+            <button
+              class="mt-5 align-middle select-none font-bold text-center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xl 2xl:text-2xl py-2 px-5 rounded-lg border border-gray-900 text-gray-900 hover:opacity-75 focus:ring focus:ring-gray-900 active:opacity-[0.85] flex mx-auto items-center gap-3"
+              type="button"
+              onClick={() => {
+                resetSortedDetails();
+                resetSortDetails();
+              }}
+            >
+              Reset All
+            </button>
+            <button
+              class="mt-5 align-middle select-none font-bold text-center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xl 2xl:text-2xl py-2 px-5 rounded-lg border border-gray-900 text-gray-900 hover:opacity-75 focus:ring focus:ring-gray-900 active:opacity-[0.85] flex mx-auto items-center gap-3"
+              type="submit"
+            >
+              Apply
+            </button>
+          </form>
+
+
+        </>
+      )}
 
       {tableData.headers.length > 0 &&
         <Table headers={tableData.headers} data={tableData.feedbackDetails} />
