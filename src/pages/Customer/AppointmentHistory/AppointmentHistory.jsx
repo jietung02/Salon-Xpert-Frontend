@@ -1,4 +1,4 @@
-import ViewAppointmentHistory from "../../../features/Appointment/ViewAppointmentHistory";
+import ViewAppointmentHistory from "../../../features/Customer/ViewAppointmentHistory";
 
 export default function AppointmentHistory() {
     return (

@@ -1,4 +1,4 @@
-import BookingSummary from "../../../features/Appointment/BookingSummary";
+import BookingSummary from "../../../features/Customer/BookingSummary";
 
 export default function BookSummary() {
   return (

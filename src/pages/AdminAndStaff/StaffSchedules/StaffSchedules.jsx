@@ -1,3 +1,7 @@
+import AllStaffSchedulesMain from "../../../features/Dashboard/AllStaffSchedulesMain";
+
 export default function StaffSchedules() {
-    return (<h1>Staff Schedules</h1>);
+    return (
+        <AllStaffSchedulesMain />
+    );
 }

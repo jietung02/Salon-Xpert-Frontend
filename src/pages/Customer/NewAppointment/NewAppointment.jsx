@@ -1,4 +1,4 @@
-import CreateAppointment from '../../../features/Appointment/CreateAppointment';
+import CreateAppointment from '../../../features/Customer/CreateAppointment';
 
 export default function NewAppointment() {
     return (

@@ -1,4 +1,4 @@
-import AppointmentCancelation from "../../../features/Appointment/AppointmentCancelation";
+import AppointmentCancelation from "../../../features/Customer/AppointmentCancelation";
 export default function CancelAppointment() {
     return (
         <div>

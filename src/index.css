@@ -25,3 +25,7 @@ code {
 .custom-height {
   height: 600px;
 }
+
+.custom-height-iframe {
+  height: 1000px;
+}
