@@ -50,9 +50,7 @@ export const useStaffProfileConfiguration = () => {
             setAllProfiles(allProfiles.data.additionalData)
 
         } catch (error) {
-            // if (error.message === 'No Services Found') {
             setError(error.message);
-            // }
         }
 
     }

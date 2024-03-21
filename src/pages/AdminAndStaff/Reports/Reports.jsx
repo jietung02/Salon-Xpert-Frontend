@@ -1,10 +1,7 @@
-import { Outlet } from "react-router-dom";
+import GenerateReports from "../../../features/Reports/GenerateReports";
 
 export default function Reports() {
     return (
-        <div>
-            <h1>Reports</h1>
-            <Outlet />
-        </div>
+        <GenerateReports />
     );
-}
+};
