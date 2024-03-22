@@ -1,15 +1,14 @@
 import { useContext, useState } from "react";
 import { fetchAppointmentHistoryForSSFeedback, submitServiceSpecificFeedback, } from "../services/customerService";
 import { AuthContext } from "../context/AuthContext";
-import { FeedbackContext } from "../context/FeedbackContext";
 
 export const useServiceSpecificFeedback = () => {
 
-    const { customerId } = useContext(AuthContext);
-    const { selectedFeedbackType } = useContext(FeedbackContext);
+    const { id, role } = useContext(AuthContext);
     const [successMessage, setSuccessMessage] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [refresh, setRefresh] = useState(false);
 
     const [serviceSpecificFeedbackDetails, setServiceSpecificFeedbackDetails] = useState({
         appointmentId: null,
@@ -20,6 +19,10 @@ export const useServiceSpecificFeedback = () => {
         feedbackCategory: null,
         feedbackComments: null,
     });
+
+    const refreshPage = () => {
+        setRefresh(!refresh);
+    }
 
     const overallServiceRatingScale = [
         { id: 'osrs1', value: '1', label: '1' },
@@ -113,7 +116,8 @@ export const useServiceSpecificFeedback = () => {
 
     const fetchAppointmentHistoryForFeedback = async () => {
         try {
-            const history = await fetchAppointmentHistoryForSSFeedback(customerId);
+            setAppointmentHistory([]);
+            const history = await fetchAppointmentHistoryForSSFeedback({ id, role });
 
             setAppointmentHistory(history.data);
 
@@ -128,7 +132,7 @@ export const useServiceSpecificFeedback = () => {
 
         try {
             setLoading(true);
-            const response = await submitServiceSpecificFeedback({...serviceSpecificFeedbackDetails, selectedFeedbackType});
+            const response = await submitServiceSpecificFeedback({ ...serviceSpecificFeedbackDetails });
 
             resetSpecificFeedbackDetails();
             setSuccessMessage(`Successfully Submitted Feedback`);
@@ -140,5 +144,5 @@ export const useServiceSpecificFeedback = () => {
 
     };
 
-    return { loading, error, successMessage, setSuccessMessage, serviceSpecificFeedbackDetails, appointmentHistory, updateServiceSpecificFeedbackDetails, resetRatingsDetailsWhenAppointmentIDChanged, fetchAppointmentHistoryForFeedback, handleSubmitForServiceSpecificFeedback, overallServiceRatingScale, cleaninessRatingScale, serviceSatisfactionRatingScale, communicationRatingScale, category, };
+    return { loading, error, setError, successMessage, setSuccessMessage, refresh, refreshPage, serviceSpecificFeedbackDetails, appointmentHistory, updateServiceSpecificFeedbackDetails, resetRatingsDetailsWhenAppointmentIDChanged, fetchAppointmentHistoryForFeedback, handleSubmitForServiceSpecificFeedback, overallServiceRatingScale, cleaninessRatingScale, serviceSatisfactionRatingScale, communicationRatingScale, category, };
 };

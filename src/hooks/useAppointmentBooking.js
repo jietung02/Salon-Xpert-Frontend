@@ -123,7 +123,7 @@ export const useAppontmentBooking = () => {
 
             const path = isAuthenticated === 'guest' ? '/guest/booking-summary' : '/customer/booking-summary';
             const from = isAuthenticated === 'guest' ? 'guest' : 'customer';
-
+            console.log(from)
             const response = await createAppointment({ ...appointDetails, from, username });
             console.log(response)
 

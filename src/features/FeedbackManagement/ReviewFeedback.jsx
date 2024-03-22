@@ -7,7 +7,7 @@ import Table from "../../components/Table/Table";
 
 export default function ReviewFeedback() {
 
-  const { loading, error, filterIsOpen, sortIsOpen, toggleFilterButton, toggleSortButton, filterDetails, sortDetails, updateFilterDetails, resetFilterDetails, updateSortDetails, overallServiceRatingScale, cleaninessRatingScale, serviceSatisfactionRatingScale, communicationRatingScale, fetchAllFeedback, tableData, handleFilterApply, resetFilteredDetails, resetSortedDetails, allServiceSpecificFeedback, allGeneralFeedback, filteredDetails, sortedDetails, resetSortDetails, handleSortApply,setOriginalDataToTable, } = useReviewFeedback();
+  const { loading, error, filterIsOpen, sortIsOpen, toggleFilterButton, toggleSortButton, filterDetails, sortDetails, updateFilterDetails, resetFilterDetails, updateSortDetails, overallServiceRatingScale, cleaninessRatingScale, serviceSatisfactionRatingScale, communicationRatingScale, fetchAllFeedback, tableData, handleFilterApply, resetFilteredDetails, resetSortedDetails, allServiceSpecificFeedback, allGeneralFeedback, filteredDetails, sortedDetails, resetSortDetails, handleSortApply, setOriginalDataToTable, } = useReviewFeedback();
 
 
   useEffect(() => {
@@ -21,11 +21,9 @@ export default function ReviewFeedback() {
 
     resetFilteredDetails();
     resetSortedDetails();
-    if (filterDetails.feedbackType !== undefined && filterDetails.feedbackType !== null && filterDetails.feedbackType !== '') {
-      fetchData();
-    }
 
-  }, [filterDetails.feedbackType]);
+    fetchData();
+  }, []);
 
 
   return (
@@ -33,30 +31,8 @@ export default function ReviewFeedback() {
     <div>
       <h1 className="px-8 py-6 text-4xl sm:px-7 lg:px-20 lg:py-10 2xl:px-20 2xl:py-12 2xl:text-5xl lg:text-left text-center font-bold text-gray-900">Review Feedback</h1>
 
-      <div className="my-4 mx-auto w-4/5 bg-gray-50 rounded-lg shadow-md shadow-gray-200 flex flex-wrap md:items-end gap-8 px-12 lg:px-20 2xl:px-24 py-12">
-        {error && (
-          <div class="w-full text-center bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative" role="alert">
-            <span class="block sm:inline text-xl 2xl:text-2xl">{error}</span>
-          </div>
-        )}
-
-        <Dropdown
-          isSelected={filterDetails.feedbackType}
-          label='Feedback Type'
-          name='feedbackType'
-          handleOnChange={updateFilterDetails}
-          options={[
-            { label: '', value: '' },
-            { label: 'Service Specific', value: 'service-specific' },
-            { label: 'General', value: 'general' },
-          ]
-          }
-          goTop='Yes'
-        />
-      </div>
 
       <button
-        disabled={filterDetails.feedbackType === null || filterDetails.feedbackType === ''}
         class="mt-5 align-middle select-none font-bold text-center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xl 2xl:text-2xl py-2 px-5 rounded-lg border border-gray-900 text-gray-900 hover:opacity-75 focus:ring focus:ring-gray-900 active:opacity-[0.85] flex mx-auto items-center gap-3"
         type="button"
         onClick={() => {
@@ -65,7 +41,7 @@ export default function ReviewFeedback() {
       >
         Toggle Filter By:
       </button>
-      {filterIsOpen && filterDetails.feedbackType && (
+      {filterIsOpen && (
         <>
 
           <form className="my-4 mx-auto w-4/5 bg-gray-50 rounded-lg shadow-md shadow-gray-300 flex flex-wrap md:items-end gap-8 px-12 lg:px-20 2xl:px-24 py-12" onSubmit={(e) => { handleFilterApply(e) }}>
@@ -110,45 +86,43 @@ export default function ReviewFeedback() {
 
             </div>
 
-            {filterDetails.feedbackType && filterDetails.feedbackType === 'service-specific' && (
-              <>
-                <RadioButton
-                  bookingMethod={filterDetails.overallRating}
-                  name='overallRating'
-                  label='Overall Service Rating'
-                  handleOnChange={updateFilterDetails}
-                  type='scale'
-                  options={overallServiceRatingScale}
-                />
 
-                <RadioButton
-                  bookingMethod={filterDetails.cleanlinessRating}
-                  name='cleanlinessRating'
-                  label='Cleanliness Rating'
-                  handleOnChange={updateFilterDetails}
-                  type='scale'
-                  options={cleaninessRatingScale}
-                />
+            <RadioButton
+              bookingMethod={filterDetails.overallRating}
+              name='overallRating'
+              label='Overall Service Rating'
+              handleOnChange={updateFilterDetails}
+              type='scale'
+              options={overallServiceRatingScale}
+            />
 
-                <RadioButton
-                  bookingMethod={filterDetails.satisfactionWithResultRating}
-                  name='satisfactionWithResultRating'
-                  label='Satisfaction Rating'
-                  handleOnChange={updateFilterDetails}
-                  type='scale'
-                  options={serviceSatisfactionRatingScale}
-                />
+            <RadioButton
+              bookingMethod={filterDetails.cleanlinessRating}
+              name='cleanlinessRating'
+              label='Cleanliness Rating'
+              handleOnChange={updateFilterDetails}
+              type='scale'
+              options={cleaninessRatingScale}
+            />
 
-                <RadioButton
-                  bookingMethod={filterDetails.communicationRating}
-                  name='communicationRating'
-                  label='Communication Rating'
-                  handleOnChange={updateFilterDetails}
-                  type='scale'
-                  options={communicationRatingScale}
-                />
-              </>
-            )}
+            <RadioButton
+              bookingMethod={filterDetails.satisfactionWithResultRating}
+              name='satisfactionWithResultRating'
+              label='Satisfaction Rating'
+              handleOnChange={updateFilterDetails}
+              type='scale'
+              options={serviceSatisfactionRatingScale}
+            />
+
+            <RadioButton
+              bookingMethod={filterDetails.communicationRating}
+              name='communicationRating'
+              label='Communication Rating'
+              handleOnChange={updateFilterDetails}
+              type='scale'
+              options={communicationRatingScale}
+            />
+
 
             <button
               class="mt-5 align-middle select-none font-bold text-center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xl 2xl:text-2xl py-2 px-5 rounded-lg border border-gray-900 text-gray-900 hover:opacity-75 focus:ring focus:ring-gray-900 active:opacity-[0.85] flex mx-auto items-center gap-3"
@@ -174,7 +148,7 @@ export default function ReviewFeedback() {
 
 
       <button
-        disabled={filterDetails.feedbackType === null || filterDetails.feedbackType === ''}
+        // disabled={}
         class="mt-5 align-middle select-none font-bold text-center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xl 2xl:text-2xl py-2 px-5 rounded-lg border border-gray-900 text-gray-900 hover:opacity-75 focus:ring focus:ring-gray-900 active:opacity-[0.85] flex mx-auto items-center gap-3"
         type="button"
         onClick={() => {
@@ -191,27 +165,22 @@ export default function ReviewFeedback() {
         </>
       )} */}
 
-      {sortIsOpen && filterDetails.feedbackType && (
+      {sortIsOpen && (
         <>
 
           <form className="my-4 mx-auto w-4/5 bg-gray-50 rounded-lg shadow-md shadow-gray-300 flex flex-wrap md:items-end gap-8 px-12 lg:px-20 2xl:px-24 py-12" onSubmit={(e) => { handleSortApply(e) }}>
 
-            {filterDetails.feedbackType && filterDetails.feedbackType === 'service-specific' && (
-              <>
-                <RadioButton
-                  bookingMethod={sortDetails.overallRating}
-                  name='overallRating'
-                  label='Overall Service Rating'
-                  handleOnChange={updateSortDetails}
+            <RadioButton
+              bookingMethod={sortDetails.overallRating}
+              name='overallRating'
+              label='Overall Service Rating'
+              handleOnChange={updateSortDetails}
 
-                  options={[
-                    { id: 'ratingAsc', value: 'true', label: 'Lowest to Highest' },
-                    { id: 'ratingDesc', value: 'false', label: 'Highest to Lowest' },
-                  ]}
-                />
-
-              </>
-            )}
+              options={[
+                { id: 'ratingAsc', value: 'true', label: 'Lowest to Highest' },
+                { id: 'ratingDesc', value: 'false', label: 'Highest to Lowest' },
+              ]}
+            />
 
             <RadioButton
               bookingMethod={sortDetails.date}

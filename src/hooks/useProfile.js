@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 
 export const useProfile = () => {
 
-    const { customerId, dispatch } = useContext(AuthContext);
+    const { id, dispatch } = useContext(AuthContext);
     const [successMessage, setSuccessMessage] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -71,7 +71,7 @@ export const useProfile = () => {
 
     const fetchProfileDetails = async () => {
         try {
-            const details = await fetchOwnProfileDetails(customerId);
+            const details = await fetchOwnProfileDetails(id);
 
             const reformat = {
                 ...details.data,
@@ -94,7 +94,7 @@ export const useProfile = () => {
             }
 
             setLoading(true);
-            const response = await saveProfileDetails(customerId, profileDetails);
+            const response = await saveProfileDetails(id, profileDetails);
             updateAuthContextData();
             //rmb if success update context also
             setSuccessMessage('Successfully Updated Profile Details');

@@ -163,9 +163,9 @@ export const payDeposit = async (summaryDetails) => {
     }
 };
 
-export const fetchOwnProfileDetails = async (customerId) => {
+export const fetchOwnProfileDetails = async (id) => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/${customerId}`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -183,9 +183,9 @@ export const fetchOwnProfileDetails = async (customerId) => {
     }
 }
 
-export const saveProfileDetails = async (customerId, profileDetails) => {
+export const saveProfileDetails = async (id, profileDetails) => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/${customerId}`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -204,13 +204,14 @@ export const saveProfileDetails = async (customerId, profileDetails) => {
     }
 }
 
-export const fetchAppointmentHistoryForSSFeedback = async (customerId) => {
+export const fetchAppointmentHistoryForSSFeedback = async (details) => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/feedback/service-specific-feedback/${customerId}`, {
-            method: 'GET',
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/feedback/service-specific-feedback/${details.id}`, {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
+            body: JSON.stringify({ ...details })
         });
 
         if (!response.ok) {

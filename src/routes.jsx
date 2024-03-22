@@ -37,7 +37,7 @@ import ModifyService from './features/SalonService/ModifyService';
 import CreateStaffProfile from './features/SalonStaffProfile/CreateStaffProfile';
 import ModifyStaffProfile from './features/SalonStaffProfile/ModifyStaffProfile';
 import GenerateReports from './features/Reports/GenerateReports';
-import GeneralFeedback from './pages/Guest/GuestFeedback/GeneralFeedback';
+import GuestFeedbackRatings from './pages/Guest/GuestFeedbackRatings/GuestFeedbackRatings';
 import { AuthContext } from './context/AuthContext';
 import { useContext } from 'react';
 
@@ -149,7 +149,8 @@ export default function AppRoutes() {
       <Route path='/guest/new-appointment' element={<GuestAppointment />} />
       <Route path='/guest/booking-summary' element={<GuestBookSummary />} />
       <Route path='/guest/booking-success' element={<GuestBookSuccess />} />
-      <Route path='/guest/general-feedback' element={<GeneralFeedback />} />
+      <Route path='/guest/feedback-ratings' element={<GuestFeedbackRatings />} />
+      
     </>
   );
 
@@ -176,6 +177,7 @@ export default function AppRoutes() {
             {role === 'admin' && adminRoutes}
             {role === 'staff' && staffRoutes}
             {role === 'customer' && customerRoutes}
+            {role === 'guest' && guestRoutes}
           </>
         ) : (
           guestRoutes

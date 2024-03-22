@@ -1,13 +1,16 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import Dropdown from '../../components/Dropdown/Dropdown';
 import RadioButton from '../../components/RadioButton/RadioButton';
 import { InformationCircleIcon } from '@heroicons/react/24/solid';
+import { ArrowPathIcon } from '@heroicons/react/24/solid';
+import { AuthContext } from '../../context/AuthContext';
 
 const { useServiceSpecificFeedback } = require('../../hooks/useServiceSpecificFeedback');
 
 export default function ProvideServiceSpecificFeedback() {
 
-  const { loading, error, successMessage, setSuccessMessage, serviceSpecificFeedbackDetails, appointmentHistory, updateServiceSpecificFeedbackDetails, resetRatingsDetailsWhenAppointmentIDChanged, handleSubmitForServiceSpecificFeedback, fetchAppointmentHistoryForFeedback, overallServiceRatingScale, cleaninessRatingScale, serviceSatisfactionRatingScale, communicationRatingScale, category, } = useServiceSpecificFeedback();
+  const { id, role } = useContext(AuthContext);
+  const { loading, error,setError, successMessage, setSuccessMessage, refresh, refreshPage, serviceSpecificFeedbackDetails, appointmentHistory, updateServiceSpecificFeedbackDetails, resetRatingsDetailsWhenAppointmentIDChanged, handleSubmitForServiceSpecificFeedback, fetchAppointmentHistoryForFeedback, overallServiceRatingScale, cleaninessRatingScale, serviceSatisfactionRatingScale, communicationRatingScale, category, } = useServiceSpecificFeedback();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,10 +20,26 @@ export default function ProvideServiceSpecificFeedback() {
         console.error('Error fetching data', error);
       }
     }
+    if (id !== null && role !== null) {
+      fetchData();
+    }
 
-    fetchData();
 
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await fetchAppointmentHistoryForFeedback();
+      } catch (error) {
+        console.error('Error fetching data', error);
+      }
+    }
+    if (id !== null && role !== null) {
+      fetchData();
+    }
+
+  }, [refresh]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,11 +68,23 @@ export default function ProvideServiceSpecificFeedback() {
 
   return (
     <div>
+      <h1 className="px-8 py-6 text-4xl sm:px-7 lg:px-20 lg:py-10 2xl:px-20 2xl:py-12 2xl:text-5xl lg:text-left text-center font-bold text-gray-900">Feedback & Ratings</h1>
+
       <form className="my-4 mx-auto w-4/5 bg-gray-50 rounded-lg shadow-md shadow-gray-300 flex flex-wrap md:items-end gap-8 px-12 lg:px-20 2xl:px-24 py-12" onSubmit={(e) => handleSubmitForServiceSpecificFeedback(e)}>
         <div className="relative w-full">
           <div className="flex justify-center items-center mb-4 h-16">
             <span className="font-bold text-xl lg:text-2xl 2xl:text-3xl text-gray-900">Service Specific Feedback</span>
           </div>
+          <button
+            type='button'
+            className="absolute top-0 right-0 mt-1 mr-1 md:mr-4"
+            onClick={() => {
+              setError(null);
+              refreshPage();
+            }}
+          >
+            <ArrowPathIcon className="h-6 w-6 hover:text-gray-500" color="#111827" />
+          </button>
         </div>
 
         {successMessage && (
