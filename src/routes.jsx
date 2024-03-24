@@ -25,6 +25,7 @@ import FeedbackRatings from './pages/Customer/FeedbackRatings/FeedbackRatings';
 import NewAppointment from './pages/Customer/NewAppointment/NewAppointment';
 import BookSummary from './pages/Customer/BookSummary/BookSummary';
 import BookSuccess from './pages/Customer/BookSuccess/BookSuccess';
+import PaymentPage from './pages/Customer/PaymentPage/PaymentPage';
 
 import GuestAppointment from './pages/Guest/GuestAppointment/GuestAppointment';
 import GuestBookSummary from './pages/Guest/GuestBookSummary/GuestBookSummary';
@@ -38,6 +39,8 @@ import CreateStaffProfile from './features/SalonStaffProfile/CreateStaffProfile'
 import ModifyStaffProfile from './features/SalonStaffProfile/ModifyStaffProfile';
 import GenerateReports from './features/Reports/GenerateReports';
 import GuestFeedbackRatings from './pages/Guest/GuestFeedbackRatings/GuestFeedbackRatings';
+import GuestPaymentPage from './pages/Guest/GuestPaymentPage/GuestPaymentPage';
+
 import { AuthContext } from './context/AuthContext';
 import { useContext } from 'react';
 
@@ -123,7 +126,7 @@ export default function AppRoutes() {
       <Route path='/staff/staff-schedules' element={<StaffSchedules />} />
 
       <Route path='/staff/update-service-price' element={<UpdateServicePrice />} />
-      <Route path='/staff/view-schedule' element={<ViewSchedule />} />
+      <Route path='/staff/view-schedules' element={<ViewSchedule />} />
 
     </>
   );
@@ -139,6 +142,7 @@ export default function AppRoutes() {
       {/* <Route path='/customer/cancel-appointment' element={<CancelAppointment />} /> can be removed? */}
       <Route path='/customer/feedback-ratings' element={<FeedbackRatings />} />
       <Route path='/customer/profile' element={<Profile />} />
+      <Route path='/customer/payment/:appointmentId' element={<PaymentPage />} />
     </>
 
   );
@@ -150,6 +154,7 @@ export default function AppRoutes() {
       <Route path='/guest/booking-summary' element={<GuestBookSummary />} />
       <Route path='/guest/booking-success' element={<GuestBookSuccess />} />
       <Route path='/guest/feedback-ratings' element={<GuestFeedbackRatings />} />
+      <Route path='/guest/payment/:appointmentId' element={<GuestPaymentPage />} />
       
     </>
   );

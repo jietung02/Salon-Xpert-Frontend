@@ -1,3 +1,7 @@
+import ViewOwnSchedules from "../../../features/ServiceManagement/ViewOwnSchedules";
+
 export default function ViewSchedule() {
-    return (<h1>View Schedule</h1>);
+    return (
+        <ViewOwnSchedules />
+    );
 }

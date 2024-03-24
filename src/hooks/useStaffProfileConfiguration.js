@@ -38,7 +38,7 @@ export const useStaffProfileConfiguration = () => {
                 };
             });
         }
-    }
+    };
 
     const fetchAllProfiles = async () => {
         try {

@@ -244,16 +244,15 @@ export const submitServiceSpecificFeedback = async (serviceSpecificFeedbackDetai
     } catch (err) {
         throw new Error(err.message);
     }
-}
+};
 
-export const submitGeneralFeedback = async (generalFeedbackDetails) => {
+export const fetchAppointmentDetails = async (appoinmentId) => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/feedback/general-feedback/submit`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/payment/${appoinmentId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ ...generalFeedbackDetails })
         });
 
         if (!response.ok) {
@@ -265,5 +264,24 @@ export const submitGeneralFeedback = async (generalFeedbackDetails) => {
     } catch (err) {
         throw new Error(err.message);
     }
+}
 
+export const makeFinalPayment = async (appoinmentId) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/payment/pay/${appoinmentId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message);
+        }
+
+        return await response.json();
+    } catch (err) {
+        throw new Error(err.message);
+    }
 }

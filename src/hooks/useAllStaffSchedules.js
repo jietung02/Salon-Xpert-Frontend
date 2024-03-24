@@ -6,7 +6,11 @@ export const useAllStaffSchedules = () => {
 
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [refresh, setRefresh] = useState(false);
 
+    const refreshPage = () => {
+        setRefresh(!refresh);
+    }
 
     const fetchCalendarIds = async () => {
         try {
@@ -17,6 +21,6 @@ export const useAllStaffSchedules = () => {
         }
     };
 
-    return { loading, error, calendarIdsString, fetchCalendarIds };
+    return { loading, error, setError, refresh, refreshPage, calendarIdsString, fetchCalendarIds };
 }
 

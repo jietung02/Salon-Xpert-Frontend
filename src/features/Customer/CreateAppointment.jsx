@@ -156,7 +156,12 @@ export default function CreateAppointment() {
   return (
     <div>
       <h1 className="px-8 py-6 text-4xl sm:px-7 lg:px-20 lg:py-10 2xl:px-20 2xl:py-12 2xl:text-5xl lg:text-left text-center font-bold text-gray-900">Book Appointment</h1>
-      <form className="my-6 mx-auto w-4/5 bg-gray-100 rounded-lg shadow-md shadow-gray-200 flex flex-wrap lg:items-end gap-8 px-12 lg:px-20 2xl:px-24 py-12 mx-auto" onSubmit={(e) => handleSubmit(e)}>
+      <form className="my-6 mx-auto w-4/5 bg-gray-50 rounded-lg shadow-md shadow-gray-300 flex flex-wrap lg:items-end gap-8 px-12 lg:px-20 2xl:px-24 py-12 mx-auto" onSubmit={(e) => handleSubmit(e)}>
+        <div className="relative w-full">
+          <div className="flex justify-center items-center mb-4 h-16">
+            <span className="font-bold text-xl lg:text-2xl 2xl:text-3xl text-gray-900">Enter Appointment Details</span>
+          </div>
+        </div>
         {error && (
           <div class="w-full text-center bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative" role="alert">
             <span class="block sm:inline text-xs">{error}</span>
@@ -204,7 +209,7 @@ export default function CreateAppointment() {
           isSelected={appointDetails.gender}
           label='Gender'
           name='gender'
-          handleOnChange={updateAppointmentDetails} 
+          handleOnChange={updateAppointmentDetails}
           loadSelection={gender}
           options={[{ label: '', value: '' }, { label: 'Male', value: 'male' }, { label: 'Female', value: 'female' }]}
         />

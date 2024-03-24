@@ -1,8 +1,9 @@
-import UpdateFinalServicePrice from '../../../features/SalonServicePrice/UpdateFinalServicePrice'
+import UpdateServiceFinalPrice from "../../../features/ServiceManagement/UpdateServiceFinalPrice";
+
 export default function UpdateServicePrice() {
     return (
         <div>
-            <UpdateFinalServicePrice />
+            <UpdateServiceFinalPrice />
         </div>
     );
 }
