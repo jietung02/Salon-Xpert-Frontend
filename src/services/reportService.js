@@ -17,3 +17,24 @@ export const fetchSpecialists = async () => {
         throw new Error(err.message);
     }
 };
+
+export const generateReport = async (reportDetails) => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/reports/generate`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ...reportDetails })
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message);
+        }
+
+        return await response.json();
+    } catch (err) {
+        throw new Error(err.message);
+    }
+};

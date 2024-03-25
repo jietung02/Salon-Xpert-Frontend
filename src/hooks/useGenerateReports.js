@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { fetchSpecialists } from "../services/reportService";
+import { fetchSpecialists, generateReport, } from "../services/reportService";
 
 export const useGenerateReports = () => {
 
@@ -73,7 +73,6 @@ export const useGenerateReports = () => {
 
     const handleReportGeneration = async (e) => {
         e.preventDefault();
-        console.log('INNN')
         try {
 
             setLoading(true);
@@ -82,7 +81,7 @@ export const useGenerateReports = () => {
                 setError('Please fill up all the required field')
                 return;
             }
-            // const response = await createRole(roleDetails);
+            const response = await generateReport(reportDetails);
             // clearRoleDetails();
             // navigate(role === 'admin' ? '/admin/roles' : '/staff/roles', { state: { successMessage: `Successfully Created a New Role, Role Code : ${roleDetails.roleCode}` } })
             // performedChanges();
