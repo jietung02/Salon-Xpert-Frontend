@@ -2,16 +2,31 @@
 import { useGenerateReports } from "../../hooks/useGenerateReports";
 import Dropdown from "../../components/Dropdown/Dropdown";
 import { InformationCircleIcon } from "@heroicons/react/24/solid";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import useScreenSize from "../../hooks/useScreenSize";
 import { DatePicker } from "@mui/x-date-pickers";
 import { MobileDatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
+import { Viewer } from "@grapecity/activereports-react";
 
 export default function GenerateReports() {
-
+  const viewerRef = useRef();
   const { width } = useScreenSize();
-  const { loading, error, setError, successMessage, setSuccessMessage, reportDetails, updateReportDetails, resetReportDetailsExceptSelectedReport, fetchAllSpecialist, specialists, handleReportGeneration, } = useGenerateReports();
+  const { loading, error, setError, successMessage, setSuccessMessage, reportDetails, updateReportDetails, resetReportDetailsExceptSelectedReport, fetchAllSpecialist, specialists, handleReportGeneration, reportData, loadStaffPerformanceReportLayout, loadFeedbackReportLayout, } = useGenerateReports();
+
+  const openStaffPerformanceReport = async () => {
+    const report = await loadStaffPerformanceReportLayout();
+    report.DataSources[0].ConnectionProperties.ConnectString =
+      "jsondata=" + JSON.stringify(reportData);
+    viewerRef.current.Viewer.open(report);
+  };
+
+  const openFeedbackReport = async () => {
+    const report = await loadFeedbackReportLayout();
+    report.DataSources[0].ConnectionProperties.ConnectString =
+      "jsondata=" + JSON.stringify(reportData);
+    viewerRef.current.Viewer.open(report);
+  };
 
   useEffect(() => {
 
@@ -31,6 +46,19 @@ export default function GenerateReports() {
     resetReportDetailsExceptSelectedReport();
   }, [reportDetails.selectedReport]);
 
+
+  useEffect(() => {
+
+    if (reportData && reportDetails.selectedReport === 'staffPerformanceReport') {
+      openStaffPerformanceReport();
+    }
+    else if (reportData && reportDetails.selectedReport === 'feedbackReport') {
+      openFeedbackReport();
+    }
+    else if (reportData && reportDetails.selectedReport === 'revenueReport') {
+
+    }
+  }, [reportData]);
 
   return (
     <div>
@@ -107,7 +135,7 @@ export default function GenerateReports() {
                     format="DD/MM/YYYY"
                     views={['day', 'month', 'year']}
                     onError={(newError) => setError(newError)}
-                    disableFuture 
+                    disableFuture
                     onChange={(e) => { updateReportDetails(e, 'dateFrom') }}
                     onAccept={(e) => { updateReportDetails(e, 'dateFrom') }}
                   />
@@ -162,7 +190,7 @@ export default function GenerateReports() {
                     onAccept={(e) => { updateReportDetails(e, 'dateTo') }}
                   />
                 </div>
-              </>    
+              </>
             }
           </>
         }
@@ -175,6 +203,13 @@ export default function GenerateReports() {
           </button>
         </div>
       </form>
+
+      {reportData && <div className="my-4 mx-auto w-4/5 bg-gray-50 rounded-lg shadow-md shadow-gray-300 flex flex-wrap md:items-end gap-8 px-12 lg:px-20 2xl:px-24 py-12">
+        <div id="viewer-host">
+          <Viewer ref={viewerRef} />
+        </div>
+      </div>}
+
     </div >
 
 
