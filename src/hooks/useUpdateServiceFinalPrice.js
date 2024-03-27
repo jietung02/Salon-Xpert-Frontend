@@ -53,6 +53,7 @@ export const useUpdateServiceFinalPrice = () => {
 
     const fetchCurrentDateAppointments = async () => {
         try {
+            setAppointments([]);
             const appointments = await fetchTodayAppointments();
 
             setAppointments(appointments.data)

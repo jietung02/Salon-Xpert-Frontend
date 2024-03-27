@@ -12,7 +12,7 @@ import { Viewer } from "@grapecity/activereports-react";
 export default function GenerateReports() {
   const viewerRef = useRef();
   const { width } = useScreenSize();
-  const { loading, error, setError, successMessage, setSuccessMessage, reportDetails, updateReportDetails, resetReportDetailsExceptSelectedReport, fetchAllSpecialist, specialists, handleReportGeneration, reportData, loadStaffPerformanceReportLayout, loadFeedbackReportLayout, } = useGenerateReports();
+  const { loading, error, setError, successMessage, setSuccessMessage, reportDetails, updateReportDetails, resetReportDetailsExceptSelectedReport, fetchAllSpecialist, specialists, handleReportGeneration, reportData, loadStaffPerformanceReportLayout, loadFeedbackReportLayout, loadRevenueReportLayout, } = useGenerateReports();
 
   const openStaffPerformanceReport = async () => {
     const report = await loadStaffPerformanceReportLayout();
@@ -23,6 +23,13 @@ export default function GenerateReports() {
 
   const openFeedbackReport = async () => {
     const report = await loadFeedbackReportLayout();
+    report.DataSources[0].ConnectionProperties.ConnectString =
+      "jsondata=" + JSON.stringify(reportData);
+    viewerRef.current.Viewer.open(report);
+  };
+
+  const openRevenueReport = async () => {
+    const report = await loadRevenueReportLayout();
     report.DataSources[0].ConnectionProperties.ConnectString =
       "jsondata=" + JSON.stringify(reportData);
     viewerRef.current.Viewer.open(report);
@@ -56,7 +63,7 @@ export default function GenerateReports() {
       openFeedbackReport();
     }
     else if (reportData && reportDetails.selectedReport === 'revenueReport') {
-
+      openRevenueReport();
     }
   }, [reportData]);
 

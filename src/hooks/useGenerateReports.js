@@ -97,7 +97,18 @@ export const useGenerateReports = () => {
         return data;
     };
 
+    const loadRevenueReportLayout = async () => {
 
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/reports/revenue-report/layout`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        const data = await response.json();
+        return data;
+    };
+    
     const handleReportGeneration = async (e) => {
         e.preventDefault();
         try {
@@ -121,5 +132,5 @@ export const useGenerateReports = () => {
         }
     }
 
-    return { loading, error, setError, successMessage, setSuccessMessage, reportDetails, resetReportDetailsExceptSelectedReport, updateReportDetails, fetchAllSpecialist, specialists, handleReportGeneration, reportData, loadStaffPerformanceReportLayout, loadFeedbackReportLayout, };
+    return { loading, error, setError, successMessage, setSuccessMessage, reportDetails, resetReportDetailsExceptSelectedReport, updateReportDetails, fetchAllSpecialist, specialists, handleReportGeneration, reportData, loadStaffPerformanceReportLayout, loadFeedbackReportLayout,loadRevenueReportLayout, };
 };
