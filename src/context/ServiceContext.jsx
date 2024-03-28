@@ -49,15 +49,6 @@ export const ServiceContextProvider = ({ children }) => {
         })
     };
 
-    // const updateServiceDetailsObjectVer = (service) => {
-    //     setServiceDetails({
-    //         serviceCode: service.serviceCode,
-    //         serviceName: service.serviceName,
-    //         serviceDuration: service.serviceDuration,
-    //         serviceBasedPrice: service.serviceBasedPrice,
-    //     })
-    // };
-
     return (
         <ServiceContext.Provider value={{ performingChanges, serviceDetails, performedChanges, updateServiceDetails, updateServiceDetailsArrayVer, clearServiceDetails}}>
             {children}
