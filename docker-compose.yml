@@ -7,3 +7,5 @@ services:
       dockerfile: Dockerfile
     ports:
       - 80:80
+    environment:
+      REACT_APP_SERVER_URI: http://localhost:8000
