@@ -75,7 +75,7 @@ export const useGenerateReports = () => {
 
     const loadStaffPerformanceReportLayout = async () => {
 
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/reports/staff-performance-report/layout`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/reports/staff-performance-report/layout`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -87,7 +87,7 @@ export const useGenerateReports = () => {
 
     const loadFeedbackReportLayout = async () => {
 
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/reports/feedback-report/layout`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/reports/feedback-report/layout`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -99,7 +99,7 @@ export const useGenerateReports = () => {
 
     const loadRevenueReportLayout = async () => {
 
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/reports/revenue-report/layout`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/reports/revenue-report/layout`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

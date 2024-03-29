@@ -1,6 +1,6 @@
 export const fetchAllFeedbackAndRatings = async () => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/feedback-management`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/feedback-management`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

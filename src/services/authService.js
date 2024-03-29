@@ -2,7 +2,8 @@
 
 export const loginUser = async (credentials) => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/users/login`, {
+        console.log(process.env.REACT_APP_SERVER_URI)
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/users/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -17,13 +18,14 @@ export const loginUser = async (credentials) => {
 
         return await response.json();
     } catch (err) {
+        console.log(err)
         throw new Error(err.message);
     }
 };
 
 export const registerUser = async (userData) => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/new`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/customers/new`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -44,7 +46,7 @@ export const registerUser = async (userData) => {
 
 export const guestLogin = async () => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/users/guest`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/users/guest`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

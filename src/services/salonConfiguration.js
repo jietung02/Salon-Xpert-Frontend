@@ -1,6 +1,6 @@
 export const getSalonServices = async () => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/services`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/salon-configurations/services`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -20,7 +20,7 @@ export const getSalonServices = async () => {
 
 export const createNewService = async (serviceDetails) => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/services/new`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/salon-configurations/services/new`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -41,7 +41,7 @@ export const createNewService = async (serviceDetails) => {
 
 export const editService = async (serviceDetails) => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/services/${serviceDetails.serviceCode}`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/salon-configurations/services/${serviceDetails.serviceCode}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -62,7 +62,7 @@ export const editService = async (serviceDetails) => {
 
 export const deleteService = async (serviceCode) => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/services/${serviceCode}`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/salon-configurations/services/${serviceCode}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -82,7 +82,7 @@ export const deleteService = async (serviceCode) => {
 
 export const fetchAllProfileRecords = async () => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/staff-profiles`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/salon-configurations/staff-profiles`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -102,7 +102,7 @@ export const fetchAllProfileRecords = async () => {
 
 export const fetchAllRoles = async () => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/staff-profiles/roles`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/salon-configurations/staff-profiles/roles`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -122,7 +122,7 @@ export const fetchAllRoles = async () => {
 
 export const fetchAllServices = async () => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/staff-profiles/services`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/salon-configurations/staff-profiles/services`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -142,7 +142,7 @@ export const fetchAllServices = async () => {
 
 export const createNewStaff = async (profileDetails) => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/staff-profiles/new`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/salon-configurations/staff-profiles/new`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -163,7 +163,7 @@ export const createNewStaff = async (profileDetails) => {
 
 export const editStaffProfile = async (profileDetails) => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/staff-profiles/${profileDetails.staffId}`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/salon-configurations/staff-profiles/${profileDetails.staffId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -184,7 +184,7 @@ export const editStaffProfile = async (profileDetails) => {
 
 export const deleteProfile = async (staffId) => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/staff-profiles/${staffId}`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/salon-configurations/staff-profiles/${staffId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -204,7 +204,7 @@ export const deleteProfile = async (staffId) => {
 
 export const fetchAllPriceOptions = async () => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-options`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-options`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -224,7 +224,7 @@ export const fetchAllPriceOptions = async () => {
 
 export const savePriceOptions = async (priceOptions) => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-options/save`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-options/save`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -245,7 +245,7 @@ export const savePriceOptions = async (priceOptions) => {
 
 export const fetchAllPricingRules = async () => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-rules`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-rules`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -265,7 +265,7 @@ export const fetchAllPricingRules = async () => {
 
 export const fetchAllSalonServices = async () => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-rules/services`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-rules/services`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -285,7 +285,7 @@ export const fetchAllSalonServices = async () => {
 
 export const fetchAllAgeCategories = async () => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-rules/age-categories`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-rules/age-categories`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -305,7 +305,7 @@ export const fetchAllAgeCategories = async () => {
 
 export const fetchMatchSpecialists = async (serviceCode) => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-rules/match-specialists/${serviceCode}`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-rules/match-specialists/${serviceCode}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -325,7 +325,7 @@ export const fetchMatchSpecialists = async (serviceCode) => {
 
 export const createNewPriceRule = async (pricingRuleDetails) => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-rules/new`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-rules/new`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -346,7 +346,7 @@ export const createNewPriceRule = async (pricingRuleDetails) => {
 
 export const editPriceRule = async (pricingRuleDetails) => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-rules/${pricingRuleDetails.pricingRuleId}`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-rules/${pricingRuleDetails.pricingRuleId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -367,7 +367,7 @@ export const editPriceRule = async (pricingRuleDetails) => {
 
 export const deletePricingRule = async (pricingRuleId) => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-rules/${pricingRuleId}`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/salon-configurations/pricing-rules/${pricingRuleId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

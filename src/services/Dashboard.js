@@ -1,6 +1,6 @@
 export const getAllStaffCalendarIds = async () => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/dashboard/staff-calendar-ids`, {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/dashboard/staff-calendar-ids`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
