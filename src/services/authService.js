@@ -2,7 +2,6 @@
 
 export const loginUser = async (credentials) => {
     try {
-        console.log(process.env.REACT_APP_SERVER_URI)
         const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/users/login`, {
             method: 'POST',
             headers: {
