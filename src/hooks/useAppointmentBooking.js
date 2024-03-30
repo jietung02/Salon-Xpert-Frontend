@@ -197,7 +197,7 @@ export const useAppontmentBooking = () => {
 
     const fetchWorkingTimeSlots = async () => {
         try {
-            const timeSlots = await fetchWorkingHoursTimeSlots();
+            const timeSlots = await fetchWorkingHoursTimeSlots(appointDetails.selectedServices);
             setAvailableTimeSlots(timeSlots);
         } catch (error) {
             setError(error.message);

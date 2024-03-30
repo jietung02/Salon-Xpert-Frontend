@@ -63,7 +63,7 @@ export default function CreateAppointment() {
 
 
   useEffect(() => {
-    const fetchSpecialistData = async () => {
+    const fetchData = async () => {
       try {
 
         if (appointDetails.bookingMethod === 'specialist') {
@@ -71,7 +71,6 @@ export default function CreateAppointment() {
           setSpecialists([]);
           setAvailableTimeSlots([]);
           resetDateTime();
-          console.log('INN')
           await fetchSpecialists();
         }
         else {
@@ -79,14 +78,17 @@ export default function CreateAppointment() {
           resetDateTime();
           setSpecialists([]);
           await fetchSpecialists();
+          if (appointDetails.selectedServices.length > 0) {
+            await fetchWorkingTimeSlots();
+          }       
         }
 
       } catch (error) {
-        console.error('Error fetching specialists:', error);
+        console.error('Error fetching data:', error);
       }
     }
 
-    fetchSpecialistData();
+    fetchData();
   }, [appointDetails.bookingMethod, appointDetails.selectedServices]);
 
   useEffect(() => {
@@ -104,19 +106,6 @@ export default function CreateAppointment() {
 
   }, [appointDetails.selectedSpecialist, appointDetails.selectedDate]);
 
-  useEffect(() => {
-    const fetchWorkingHours = async () => {
-      try {
-        await fetchWorkingTimeSlots();
-      } catch (error) {
-        console.error('Error fetching working hours', error);
-      }
-    }
-
-    if (appointDetails.bookingMethod === 'datetime') {
-      fetchWorkingHours();
-    }
-  }, [appointDetails.bookingMethod])
 
   useEffect(() => {
     if (appointDetails.bookingMethod === 'datetime') {
@@ -147,6 +136,7 @@ export default function CreateAppointment() {
 
   useEffect(() => {
     if (appointDetails.bookingMethod === 'datetime') {
+
       resetTime();
     }
 
