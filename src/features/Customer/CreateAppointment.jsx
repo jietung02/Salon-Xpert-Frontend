@@ -134,7 +134,6 @@ export default function CreateAppointment() {
 
     const fetchSpecialistAvailableThatTime = async () => {
       try {
-        await fetchSpecialists();
         if (appointDetails.bookingMethod === 'datetime' && specialists.length !== 0 && appointDetails.selectedTime !== null) {
           await fetchSpecialistAvailability();
         }

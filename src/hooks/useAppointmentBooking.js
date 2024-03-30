@@ -147,8 +147,11 @@ export const useAppontmentBooking = () => {
     const fetchSpecialists = async () => {
         const specialists = await fetchMatchSpecialists(appointDetails.selectedServices);
         setSpecialists(specialists);
+    }
 
-
+    const fetchSpecialistsArray = async () => {
+        const result = await fetchMatchSpecialists(appointDetails.selectedServices);
+        return result;
     }
 
     const fetchAvailableTimeSlot = async () => {
@@ -170,11 +173,9 @@ export const useAppontmentBooking = () => {
                 const availableSlots = availableTimeSlots.filter(slot => slot.hour === hour);
 
                 if (availableSlots.some((slot => hour === slot.hour))) {
-                    console.log(hour)
                     return false;
                 }
                 else {
-                    console.log(hour)
                     return true;
                 }
 
@@ -206,7 +207,9 @@ export const useAppontmentBooking = () => {
     const fetchSpecialistAvailability = async () => {
         try {
             setError(null);
-            const specialistsAvailable = await fetchSpecialistThatTime(specialists, appointDetails.selectedServices, appointDetails.selectedTime);
+            const response = await fetchSpecialistsArray();
+
+            const specialistsAvailable = await fetchSpecialistThatTime(response, appointDetails.selectedServices, appointDetails.selectedTime);
             setSpecialists(specialistsAvailable);
         } catch (error) {
             setSpecialists([]);
