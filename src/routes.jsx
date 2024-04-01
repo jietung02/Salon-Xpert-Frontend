@@ -27,6 +27,7 @@ import BookSummary from './pages/Customer/BookSummary/BookSummary';
 import BookSuccess from './pages/Customer/BookSuccess/BookSuccess';
 import PaymentPage from './pages/Customer/PaymentPage/PaymentPage';
 
+import GuestDashboard from './pages/Guest/GuestDashboard/GuestDashboard';
 import GuestAppointment from './pages/Guest/GuestAppointment/GuestAppointment';
 import GuestBookSummary from './pages/Guest/GuestBookSummary/GuestBookSummary';
 import GuestBookSuccess from './pages/Guest/GuestBookSuccess/GuestBookSuccess';
@@ -43,6 +44,7 @@ import GuestPaymentPage from './pages/Guest/GuestPaymentPage/GuestPaymentPage';
 
 import { AuthContext } from './context/AuthContext';
 import { useContext } from 'react';
+
 
 
 
@@ -150,12 +152,13 @@ export default function AppRoutes() {
   const guestRoutes = (
     <>
       {/* Guest Routes */}
+      <Route path='/guest' element={<GuestDashboard />} />
       <Route path='/guest/new-appointment' element={<GuestAppointment />} />
       <Route path='/guest/booking-summary' element={<GuestBookSummary />} />
       <Route path='/guest/booking-success' element={<GuestBookSuccess />} />
       <Route path='/guest/feedback-ratings' element={<GuestFeedbackRatings />} />
       <Route path='/guest/payment/:appointmentId' element={<GuestPaymentPage />} />
-      
+
     </>
   );
 

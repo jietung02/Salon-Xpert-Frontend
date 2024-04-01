@@ -53,7 +53,7 @@ export default function Login() {
         navigate('/customer');
       }
       else if (role === 'guest') {
-        navigate('/guest/feedback-ratings');
+        navigate('/guest');
       }
 
     }
@@ -84,7 +84,7 @@ export default function Login() {
         navigate('/customer');
       }
       else if (role === 'guest') {
-        navigate('/guest/feedback-ratings');
+        navigate('/guest');
       }
     }
     else if (isAuthenticated === 'guest') {

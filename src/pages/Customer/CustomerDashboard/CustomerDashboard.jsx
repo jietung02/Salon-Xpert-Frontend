@@ -1,9 +1,7 @@
-import { Outlet } from "react-router-dom";
+import DashboardCustomer from "../../../features/Customer/DashboardCustomer";
 
 export default function CustomerDashboard() {
-    return (
-        <div>
-            <h1>Customer Dashboard</h1>
-            <Outlet />
-        </div>);
+  return (
+    <DashboardCustomer />
+  );
 }

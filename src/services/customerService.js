@@ -83,7 +83,7 @@ export const fetchTimeSpecialistTimeSlot = async (selectedServices, selectedSpec
 
 export const fetchWorkingHoursTimeSlots = async (selectedServices) => {
     try {
-        
+
         const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/customers/working-hours`, {
             method: 'POST',
             headers: {
@@ -127,6 +127,26 @@ export const fetchSpecialistThatTime = async (specialists, selectedServices, sel
 export const cancelAppointment = async (appointmentId) => {
     try {
         const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/customers/appointment/cancel/${appointmentId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message);
+        }
+
+        return await response.json();
+    } catch (err) {
+        throw new Error(err.message);
+    }
+};
+
+export const cancelScheduledAppointment = async (appointmentId) => {
+    try {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/customers/appointment-scheduled/cancel/${appointmentId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -287,3 +307,26 @@ export const makeFinalPayment = async (appoinmentId) => {
         throw new Error(err.message);
     }
 }
+
+export const fetchCustomerData = async (userData) => {
+    try {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/customers/dashboard-data/${userData.id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ...userData })
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message);
+        }
+
+        return await response.json();
+    } catch (err) {
+        throw new Error(err.message);
+    }
+};
+
+
