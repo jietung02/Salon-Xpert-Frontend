@@ -1,7 +1,7 @@
-export default function Table({ headers, data, handleEdit, handleDelete }) {
+export default function Table({ headers, data, handleEdit, handleDelete, customHeight }) {
 
   return (
-    <div class="relative rounded-xl shadow-md my-14 lg:w-11/12 mx-5 lg:mx-auto overflow-auto custom-height bg-white">
+    <div class={`relative rounded-xl shadow-md my-14 lg:w-11/12 mx-5 lg:mx-auto overflow-auto ${customHeight && customHeight === true ? 'custom-height-dashboard' : 'custom-height-default'} bg-white`}>
 
       <table class="w-full text-base 2xl:text-xl text-left rtl:text-right text-gray-500">
         <thead class="text-base 2xl:text-xl text-white uppercase bg-gray-900 ">

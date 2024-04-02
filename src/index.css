@@ -22,14 +22,21 @@ code {
   flex-grow: 1;
 }
 
-.custom-height {
+.custom-height-default {
   height: 600px;
 }
 
 .custom-height-iframe {
   height: 1000px;
 }
+.custom-height-dashboard {
+  height: 400px;
+}
 
 .custom-height-upcoming-appointment {
   height: 500px;
+}
+
+.custom-height-upcoming-appointment-adminstaff {
+  height: 1000px;
 }

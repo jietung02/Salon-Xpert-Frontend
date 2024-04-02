@@ -1,11 +1,7 @@
-import { Outlet } from "react-router-dom";
+import AdminStaffDashboard from "../../../features/Dashboard/AdminStaffDashboard";
 
 export default function Dashboard() {
     return (
-        <>
-            <h1>Dashboard</h1>
-
-        </>
-
+        <AdminStaffDashboard />
     );
 }
