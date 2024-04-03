@@ -67,7 +67,8 @@ export default function AdminStaffDashboard() {
 
             {Array.isArray(dashboardData.allUpcomingAppointments) && dashboardData.allUpcomingAppointments.length > 0 ? dashboardData.allUpcomingAppointments.map(value => {
               return (
-                <div key={value.appointmentId} className="relative w-full mx-auto my-4 bg-gray-50 rounded-lg border-2 border-gray-900 shadow-md shadow-gray-200 gap-8 px-12 lg:px-14 2xl:px-16 py-6">
+                <div key={value.appointmentId} className="relative w-full mx-auto my-4 bg-gray-50 rounded-lg border-2 border-gray-900 break-words shadow-md shadow-gray-200 gap-8 px-12 lg:px-14 2xl:px-16 py-6">
+                  <p className=" text-lg lg:text-xl 2xl:text-2xl text-left"><span className="font-medium">Appointment ID : </span><span>{value.appointmentId}</span></p>
                   <p className="text-lg lg:text-xl 2xl:text-2xl text-left"><span className="font-medium">Staff Name : </span><span>{value.staffName}</span></p>
                   <p className="text-lg lg:text-xl 2xl:text-2xl text-left"><span className="font-medium">Customer or Guest Name : </span><span>{value.name}</span></p>
                   <p className="text-lg lg:text-xl 2xl:text-2xl text-left"><span className="font-medium">Appointment Date Time : </span><span>{value.startDateTime}</span></p>
@@ -75,8 +76,8 @@ export default function AdminStaffDashboard() {
                 </div>)
             })
               :
-              <div className="relative overflow-auto  md:m-16 m-3 h-80 flex items-center justify-center">
-                <span className="text-xl lg:text-2xl 2xl:text-3xl text-gray-900">No Upcoming Appointments</span>
+              <div className="flex justify-center items-center h-4/5">
+                <span className="text-xl lg:text-2xl 2xl:text-3xl text-gray-900">No Past Appointments</span>
               </div>
             }
 

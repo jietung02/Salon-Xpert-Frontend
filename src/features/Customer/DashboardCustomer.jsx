@@ -78,7 +78,7 @@ export default function DashboardCustomer() {
         {Array.isArray(upcomingAppointments) && upcomingAppointments.length > 0 ? upcomingAppointments.map(value => {
 
           return (
-            <div key={value.appointmentId} className="relative my-3 w-full mx-auto w-9/12 bg-gray-50 rounded-lg shadow-md shadow-gray-200 gap-8 px-12 lg:px-20 2xl:px-24 py-12">
+            <div key={value.appointmentId} className="relative my-3 w-full mx-auto w-9/12 break-words bg-gray-50 rounded-lg shadow-md shadow-gray-200 gap-8 px-12 lg:px-20 2xl:px-24 py-12">
               <p className="text-lg lg:text-xl 2xl:text-2xl text-left"><span className="font-medium">Appointment ID : </span><span>{value.appointmentId}</span></p>
               <p className="text-lg lg:text-xl 2xl:text-2xl text-left"><span className="font-medium">Staff Name : </span><span>{value.staffName}</span></p>
               <p className="text-lg lg:text-xl 2xl:text-2xl text-left"><span className="font-medium">Appointment Date Time : </span><span>{value.startDateTime}</span></p>

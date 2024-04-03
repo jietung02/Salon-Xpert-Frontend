@@ -329,4 +329,24 @@ export const fetchCustomerData = async (userData) => {
     }
 };
 
+export const fetchAllAppointmentHistory = async (id) => {
+    try {
+        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/customers/appointment/history/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message);
+        }
+
+        return await response.json();
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
+
 
