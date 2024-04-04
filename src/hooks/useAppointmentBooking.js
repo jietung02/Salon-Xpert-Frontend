@@ -123,14 +123,14 @@ export const useAppontmentBooking = () => {
 
             const path = isAuthenticated === 'guest' ? '/guest/booking-summary' : '/customer/booking-summary';
             const from = isAuthenticated === 'guest' ? 'guest' : 'customer';
-            
+
             const response = await createAppointment({ ...appointDetails, from, username });
             console.log(response)
 
             navigate(path, { replace: true, state: { summaryDetails: response.data } });
 
         } catch (err) {
-            
+
             setError(err.message);
         }
         finally {
@@ -138,7 +138,7 @@ export const useAppontmentBooking = () => {
         }
     }
 
-    
+
     const fetchServices = async () => {
         const allServices = await fetchAllServices();
         setServices(allServices);
@@ -197,7 +197,7 @@ export const useAppontmentBooking = () => {
 
     const fetchWorkingTimeSlots = async () => {
         try {
-            const timeSlots = await fetchWorkingHoursTimeSlots(appointDetails.selectedServices);
+            const timeSlots = await fetchWorkingHoursTimeSlots(appointDetails.selectedServices, appointDetails.selectedDate);
             setAvailableTimeSlots(timeSlots);
         } catch (error) {
             setError(error.message);

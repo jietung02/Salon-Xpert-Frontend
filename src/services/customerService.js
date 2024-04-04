@@ -81,7 +81,7 @@ export const fetchTimeSpecialistTimeSlot = async (selectedServices, selectedSpec
     }
 }
 
-export const fetchWorkingHoursTimeSlots = async (selectedServices) => {
+export const fetchWorkingHoursTimeSlots = async (selectedServices, selectedDate) => {
     try {
 
         const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/customers/working-hours`, {
@@ -89,7 +89,7 @@ export const fetchWorkingHoursTimeSlots = async (selectedServices) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ selectedServices })
+            body: JSON.stringify({ selectedServices, selectedDate })
         });
 
         if (!response.ok) {

@@ -77,7 +77,7 @@ export default function AdminStaffDashboard() {
             })
               :
               <div className="flex justify-center items-center h-4/5">
-                <span className="text-xl lg:text-2xl 2xl:text-3xl text-gray-900">No Past Appointments</span>
+                <span className="text-xl lg:text-2xl 2xl:text-3xl text-gray-900">No Upcoming Appointments</span>
               </div>
             }
 

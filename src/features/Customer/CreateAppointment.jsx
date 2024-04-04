@@ -78,9 +78,6 @@ export default function CreateAppointment() {
           resetDateTime();
           setSpecialists([]);
           await fetchSpecialists();
-          if (appointDetails.selectedServices.length > 0) {
-            await fetchWorkingTimeSlots();
-          }       
         }
 
       } catch (error) {
@@ -135,8 +132,18 @@ export default function CreateAppointment() {
   }, [appointDetails.selectedTime, appointDetails.selectedDate])
 
   useEffect(() => {
-    if (appointDetails.bookingMethod === 'datetime') {
+    const fetchData = async () => {
+      try {
+        await fetchWorkingTimeSlots();
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+    if (appointDetails.bookingMethod === 'datetime' && appointDetails.selectedServices.length > 0 && appointDetails.selectedDate !== null) {
+      fetchData();
+    }
 
+    if (appointDetails.bookingMethod === 'datetime') {
       resetTime();
     }
 
