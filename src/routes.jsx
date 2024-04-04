@@ -38,7 +38,6 @@ import CreateService from './features/SalonService/CreateService';
 import ModifyService from './features/SalonService/ModifyService';
 import CreateStaffProfile from './features/SalonStaffProfile/CreateStaffProfile';
 import ModifyStaffProfile from './features/SalonStaffProfile/ModifyStaffProfile';
-import GenerateReports from './features/Reports/GenerateReports';
 import GuestFeedbackRatings from './pages/Guest/GuestFeedbackRatings/GuestFeedbackRatings';
 import GuestPaymentPage from './pages/Guest/GuestPaymentPage/GuestPaymentPage';
 
@@ -58,9 +57,7 @@ export default function AppRoutes() {
       {/* Admin Routes */}
       <Route path='/admin' element={<Dashboard />} />
 
-      <Route path='/admin/reports' element={<Reports />} >
-        <Route path='generate-report' element={<GenerateReports />} />
-      </Route>
+      <Route path='/admin/reports' element={<Reports />} />
       <Route path='/admin/access-control' element={<AccessControl />} />
 
       <Route path='/admin/roles' element={<Roles />} >
@@ -101,9 +98,7 @@ export default function AppRoutes() {
         )
       } />
 
-      <Route path='/staff/reports' element={<Reports />} >
-        <Route path='generate-report' element={<GenerateReports />} />
-      </Route>
+      <Route path='/staff/reports' element={<Reports />} />
       <Route path='/staff/access-control' element={<AccessControl />} />
 
       <Route path='/staff/roles' element={<Roles />} >
