@@ -5,6 +5,11 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AuthContextProvider } from './context/AuthContext';
+import { Core } from '@grapecity/activereports';
+
+
+const activeReportLicenseKey = process.env.REACT_APP_ACTIVE_REPORT_LICENSE_KEY;
+Core.setLicenseKey(activeReportLicenseKey);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
