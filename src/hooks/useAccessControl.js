@@ -85,6 +85,7 @@ export const useAccessControl = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       if (rolePermissions.permissions.length === 0) {
         throw new Error('No Permissions Selected');
       }
@@ -92,13 +93,12 @@ export const useAccessControl = () => {
         throw new Error('No Role Selected');
       }
       const response = await saveRoleAccess(rolePermissions);
-
-      navigate(role === 'admin' ? '/admin/access-control' : '/staff/access-control')
+      setSuccessMessage(`Successfully Saved Role Access for Role Code: ${rolePermissions.roleCode}`)
+      setPerformingChanges(!performingChanges);
     } catch (error) {
       setError(error.message);
     } finally {
-      setSuccessMessage(`Successfully Saved Role Access for Role Code: ${rolePermissions.roleCode}`)
-      setPerformingChanges(!performingChanges);
+      setLoading(false);  
     }
   }
 
