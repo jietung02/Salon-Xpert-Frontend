@@ -192,7 +192,7 @@ export const usePriceConfiguration = () => {
         try {
             setLoading(true);
             const response = await createNewPriceRule(pricingRuleDetails);
-            setSuccessMessage(`Successfully Created New Price Rule`);
+            setSuccessMessage(`Successfully Created New Pricing Rule`);
             clearPricingRuleDetails();
 
             navigate(role === 'admin' ? '/admin/price-configurations' : '/staff/price-configurations')
