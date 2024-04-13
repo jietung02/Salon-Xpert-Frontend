@@ -81,7 +81,7 @@ export default function CreateService() {
             className="peer w-full h-full bg-transparent text-gray-900 font-normal outline outline-0 focus:outline-0 disabled:bg-white disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-gray-100 placeholder-shown:border-t-gray-100 border focus:border-2 border-t-transparent focus:border-t-transparent text-xl 2xl:text-2xl px-3 py-2.5 rounded-[7px] border-gray-100 focus:border-gray-900"
             placeholder=""
             onChange={(e) => updateServiceDetails(e)}
-            min="0"
+            min="1"
             max="540"
             required
           />
@@ -101,7 +101,7 @@ export default function CreateService() {
             className="peer w-full h-full bg-transparent text-gray-900 font-normal outline outline-0 focus:outline-0 disabled:bg-white disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-gray-100 placeholder-shown:border-t-gray-100 border focus:border-2 border-t-transparent focus:border-t-transparent text-xl 2xl:text-2xl px-3 py-2.5 rounded-[7px] border-gray-100 focus:border-gray-900"
             placeholder=""
             onChange={(e) => updateServiceDetails(e)}
-            min="0.00"
+            min="1.00"
             max="50000.00"
             required
           />
