@@ -258,8 +258,8 @@ export const useReviewFeedback = () => {
         let dateResult = null;
         if (sortCriteria.hasOwnProperty('date')) {
             dateResult = (ratingResult !== null ? ratingResult : filteredDetails.length > 0 ? filteredDetails : allServiceSpecificFeedback).sort((a, b) => {
-                const dateA = dayjs(a.feedbackCreatedDate);
-                const dateB = dayjs(b.feedbackCreatedDate);
+                const dateA = dayjs(a.feedbackCreatedDate, 'DD-MM-YYYY');
+                const dateB = dayjs(b.feedbackCreatedDate, 'DD-MM-YYYY');
                 if (ratingResult !== null) {
                     if (a.overallRating === b.overallRating) {
                         const comparison = sortCriteria['date'] === 'true' ? dateA.diff(dateB) : dateB.diff(dateA);

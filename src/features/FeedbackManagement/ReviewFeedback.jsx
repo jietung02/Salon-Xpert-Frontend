@@ -189,8 +189,8 @@ export default function ReviewFeedback() {
               handleOnChange={updateSortDetails}
 
               options={[
-                { id: 'dateAsc', value: 'true', label: 'Date Ascending' },
-                { id: 'dateDesc', value: 'false', label: 'Date Descending' },
+                { id: 'dateAsc', value: 'true', label: 'Oldest to Newest' },
+                { id: 'dateDesc', value: 'false', label: 'Newest to Oldest' },
               ]}
             />
 
@@ -201,8 +201,8 @@ export default function ReviewFeedback() {
               handleOnChange={updateSortDetails}
 
               options={[
-                { id: 'ageAsc', value: 'true', label: 'Age Ascending' },
-                { id: 'ageDesc', value: 'false', label: 'Age Descending' },
+                { id: 'ageAsc', value: 'true', label: 'Youngest to Oldest' },
+                { id: 'ageDesc', value: 'false', label: 'Oldest to Youngest' },
               ]}
             />
 
