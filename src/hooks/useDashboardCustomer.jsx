@@ -32,10 +32,12 @@ export const useDashboardCustomer = () => {
     const handleCancelAppointment = async (appointmentId) => {
         try {
             setLoading(true);
+            const isConfirmed = window.confirm('Are you sure you want to cancel this appointment?');
 
-            await cancelScheduledAppointment(appointmentId);
-
-            setSuccessMessage(`Successfully Cancelled an Appointment : ${appointmentId}`);
+            if (isConfirmed) {
+                await cancelScheduledAppointment(appointmentId);
+                setSuccessMessage(`Successfully Cancelled an Appointment : ${appointmentId}`);
+            }
 
         } catch (error) {
             setError(error.message)
