@@ -125,13 +125,14 @@ export default function Signup() {
               <div>
                 <label htmlFor="contact" className="block mb-2 text-sm md:text-lg font-medium text-gray-900 text-white">Contact Number (with -)</label>
                 <input
-                  type="tel"
+                  type="text"
                   name="contact"
                   onChange={(e) => handleChange(e)}
                   value={userData.contact}
                   id="contact"
                   placeholder="Your Contact Number"
                   pattern="[0-9]{1,3}-[0-9]{7,8}"
+                  title="Please Follow this format 01X-XXXXXXX"
                   className="bg-gray-50 border border-gray-300 text-gray-900 md:text-xl sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                   required
                 />

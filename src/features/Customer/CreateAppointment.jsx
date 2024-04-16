@@ -232,7 +232,7 @@ export default function CreateAppointment() {
 
         <div className="relative md:w-2/5 w-full h-12 2xl:h-14 mx-auto mb-auto">
           <input
-            type="tel"
+            type="text"
             readOnly={contact !== null}
             name="contact"
             value={contact !== null ? contact : appointDetails.contact}
@@ -240,6 +240,7 @@ export default function CreateAppointment() {
             placeholder=""
             onChange={(e) => updateAppointmentDetails(e)}
             pattern="[0-9]{1,3}-[0-9]{7,8}"
+            title="Please Follow this format 01X-XXXXXXX"
             required
           />
           <label
