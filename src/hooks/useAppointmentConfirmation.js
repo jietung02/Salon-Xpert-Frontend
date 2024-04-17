@@ -27,6 +27,7 @@ export const useAppointmentConfirmation = () => {
             appointmentId: details.appointmentId,
             name: details.name,
             email: details.email,
+            contact: details.contact,
             servicesName: details.servicesName,
             specialist: details.specialist,
             startDateTime: details.startDateTime,
