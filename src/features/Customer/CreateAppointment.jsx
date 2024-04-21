@@ -294,7 +294,7 @@ export default function CreateAppointment() {
                     name="selectedDate"
                     format="DD/MM/YYYY"
                     maxDate={maxDate}
-                    views={['day', 'month', 'year']}
+                    views={['day']}
                     onError={(newError) => setErrorMessage(newError)}
                     disablePast
 
@@ -330,7 +330,7 @@ export default function CreateAppointment() {
                     name="selectedDate"
                     format="DD/MM/YYYY"
                     maxDate={maxDate}
-                    views={['day', 'month', 'year']}
+                    views={['day']}
                     onError={(newError) => setErrorMessage(newError)}
                     disablePast
                     onAccept={(e) => { updateAppointmentDetails(e, 'selectedDate') }}
@@ -376,7 +376,7 @@ export default function CreateAppointment() {
                     name="selectedDate"
                     format="DD/MM/YYYY"
                     maxDate={maxDate}
-                    views={['day', 'month', 'year']}
+                    views={['day']}
                     onError={(newError) => setErrorMessage(newError)}
                     disablePast
 
@@ -412,7 +412,7 @@ export default function CreateAppointment() {
                     name="selectedDate"
                     format="DD/MM/YYYY"
                     maxDate={maxDate}
-                    views={['day', 'month', 'year']}
+                    views={['day']}
                     onError={(newError) => setErrorMessage(newError)}
                     disablePast
                     onAccept={(e) => { updateAppointmentDetails(e, 'selectedDate') }}
