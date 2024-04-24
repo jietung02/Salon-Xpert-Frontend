@@ -143,6 +143,7 @@ export default function GenerateReports() {
                     views={['day', 'month', 'year']}
                     onError={(newError) => setError(newError)}
                     disableFuture
+                    maxDate={dayjs(reportDetails.dateTo)}
                     onChange={(e) => { updateReportDetails(e, 'dateFrom') }}
                     onAccept={(e) => { updateReportDetails(e, 'dateFrom') }}
                   />
