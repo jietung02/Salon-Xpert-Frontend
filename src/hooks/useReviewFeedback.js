@@ -236,6 +236,12 @@ export const useReviewFeedback = () => {
         // toggleSortButton();
     }
 
+    //Programmer Name : Mr. Dhason Padmakumar, Senior Lecturer & Project Manager, APU, Technology Park Malaysia
+    //Program Name : Sort Feedback
+    //Description : Sort the feedback data according to the selected sorting criteria.
+    //First Written On : 26 March 2024
+    //Edit Written On : -
+
     const sortData = () => {
         const sortCriteria = Object.fromEntries(
             Object.entries(sortDetails).filter(([key, value]) => value !== null)
@@ -243,6 +249,7 @@ export const useReviewFeedback = () => {
 
 
         let ratingResult = null;
+        //CHECK IF OVERALL RATING IS IN THE SORTING CRITERIA
         if (sortCriteria.hasOwnProperty('overallRating')) {
             ratingResult = (filteredDetails.length > 0 ? filteredDetails : allServiceSpecificFeedback).sort((a, b) => {
                 const comparison = sortCriteria['overallRating'] === 'true' ? a.overallRating - b.overallRating : b.overallRating - a.overallRating;
@@ -256,6 +263,7 @@ export const useReviewFeedback = () => {
         };
 
         let dateResult = null;
+        //CHECK IF DATE IS IN THE SORTING CRITERIA
         if (sortCriteria.hasOwnProperty('date')) {
             dateResult = (ratingResult !== null ? ratingResult : filteredDetails.length > 0 ? filteredDetails : allServiceSpecificFeedback).sort((a, b) => {
                 const dateA = dayjs(a.feedbackCreatedDate, 'DD-MM-YYYY');
@@ -283,7 +291,7 @@ export const useReviewFeedback = () => {
         }
 
         let ageResult = null;
-
+        //CHECK IF AGE IS IN THE SORTING CRITERIA
         if (sortCriteria.hasOwnProperty('age')) {
             ageResult = (dateResult !== null ? dateResult : ratingResult !== null ? ratingResult : filteredDetails.length > 0 ? filteredDetails : allServiceSpecificFeedback).sort((a, b) => {
                 if (ratingResult !== null && dateResult !== null) {
