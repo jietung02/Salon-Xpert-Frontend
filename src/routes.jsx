@@ -18,7 +18,6 @@ import UpdateServicePrice from './pages/AdminAndStaff/UpdateServicePrice/UpdateS
 import ViewSchedule from './pages/AdminAndStaff/ViewSchedule/ViewSchedule';
 
 import AppointmentHistory from './pages/Customer/AppointmentHistory/AppointmentHistory';
-import CancelAppointment from './pages/Customer/CancelAppointment/CancelAppointment';
 import CustomerDashboard from './pages/Customer/CustomerDashboard/CustomerDashboard';
 import Profile from './pages/Customer/Profile/Profile';
 import FeedbackRatings from './pages/Customer/FeedbackRatings/FeedbackRatings';
