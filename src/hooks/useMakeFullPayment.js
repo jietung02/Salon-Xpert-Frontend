@@ -41,7 +41,6 @@ export const useMakeFullPayment = () => {
                 appointmentDateTime: dayjs(details.data.appointmentDateTime).tz('Asia/Kuala_Lumpur').format('DD-MM-YYYY HH:mm'),
             };
 
-            console.log(reformatObject)
             updateAppointmentDetails(reformatObject);
 
         } catch (error) {

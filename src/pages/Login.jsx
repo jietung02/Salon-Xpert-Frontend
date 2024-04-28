@@ -73,7 +73,6 @@ export default function Login() {
     }, 3000);
 
     if (isAuthenticated === true) {
-      console.log(role);
       if (role === 'admin') {
         navigate('/admin');
       }

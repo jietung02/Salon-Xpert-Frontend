@@ -25,7 +25,6 @@ export default function CreateAppointment() {
     const fetchData = async () => {
       try {
         if (name !== null && email !== null && gender !== null && age !== null && contact !== null) {
-          console.log('iNNIN')
           const userDetails = [
             { name: 'name', value: name },
             { name: 'email', value: email },
@@ -38,7 +37,6 @@ export default function CreateAppointment() {
             updateAppointmentDetails({ target: { name: [name], value: value } });
           });
         }
-        console.log('i89080')
         await fetchServices();
 
       } catch (error) {
