@@ -1,6 +1,6 @@
 export const createAppointment = async (appointDetails) => {
     try {
-        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/customers/appointment/new`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/appointment/new`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -22,7 +22,7 @@ export const createAppointment = async (appointDetails) => {
 
 export const fetchAllServices = async () => {
     try {
-        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/customers/services`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/services`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -41,7 +41,7 @@ export const fetchAllServices = async () => {
 }
 export const fetchMatchSpecialists = async (selectedServices) => {
     try {
-        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/customers/match-specialists`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/match-specialists`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -62,7 +62,7 @@ export const fetchMatchSpecialists = async (selectedServices) => {
 
 export const fetchTimeSpecialistTimeSlot = async (selectedServices, selectedSpecialist, selectedDate) => {
     try {
-        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/customers/specialist-timeslots`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/specialist-timeslots`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -84,7 +84,7 @@ export const fetchTimeSpecialistTimeSlot = async (selectedServices, selectedSpec
 export const fetchWorkingHoursTimeSlots = async (selectedServices, selectedDate) => {
     try {
 
-        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/customers/working-hours`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/working-hours`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -105,7 +105,7 @@ export const fetchWorkingHoursTimeSlots = async (selectedServices, selectedDate)
 
 export const fetchSpecialistThatTime = async (specialists, selectedServices, selectedTime) => {
     try {
-        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/customers/specialists-available`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/specialists-available`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -126,7 +126,7 @@ export const fetchSpecialistThatTime = async (specialists, selectedServices, sel
 
 export const cancelAppointment = async (appointmentId) => {
     try {
-        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/customers/appointment/cancel/${appointmentId}`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/appointment/cancel/${appointmentId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -146,7 +146,7 @@ export const cancelAppointment = async (appointmentId) => {
 
 export const cancelScheduledAppointment = async (appointmentId) => {
     try {
-        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/customers/appointment-scheduled/cancel/${appointmentId}`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/appointment-scheduled/cancel/${appointmentId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -166,7 +166,7 @@ export const cancelScheduledAppointment = async (appointmentId) => {
 
 export const payDeposit = async (summaryDetails) => {
     try {
-        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/customers/appointment/update/${summaryDetails.appointmentId}`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/appointment/update/${summaryDetails.appointmentId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -187,7 +187,7 @@ export const payDeposit = async (summaryDetails) => {
 
 export const fetchOwnProfileDetails = async (id) => {
     try {
-        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/customers/${id}`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -207,7 +207,7 @@ export const fetchOwnProfileDetails = async (id) => {
 
 export const saveProfileDetails = async (id, profileDetails) => {
     try {
-        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/customers/${id}`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -228,7 +228,7 @@ export const saveProfileDetails = async (id, profileDetails) => {
 
 export const fetchAppointmentHistoryForSSFeedback = async (details) => {
     try {
-        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/customers/feedback/service-specific-feedback/${details.id}`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/feedback/service-specific-feedback/${details.id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -249,7 +249,7 @@ export const fetchAppointmentHistoryForSSFeedback = async (details) => {
 
 export const submitServiceSpecificFeedback = async (serviceSpecificFeedbackDetails) => {
     try {
-        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/customers/feedback/service-specific-feedback/submit`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/feedback/service-specific-feedback/submit`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -270,7 +270,7 @@ export const submitServiceSpecificFeedback = async (serviceSpecificFeedbackDetai
 
 export const fetchAppointmentDetails = async (appoinmentId) => {
     try {
-        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/customers/payment/${appoinmentId}`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/payment/${appoinmentId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -290,7 +290,7 @@ export const fetchAppointmentDetails = async (appoinmentId) => {
 
 export const makeFinalPayment = async (appoinmentId) => {
     try {
-        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/customers/payment/pay/${appoinmentId}`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/payment/pay/${appoinmentId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -310,7 +310,7 @@ export const makeFinalPayment = async (appoinmentId) => {
 
 export const fetchCustomerData = async (userData) => {
     try {
-        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/customers/dashboard-data/${userData.id}`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/dashboard-data/${userData.id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -331,7 +331,7 @@ export const fetchCustomerData = async (userData) => {
 
 export const fetchAllAppointmentHistory = async (id) => {
     try {
-        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/customers/appointment/history/${id}`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/appointment/history/${id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -1,6 +1,6 @@
 export const fetchStaffCalendarId = async (id) => {
     try {
-        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/service-management/schedule/${id}`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/service-management/schedule/${id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -20,7 +20,7 @@ export const fetchStaffCalendarId = async (id) => {
 
 export const fetchTodayAppointments = async () => {
     try {
-        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/service-management/update-service-price/appointments`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/service-management/update-service-price/appointments`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ export const fetchTodayAppointments = async () => {
 
 export const updateFinalServicePrice = async (selectedAppointment) => {
     try {
-        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/service-management/update-service-price/${selectedAppointment.appointmentId}`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/service-management/update-service-price/${selectedAppointment.appointmentId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

@@ -1,6 +1,6 @@
 export const fetchSpecialists = async () => {
     try {
-        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/reports/staff-performance-report/specialists`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/reports/staff-performance-report/specialists`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -20,7 +20,7 @@ export const fetchSpecialists = async () => {
 
 export const generateReport = async (reportDetails) => {
     try {
-        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/reports/generate`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/reports/generate`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -2,7 +2,7 @@
 
 export const loginUser = async (credentials) => {
     try {
-        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/users/login`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/users/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -24,7 +24,7 @@ export const loginUser = async (credentials) => {
 
 export const registerUser = async (userData) => {
     try {
-        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/customers/new`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/customers/new`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -45,7 +45,7 @@ export const registerUser = async (userData) => {
 
 export const guestLogin = async () => {
     try {
-        const response = await fetch(`http://${process.env.REACT_APP_SERVER_URI}/users/guest`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URI}/users/guest`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
